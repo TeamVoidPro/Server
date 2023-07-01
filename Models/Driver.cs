@@ -42,5 +42,6 @@ public class Driver
     [Required]
     public DateTime AccountCreatedAt { get; set; }
     
+    public string Token { get; set; } = null!;
     public ICollection<Vehicle>? Vehicles { get; set; } 
 }

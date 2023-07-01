@@ -23,4 +23,6 @@ public class DriverDto
     public required int ContactNumber { get; set; }
 
     public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
+    
+    public string? Token { get; set; } = null!;
 }

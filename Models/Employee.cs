@@ -3,17 +3,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models;
 
-public class ParkingPlaceOwner
+public class Employee
 {
     [Key]
-    [Required (ErrorMessage = "Parking place owner id is required")]
+    [Required (ErrorMessage = "Employee id is required")]
     [Column(TypeName = "varchar(20)")]
-    public required string OwnerId { get; set; }
+    public required string EmployeeId { get; set; }
     
-    [Required (ErrorMessage = "Full is required")]
-    [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid name")]
-    [StringLength(100, MinimumLength = 2, ErrorMessage = "The full name must be 2 characters long.")]
-    public required string FullName { get; set; }
+    [Required (ErrorMessage = "First name is required")]
+    [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid first name")]
+    [StringLength(60, MinimumLength = 2, ErrorMessage = "The first name must be 2 characters long.")]
+    public required string FirstName { get; set; }
+    
+    [Required (ErrorMessage = "Last name is required")]
+    [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid last name")]
+    [StringLength(60, MinimumLength = 2, ErrorMessage = "The last name must be 2 characters long.")]
+    public required string LastName { get; set; }
     
     [Required (ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid Email Address")]
@@ -25,10 +30,10 @@ public class ParkingPlaceOwner
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",
         ErrorMessage = "The password must contain at least an uppercase letter, a lowercase letter, a number and a special character.")]
     public required string Password { get; set; }
-
+    
     [Required (ErrorMessage = "Address line 1 is required")]
     [RegularExpression(@"^[a-zA-Z0-9/\s]+$", ErrorMessage = "Address line 1 should contain only alphanumeric characters.")]
-    [StringLength(100, MinimumLength = 2, ErrorMessage = "Invalid address line.")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "The address line 1 must be 2 characters long.")]
     public required string AddressLine1 { get; set; }
     
     [Required (ErrorMessage = "Street is required")]
@@ -46,10 +51,6 @@ public class ParkingPlaceOwner
     [MinLength(10, ErrorMessage = "Contact number must be 10 digits")]
     public required int ContactNumber { get; set; }
     
-    [Required (ErrorMessage = "Deed copy is required")]
-    [Column(TypeName = "varchar(256)")]
-    public required string DeedCopy { get; set; }
-    
     [Required (ErrorMessage = "NIC is required")]
     [Column(TypeName = "varchar(12)")]
     [MaxLength(12, ErrorMessage = "NIC must be 12 digits")]
@@ -57,6 +58,14 @@ public class ParkingPlaceOwner
     [RegularExpression(@"^[0-9Vv]+$" , ErrorMessage = "Invalid NIC")]
     public required string Nic { get; set; }
     
+    [Required]
+    [Column(TypeName = "varchar(20)")]
+    public required string Role { get; set; }
+    
+    [Column(TypeName = "varchar(256)")]
+    public string ProfilePicture { get; set; } = null!;
+    
+    [Required]
     public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
     
     [Column(TypeName = "varchar(256)")]
