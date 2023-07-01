@@ -12,6 +12,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Driver>? Drivers { get; set; }
     
     public DbSet<Vehicle>? Vehicles { get; set; }
+    
+    public DbSet<ParkingPlaceOwner>? ParkingPlaceOwners { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
