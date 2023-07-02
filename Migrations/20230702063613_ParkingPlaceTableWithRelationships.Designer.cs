@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DbContext;
@@ -11,9 +12,11 @@ using Server.DbContext;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230702063613_ParkingPlaceTableWithRelationships")]
+    partial class ParkingPlaceTableWithRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,9 @@ namespace Server.Migrations
                     b.Property<DateTime>("AccountCreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
+                    b.Property<int>("ContactNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -83,10 +85,9 @@ namespace Server.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
+                    b.Property<int>("ContactNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -171,26 +172,7 @@ namespace Server.Migrations
 
                     b.HasIndex("ParkingPlaceVerifierId");
 
-                    b.HasIndex("ParkingPlaceId", "Name", "Location", "ParkingPlaceOperatorId", "ParkingPlaceVerifierId")
-                        .IsUnique();
-
                     b.ToTable("ParkingPlaces");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlaceImages", b =>
-                {
-                    b.Property<string>("ParkingPlaceId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
-                    b.HasKey("ParkingPlaceId", "ImageUrl");
-
-                    b.HasIndex("ParkingPlaceId", "ImageUrl")
-                        .IsUnique();
-
-                    b.ToTable("ParkingPlaceImages");
                 });
 
             modelBuilder.Entity("Server.Models.ParkingPlaceOwner", b =>
@@ -211,10 +193,9 @@ namespace Server.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
+                    b.Property<int>("ContactNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("DeedCopy")
                         .IsRequired()
@@ -251,75 +232,6 @@ namespace Server.Migrations
                     b.HasKey("OwnerId");
 
                     b.ToTable("ParkingPlaceOwners");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlaceRatings", b =>
-                {
-                    b.Property<string>("RatingId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DriverId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("ParkingPlaceId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<float>("Rating")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("RatingDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("RatingId");
-
-                    b.HasIndex("DriverId");
-
-                    b.HasIndex("ParkingPlaceId");
-
-                    b.ToTable("ParkingPlaceRatings");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlaceServices", b =>
-                {
-                    b.Property<string>("ParkingPlaceId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("ServiceProvide")
-                        .HasColumnType("text");
-
-                    b.HasKey("ParkingPlaceId", "ServiceProvide");
-
-                    b.HasIndex("ParkingPlaceId", "ServiceProvide")
-                        .IsUnique();
-
-                    b.ToTable("ParkingPlaceServices");
-                });
-
-            modelBuilder.Entity("Server.Models.SlotCategories", b =>
-                {
-                    b.Property<string>("SlotCategoryId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<DateTime>("CategoryCreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("SlotCategoryDescription")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SlotCategoryName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("SlotCategoryId");
-
-                    b.ToTable("SlotCategories");
                 });
 
             modelBuilder.Entity("Server.Models.Vehicle", b =>
@@ -378,47 +290,6 @@ namespace Server.Migrations
                     b.Navigation("ParkingPlaceVerifier");
                 });
 
-            modelBuilder.Entity("Server.Models.ParkingPlaceImages", b =>
-                {
-                    b.HasOne("Server.Models.ParkingPlace", "ParkingPlace")
-                        .WithMany("ParkingPlaceImages")
-                        .HasForeignKey("ParkingPlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParkingPlace");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlaceRatings", b =>
-                {
-                    b.HasOne("Server.Models.Driver", "Driver")
-                        .WithMany("ParkingPlaceRatings")
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.ParkingPlace", "ParkingPlace")
-                        .WithMany("ParkingPlaceRatings")
-                        .HasForeignKey("ParkingPlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Driver");
-
-                    b.Navigation("ParkingPlace");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlaceServices", b =>
-                {
-                    b.HasOne("Server.Models.ParkingPlace", "ParkingPlace")
-                        .WithMany("ParkingPlaceServices")
-                        .HasForeignKey("ParkingPlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParkingPlace");
-                });
-
             modelBuilder.Entity("Server.Models.Vehicle", b =>
                 {
                     b.HasOne("Server.Models.Driver", "Driver")
@@ -432,18 +303,7 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.Driver", b =>
                 {
-                    b.Navigation("ParkingPlaceRatings");
-
                     b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlace", b =>
-                {
-                    b.Navigation("ParkingPlaceImages");
-
-                    b.Navigation("ParkingPlaceRatings");
-
-                    b.Navigation("ParkingPlaceServices");
                 });
 
             modelBuilder.Entity("Server.Models.ParkingPlaceOwner", b =>

@@ -37,11 +37,13 @@ public class Driver
     [Required (ErrorMessage = "Contact number is required")]
     [MaxLength(10, ErrorMessage = "Contact number must be 10 digits")]
     [MinLength(10, ErrorMessage = "Contact number must be 10 digits")]
-    public required int ContactNumber { get; set; }
+    public required string ContactNumber { get; set; }
     
     [Required]
     public DateTime AccountCreatedAt { get; set; }
     
     public string Token { get; set; } = null!;
     public ICollection<Vehicle>? Vehicles { get; set; } 
+    
+    public ICollection<ParkingPlaceRatings> ParkingPlaceRatings { get; set; } = null!;
 }

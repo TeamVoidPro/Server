@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DbContext;
@@ -11,9 +12,11 @@ using Server.DbContext;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230702081506_ParkingPlaceRatingsTable")]
+    partial class ParkingPlaceRatingsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,28 +301,6 @@ namespace Server.Migrations
                         .IsUnique();
 
                     b.ToTable("ParkingPlaceServices");
-                });
-
-            modelBuilder.Entity("Server.Models.SlotCategories", b =>
-                {
-                    b.Property<string>("SlotCategoryId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<DateTime>("CategoryCreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("SlotCategoryDescription")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SlotCategoryName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("SlotCategoryId");
-
-                    b.ToTable("SlotCategories");
                 });
 
             modelBuilder.Entity("Server.Models.Vehicle", b =>
