@@ -28,6 +28,10 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<SlotCategories>? SlotCategories { get; set; }
     
     public DbSet<ParkingPlaceSlotCapacities>? ParkingPlaceSlotCapacities { get; set; }
+    
+    public DbSet<Zones>? Zones { get; set; }
+    
+    public DbSet<Slot>? Slots { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -72,6 +76,24 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasOne( p => p.ParkingPlace)
             .WithMany(p => p.ParkingPlaceSlotCapacities)
             .HasForeignKey(psc => psc.ParkingPlaceId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Zones>()
+            .HasOne(p => p.ParkingPlace)
+            .WithMany(p => p.Zones)
+            .HasForeignKey(z => z.ParkingPlaceId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Slot>()
+            .HasOne(p => p.ParkingPlace)
+            .WithMany(p => p.Slots)
+            .HasForeignKey(z => z.ParkingPlaceId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Slot>()
+            .HasOne(p => p.SlotCategories)
+            .WithMany(p => p.Slots)
+            .HasForeignKey(z => z.SlotCategoryId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
