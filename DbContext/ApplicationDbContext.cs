@@ -24,6 +24,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<ParkingPlaceServices>? ParkingPlaceServices { get; set; }
     
     public DbSet<ParkingPlaceRatings>? ParkingPlaceRatings { get; set; }
+    
+    public DbSet<SlotCategories>? SlotCategories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
