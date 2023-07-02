@@ -32,6 +32,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Zones>? Zones { get; set; }
     
     public DbSet<Slot>? Slots { get; set; }
+    
+    public DbSet<SlotReservationHistory>? SlotReservationHistories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -94,6 +96,12 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasOne(p => p.SlotCategories)
             .WithMany(p => p.Slots)
             .HasForeignKey(z => z.SlotCategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<SlotReservationHistory>()
+            .HasOne(s => s.Slot)
+            .WithMany(s => s.SlotReservationHistories)
+            .HasForeignKey(s => s.SlotId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
