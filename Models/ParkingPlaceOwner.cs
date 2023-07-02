@@ -44,7 +44,7 @@ public class ParkingPlaceOwner
     [Required (ErrorMessage = "Contact number is required")]
     [MaxLength(10, ErrorMessage = "Contact number must be 10 digits")]
     [MinLength(10, ErrorMessage = "Contact number must be 10 digits")]
-    public required int ContactNumber { get; set; }
+    public required string ContactNumber { get; set; }
     
     [Required (ErrorMessage = "Deed copy is required")]
     [Column(TypeName = "varchar(256)")]
@@ -61,4 +61,6 @@ public class ParkingPlaceOwner
     
     [Column(TypeName = "varchar(256)")]
     public string Token { get; set; } = null!;
+    
+    public ICollection<ParkingPlace>? ParkingPlaces { get; set; }
 }

@@ -49,7 +49,7 @@ public class Employee
     [Required (ErrorMessage = "Contact number is required")]
     [MaxLength(10, ErrorMessage = "Contact number must be 10 digits")]
     [MinLength(10, ErrorMessage = "Contact number must be 10 digits")]
-    public required int ContactNumber { get; set; }
+    public required string ContactNumber { get; set; }
     
     [Required (ErrorMessage = "NIC is required")]
     [Column(TypeName = "varchar(12)")]
@@ -70,4 +70,11 @@ public class Employee
     
     [Column(TypeName = "varchar(256)")]
     public string Token { get; set; } = null!;
+    
+    [NotMapped]
+    public ParkingPlace VerifiedParkingPlace { get; set; } = null!;
+    
+    [NotMapped]
+    public ParkingPlace OperatorParkingPlace { get; set; } = null!;
+    
 }

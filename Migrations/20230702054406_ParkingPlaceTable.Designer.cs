@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DbContext;
@@ -11,9 +12,11 @@ using Server.DbContext;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230702054406_ParkingPlaceTable")]
+    partial class ParkingPlaceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,9 @@ namespace Server.Migrations
                     b.Property<DateTime>("AccountCreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
+                    b.Property<int>("ContactNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -83,10 +85,9 @@ namespace Server.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
+                    b.Property<int>("ContactNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -153,38 +154,15 @@ namespace Server.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("ParkingPlaceOperatorId")
-                        .HasColumnType("varchar(20)");
-
                     b.Property<string>("ParkingPlaceOwnerOwnerId")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("ParkingPlaceVerifierId")
-                        .HasColumnType("varchar(20)");
-
                     b.HasKey("ParkingPlaceId");
-
-                    b.HasIndex("ParkingPlaceOperatorId");
 
                     b.HasIndex("ParkingPlaceOwnerOwnerId");
 
-                    b.HasIndex("ParkingPlaceVerifierId");
-
                     b.ToTable("ParkingPlaces");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlaceImages", b =>
-                {
-                    b.Property<string>("ParkingPlaceId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
-                    b.HasKey("ParkingPlaceId", "ImageUrl");
-
-                    b.ToTable("ParkingPlaceImages");
                 });
 
             modelBuilder.Entity("Server.Models.ParkingPlaceOwner", b =>
@@ -205,10 +183,9 @@ namespace Server.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
+                    b.Property<int>("ContactNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("DeedCopy")
                         .IsRequired()
@@ -247,19 +224,6 @@ namespace Server.Migrations
                     b.ToTable("ParkingPlaceOwners");
                 });
 
-            modelBuilder.Entity("Server.Models.ParkingPlaceServices", b =>
-                {
-                    b.Property<string>("ParkingPlaceId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("ServiceProvide")
-                        .HasColumnType("text");
-
-                    b.HasKey("ParkingPlaceId", "ServiceProvide");
-
-                    b.ToTable("ParkingPlaceServices");
-                });
-
             modelBuilder.Entity("Server.Models.Vehicle", b =>
                 {
                     b.Property<string>("VehicleNumber")
@@ -293,49 +257,26 @@ namespace Server.Migrations
                     b.ToTable("Vehicles");
                 });
 
+            modelBuilder.Entity("Server.Models.Employee", b =>
+                {
+                    b.HasOne("Server.Models.ParkingPlace", "VerifiedParkingPlace")
+                        .WithOne("ParkingPlaceVerifier")
+                        .HasForeignKey("Server.Models.Employee", "EmployeeId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("VerifiedParkingPlace");
+                });
+
             modelBuilder.Entity("Server.Models.ParkingPlace", b =>
                 {
-                    b.HasOne("Server.Models.Employee", "ParkingPlaceOperator")
-                        .WithMany()
-                        .HasForeignKey("ParkingPlaceOperatorId");
-
                     b.HasOne("Server.Models.ParkingPlaceOwner", "ParkingPlaceOwner")
                         .WithMany("ParkingPlaces")
                         .HasForeignKey("ParkingPlaceOwnerOwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.Employee", "ParkingPlaceVerifier")
-                        .WithMany()
-                        .HasForeignKey("ParkingPlaceVerifierId");
-
-                    b.Navigation("ParkingPlaceOperator");
-
                     b.Navigation("ParkingPlaceOwner");
-
-                    b.Navigation("ParkingPlaceVerifier");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlaceImages", b =>
-                {
-                    b.HasOne("Server.Models.ParkingPlace", "ParkingPlace")
-                        .WithMany("ParkingPlaceImages")
-                        .HasForeignKey("ParkingPlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParkingPlace");
-                });
-
-            modelBuilder.Entity("Server.Models.ParkingPlaceServices", b =>
-                {
-                    b.HasOne("Server.Models.ParkingPlace", "ParkingPlace")
-                        .WithMany("ParkingPlaceServices")
-                        .HasForeignKey("ParkingPlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParkingPlace");
                 });
 
             modelBuilder.Entity("Server.Models.Vehicle", b =>
@@ -356,9 +297,8 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.ParkingPlace", b =>
                 {
-                    b.Navigation("ParkingPlaceImages");
-
-                    b.Navigation("ParkingPlaceServices");
+                    b.Navigation("ParkingPlaceVerifier")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Server.Models.ParkingPlaceOwner", b =>
