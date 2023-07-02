@@ -45,4 +45,8 @@ public class Slot
     public DateTime ReservedUntil { get; set; }
     
     public ICollection<SlotReservationHistory> SlotReservationHistories { get; set; } = null!;
+    
+    public ICollection<Reservation> Reservations { get; set; } = null!;
+    
+    public ICollection<SlotReservation> SlotReservations { get; set; } = null!;
 }

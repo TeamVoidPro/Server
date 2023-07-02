@@ -16,7 +16,7 @@ public class Zones
     public string? ZoneDescription { get; set; }
     
     public DateTime ZoneCreatedDate { get; set; } = DateTime.Now;
-    
+
     public string ParkingPlaceId { get; set; } = null!;
     
     public ParkingPlace ParkingPlace { get; set; } = null!;

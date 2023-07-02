@@ -46,4 +46,6 @@ public class ParkingPlace
     public ICollection<Zones> Zones { get; set; } = null!;
     
     public ICollection<Slot> Slots { get; set; } = null!;
+    
+    public ICollection<ZoneReservation> ZoneReservations { get; set; } = null!;
 }

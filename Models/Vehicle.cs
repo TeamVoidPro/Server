@@ -31,4 +31,8 @@ public class Vehicle
     
     [Required]
     public Driver Driver { get; set; } = null!;
+    
+    public ICollection<ZoneReservation> ZoneReservations { get; set; } = null!;
+    
+    public ICollection<SlotReservation> SlotReservations { get; set; } = null!;
 }

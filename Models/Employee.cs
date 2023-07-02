@@ -77,4 +77,6 @@ public class Employee
     [NotMapped]
     public ParkingPlace OperatorParkingPlace { get; set; } = null!;
     
+    public ICollection<Reservation> Reservation { get; set; } = null!;
+    
 }

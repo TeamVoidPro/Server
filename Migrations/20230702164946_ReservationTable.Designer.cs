@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DbContext;
@@ -11,9 +12,11 @@ using Server.DbContext;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230702164946_ReservationTable")]
+    partial class ReservationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -469,29 +472,6 @@ namespace Server.Migrations
                     b.ToTable("SlotCategories");
                 });
 
-            modelBuilder.Entity("Server.Models.SlotReservation", b =>
-                {
-                    b.Property<string>("ReservationId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("SlotId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("VehicleNumber")
-                        .HasColumnType("varchar(20)");
-
-                    b.HasKey("ReservationId", "SlotId", "VehicleNumber");
-
-                    b.HasIndex("ReservationId")
-                        .IsUnique();
-
-                    b.HasIndex("SlotId");
-
-                    b.HasIndex("VehicleNumber");
-
-                    b.ToTable("SlotReservations");
-                });
-
             modelBuilder.Entity("Server.Models.SlotReservationHistory", b =>
                 {
                     b.Property<string>("SlotReservationHistoryId")
@@ -552,29 +532,6 @@ namespace Server.Migrations
                     b.HasIndex("VehicleNumber", "VehicleModel", "VehicleType");
 
                     b.ToTable("Vehicles");
-                });
-
-            modelBuilder.Entity("Server.Models.ZoneReservation", b =>
-                {
-                    b.Property<string>("ReservationId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("ParkingPlaceId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("VehicleNumber")
-                        .HasColumnType("varchar(20)");
-
-                    b.HasKey("ReservationId", "ParkingPlaceId", "VehicleNumber");
-
-                    b.HasIndex("ParkingPlaceId");
-
-                    b.HasIndex("ReservationId")
-                        .IsUnique();
-
-                    b.HasIndex("VehicleNumber");
-
-                    b.ToTable("ZoneReservations");
                 });
 
             modelBuilder.Entity("Server.Models.Zones", b =>
@@ -740,33 +697,6 @@ namespace Server.Migrations
                     b.Navigation("Zones");
                 });
 
-            modelBuilder.Entity("Server.Models.SlotReservation", b =>
-                {
-                    b.HasOne("Server.Models.Reservation", "Reservation")
-                        .WithOne("SlotReservation")
-                        .HasForeignKey("Server.Models.SlotReservation", "ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.Slot", "Slot")
-                        .WithMany("SlotReservations")
-                        .HasForeignKey("SlotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.Vehicle", "Vehicle")
-                        .WithMany("SlotReservations")
-                        .HasForeignKey("VehicleNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Reservation");
-
-                    b.Navigation("Slot");
-
-                    b.Navigation("Vehicle");
-                });
-
             modelBuilder.Entity("Server.Models.SlotReservationHistory", b =>
                 {
                     b.HasOne("Server.Models.Slot", "Slot")
@@ -787,33 +717,6 @@ namespace Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Driver");
-                });
-
-            modelBuilder.Entity("Server.Models.ZoneReservation", b =>
-                {
-                    b.HasOne("Server.Models.ParkingPlace", "ParkingPlace")
-                        .WithMany("ZoneReservations")
-                        .HasForeignKey("ParkingPlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.Reservation", "Reservation")
-                        .WithOne("ZoneReservation")
-                        .HasForeignKey("Server.Models.ZoneReservation", "ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.Vehicle", "Vehicle")
-                        .WithMany("ZoneReservations")
-                        .HasForeignKey("VehicleNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParkingPlace");
-
-                    b.Navigation("Reservation");
-
-                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Server.Models.Zones", b =>
@@ -851,8 +754,6 @@ namespace Server.Migrations
 
                     b.Navigation("Slots");
 
-                    b.Navigation("ZoneReservations");
-
                     b.Navigation("Zones");
                 });
 
@@ -861,22 +762,11 @@ namespace Server.Migrations
                     b.Navigation("ParkingPlaces");
                 });
 
-            modelBuilder.Entity("Server.Models.Reservation", b =>
-                {
-                    b.Navigation("SlotReservation")
-                        .IsRequired();
-
-                    b.Navigation("ZoneReservation")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Server.Models.Slot", b =>
                 {
                     b.Navigation("Reservations");
 
                     b.Navigation("SlotReservationHistories");
-
-                    b.Navigation("SlotReservations");
                 });
 
             modelBuilder.Entity("Server.Models.SlotCategories", b =>
@@ -884,13 +774,6 @@ namespace Server.Migrations
                     b.Navigation("ParkingPlaceSlotCapacities");
 
                     b.Navigation("Slots");
-                });
-
-            modelBuilder.Entity("Server.Models.Vehicle", b =>
-                {
-                    b.Navigation("SlotReservations");
-
-                    b.Navigation("ZoneReservations");
                 });
 #pragma warning restore 612, 618
         }

@@ -34,6 +34,12 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Slot>? Slots { get; set; }
     
     public DbSet<SlotReservationHistory>? SlotReservationHistories { get; set; }
+    
+    public DbSet<Reservation> Reservations { get; set; } = null!;
+    
+    public DbSet<ZoneReservation>? ZoneReservations { get; set; }
+    
+    public DbSet<SlotReservation>? SlotReservations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -102,6 +108,60 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasOne(s => s.Slot)
             .WithMany(s => s.SlotReservationHistories)
             .HasForeignKey(s => s.SlotId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Reservation>()
+            .HasOne(s => s.Slot)
+            .WithMany(s => s.Reservations)
+            .HasForeignKey(s => s.SlotId)
+            .OnDelete(DeleteBehavior.SetNull);
+        
+        modelBuilder.Entity<Reservation>()
+            .HasOne(p => p.ParkingPlaceOperator)
+            .WithMany(p => p.Reservation)
+            .HasForeignKey(e => e.ParkingPlaceOperatorId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<ZoneReservation>()
+            .HasKey(k => new { k.ReservationId, k.ParkingPlaceId, k.VehicleNumber });
+        
+        modelBuilder.Entity<ZoneReservation>()
+            .HasOne(v => v.Vehicle)
+            .WithMany(v => v.ZoneReservations)
+            .HasForeignKey(v => v.VehicleNumber)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<ZoneReservation>()
+            .HasOne(p => p.ParkingPlace)
+            .WithMany(p => p.ZoneReservations)
+            .HasForeignKey(p => p.ParkingPlaceId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<ZoneReservation>()
+            .HasOne(r => r.Reservation)
+            .WithOne(r => r.ZoneReservation)
+            .HasForeignKey<ZoneReservation>(r => r.ReservationId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<SlotReservation>()
+            .HasKey(k => new { k.ReservationId, k.SlotId, k.VehicleNumber });
+        
+        modelBuilder.Entity<SlotReservation>()
+            .HasOne(v => v.Vehicle)
+            .WithMany(v => v.SlotReservations)
+            .HasForeignKey(v => v.VehicleNumber)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<SlotReservation>()
+            .HasOne(p => p.Slot)
+            .WithMany(p => p.SlotReservations)
+            .HasForeignKey(p => p.SlotId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<SlotReservation>()
+            .HasOne(r => r.Reservation)
+            .WithOne(r => r.SlotReservation)
+            .HasForeignKey<SlotReservation>(r => r.ReservationId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
