@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Models;
 
+[Index(nameof(ParkingPlaceId), nameof(ServiceProvide), IsUnique = true)]
 public class ParkingPlaceServices
 {
     [ForeignKey("ParkingPlace")]

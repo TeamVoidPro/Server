@@ -1,8 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Models;
 
+[Index( nameof(ParkingPlaceId), nameof(Name), nameof(Location), nameof(ParkingPlaceOperatorId), nameof(ParkingPlaceVerifierId), IsUnique = true)]
 public class ParkingPlace
 {
     [Key]
@@ -35,4 +38,6 @@ public class ParkingPlace
     public ICollection<ParkingPlaceImages> ParkingPlaceImages { get; set; } = null!;
     
     public ICollection<ParkingPlaceServices> ParkingPlaceServices { get; set; } = null!;
+    
+    public ICollection<ParkingPlaceRatings> ParkingPlaceRatings { get; set; } = null!;
 }

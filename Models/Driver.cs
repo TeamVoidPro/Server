@@ -44,4 +44,6 @@ public class Driver
     
     public string Token { get; set; } = null!;
     public ICollection<Vehicle>? Vehicles { get; set; } 
+    
+    public ICollection<ParkingPlaceRatings> ParkingPlaceRatings { get; set; } = null!;
 }

@@ -22,6 +22,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<ParkingPlaceImages>? ParkingPlaceImages { get; set; }
     
     public DbSet<ParkingPlaceServices>? ParkingPlaceServices { get; set; }
+    
+    public DbSet<ParkingPlaceRatings>? ParkingPlaceRatings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,6 +41,16 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<ParkingPlaceOwner>()
             .HasMany(p=>p.ParkingPlaces)
             .WithOne(p=>p.ParkingPlaceOwner)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<ParkingPlace>()
+            .HasMany(r => r.ParkingPlaceRatings)
+            .WithOne(p => p.ParkingPlace)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Driver>()
+            .HasMany(r => r.ParkingPlaceRatings)
+            .WithOne(p => p.Driver)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
