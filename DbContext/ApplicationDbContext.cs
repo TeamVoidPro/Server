@@ -26,6 +26,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<ParkingPlaceRatings>? ParkingPlaceRatings { get; set; }
     
     public DbSet<SlotCategories>? SlotCategories { get; set; }
+    
+    public DbSet<ParkingPlaceSlotCapacities>? ParkingPlaceSlotCapacities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -44,15 +46,32 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasMany(p=>p.ParkingPlaces)
             .WithOne(p=>p.ParkingPlaceOwner)
             .OnDelete(DeleteBehavior.Cascade);
-        
-        modelBuilder.Entity<ParkingPlace>()
-            .HasMany(r => r.ParkingPlaceRatings)
-            .WithOne(p => p.ParkingPlace)
+
+        modelBuilder.Entity<ParkingPlaceSlotCapacities>()
+            .HasKey(k => new {k.ParkingPlaceId, k.SlotCategoryId});
+
+        modelBuilder.Entity<ParkingPlaceRatings>()
+            .HasOne(p => p.ParkingPlace)
+            .WithMany(p => p.ParkingPlaceRatings)
+            .HasForeignKey(pr => pr.ParkingPlaceId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        modelBuilder.Entity<Driver>()
-            .HasMany(r => r.ParkingPlaceRatings)
-            .WithOne(p => p.Driver)
+        modelBuilder.Entity<ParkingPlaceRatings>()
+            .HasOne(d => d.Driver)
+            .WithMany(p => p.ParkingPlaceRatings)
+            .HasForeignKey(pr => pr.DriverId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<ParkingPlaceSlotCapacities>()
+            .HasOne(s => s.SlotCategories)
+            .WithMany(p => p.ParkingPlaceSlotCapacities)
+            .HasForeignKey(psc => psc.SlotCategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<ParkingPlaceSlotCapacities>()
+            .HasOne( p => p.ParkingPlace)
+            .WithMany(p => p.ParkingPlaceSlotCapacities)
+            .HasForeignKey(psc => psc.ParkingPlaceId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -17,4 +17,6 @@ public class SlotCategories
     public string SlotCategoryDescription { get; set; } = null!;
     
     public DateTime CategoryCreatedDate { get; set; } = DateTime.Now;
+    
+    public ICollection<ParkingPlaceSlotCapacities> ParkingPlaceSlotCapacities { get; set; } = null!;
 }

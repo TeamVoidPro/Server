@@ -40,4 +40,6 @@ public class ParkingPlace
     public ICollection<ParkingPlaceServices> ParkingPlaceServices { get; set; } = null!;
     
     public ICollection<ParkingPlaceRatings> ParkingPlaceRatings { get; set; } = null!;
+    
+    public ICollection<ParkingPlaceSlotCapacities> ParkingPlaceSlotCapacities { get; set; } = null!;
 }

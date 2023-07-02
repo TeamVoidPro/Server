@@ -18,7 +18,11 @@ public class ParkingPlaceRatings
     
     public DateTime RatingDate { get; set; } = DateTime.Now;
 
-    public required ParkingPlace ParkingPlace { get; set; }
-
-    public required Driver Driver { get; set; }
+    public string ParkingPlaceId { get; set; } = null!;
+    
+    public ParkingPlace ParkingPlace { get; set; } = null!;
+    
+    public string DriverId { get; set; } = null!;
+    
+    public Driver Driver { get; set; } = null!;
 }
