@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DbContext;
@@ -11,9 +12,11 @@ using Server.DbContext;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230703043918_BookingReservationTables")]
+    partial class BookingReservationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,10 +58,6 @@ namespace Server.Migrations
                     b.Property<string>("BookingReservationId")
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("BookingPlanId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -89,8 +88,6 @@ namespace Server.Migrations
 
                     b.HasIndex("VehicleNumber")
                         .IsUnique();
-
-                    b.HasIndex("BookingPlanId", "ZonePlanId");
 
                     b.ToTable("BookingReservations");
                 });
@@ -662,10 +659,6 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("BookingPlanId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
                     b.Property<string>("DriverId")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
@@ -681,16 +674,9 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("ZonePlanId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
                     b.HasKey("VehicleNumber");
 
                     b.HasIndex("DriverId");
-
-                    b.HasIndex("BookingPlanId", "ZonePlanId")
-                        .IsUnique();
 
                     b.HasIndex("VehicleNumber", "VehicleModel", "VehicleType");
 
@@ -766,15 +752,7 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.ZonePlan", "ZonePlan")
-                        .WithMany("BookingReservations")
-                        .HasForeignKey("BookingPlanId", "ZonePlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Vehicle");
-
-                    b.Navigation("ZonePlan");
                 });
 
             modelBuilder.Entity("Server.Models.Parking", b =>
@@ -987,15 +965,7 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.ZonePlan", "ZonePlan")
-                        .WithOne("Vehicle")
-                        .HasForeignKey("Server.Models.Vehicle", "BookingPlanId", "ZonePlanId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Driver");
-
-                    b.Navigation("ZonePlan");
                 });
 
             modelBuilder.Entity("Server.Models.ZonePlan", b =>
@@ -1104,14 +1074,6 @@ namespace Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Reservations");
-                });
-
-            modelBuilder.Entity("Server.Models.ZonePlan", b =>
-                {
-                    b.Navigation("BookingReservations");
-
-                    b.Navigation("Vehicle")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Server.Models.Zones", b =>

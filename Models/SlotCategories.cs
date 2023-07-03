@@ -1,3 +1,4 @@
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,4 +18,8 @@ public class SlotCategories
     public string SlotCategoryDescription { get; set; } = null!;
     
     public DateTime CategoryCreatedDate { get; set; } = DateTime.Now;
+    
+    public ICollection<ParkingPlaceSlotCapacities> ParkingPlaceSlotCapacities { get; set; } = null!;
+    
+    public ICollection<Slot> Slots { get; set; } = null!;
 }
