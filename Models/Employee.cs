@@ -80,5 +80,10 @@ public class Employee
     public ICollection<Reservation> Reservation { get; set; } = null!;
     
     public ICollection<Ticket> Ticket { get; set; } = null!;
-
-}
+    
+    public ICollection<AwaitedParkingPlaces> AwaitedParkingPlaces { get; set; } = null!;
+    
+    public ICollection<ComplianceMonitoring> ComplianceMonitoring { get; set; } = null!;
+    
+    public ICollection<Issues> Issues { get; set; } = null!;
+ }

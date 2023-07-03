@@ -50,4 +50,8 @@ public class ParkingPlace
     public ICollection<Reservation> Reservations { get; set; } = null!;
     
     public ICollection<BookingPlan> BookingPlans { get; set; } = null!;
+    
+    public ICollection<ComplianceMonitoring> ComplianceMonitoring { get; set; } = null!;
+    
+    public ICollection<Issues> Issues { get; set; } = null!;
 }

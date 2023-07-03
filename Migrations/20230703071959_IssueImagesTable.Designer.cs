@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DbContext;
@@ -11,9 +12,11 @@ using Server.DbContext;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230703071959_IssueImagesTable")]
+    partial class IssueImagesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -738,30 +741,6 @@ namespace Server.Migrations
                     b.ToTable("SlotCategories");
                 });
 
-            modelBuilder.Entity("Server.Models.SlotRatings", b =>
-                {
-                    b.Property<string>("DriverId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("SlotId")
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("RatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer");
-
-                    b.HasKey("DriverId", "SlotId");
-
-                    b.HasIndex("SlotId");
-
-                    b.ToTable("SlotRatings");
-                });
-
             modelBuilder.Entity("Server.Models.SlotReservationHistory", b =>
                 {
                     b.Property<string>("SlotReservationHistoryId")
@@ -1199,25 +1178,6 @@ namespace Server.Migrations
                     b.Navigation("Zones");
                 });
 
-            modelBuilder.Entity("Server.Models.SlotRatings", b =>
-                {
-                    b.HasOne("Server.Models.Driver", "Driver")
-                        .WithMany("SlotRatings")
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.Slot", "Slot")
-                        .WithMany("SlotRatings")
-                        .HasForeignKey("SlotId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Driver");
-
-                    b.Navigation("Slot");
-                });
-
             modelBuilder.Entity("Server.Models.SlotReservationHistory", b =>
                 {
                     b.HasOne("Server.Models.Reservation", "Reservation")
@@ -1313,8 +1273,6 @@ namespace Server.Migrations
 
                     b.Navigation("ParkingPlaceRatings");
 
-                    b.Navigation("SlotRatings");
-
                     b.Navigation("Vehicles");
                 });
 
@@ -1377,8 +1335,6 @@ namespace Server.Migrations
                     b.Navigation("Parkings");
 
                     b.Navigation("Reservations");
-
-                    b.Navigation("SlotRatings");
 
                     b.Navigation("SlotReservationHistories");
                 });

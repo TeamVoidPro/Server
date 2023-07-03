@@ -46,4 +46,8 @@ public class Driver
     public ICollection<Vehicle>? Vehicles { get; set; } 
     
     public ICollection<ParkingPlaceRatings> ParkingPlaceRatings { get; set; } = null!;
+    
+    public ICollection<Issues> Issues { get; set; } = null!; 
+    
+    public ICollection<SlotRatings> SlotRatings { get; set; } = null!;
 }

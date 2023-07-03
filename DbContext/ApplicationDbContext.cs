@@ -46,6 +46,16 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<BookingReservation>? BookingReservations { get; set; }
     
     public DbSet<Parking>? BookingParkings { get; set; }
+    
+    public DbSet<AwaitedParkingPlaces> AwaitedParkingPlaces { get; set; } = null!;
+    
+    public DbSet<ComplianceMonitoring> ComplianceMonitoring { get; set; } = null!;
+    
+    public DbSet<Issues> Issues { get; set; } = null!;
+    
+    public DbSet<IssueImages>? IssueImages { get; set; }
+    
+    public DbSet<SlotRatings>? SlotRatings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -205,6 +215,72 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(v => v.Vehicle)
             .HasForeignKey<Vehicle>(z => new {z.BookingPlanId, z.ZonePlanId})
             .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<AwaitedParkingPlaces>()
+            .HasOne(o => o.ParkingPlaceOwner)
+            .WithMany(a => a.AwaitedParkingPlaces)
+            .HasForeignKey(o => o.OwnerId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<AwaitedParkingPlaces>()
+            .HasOne(pv => pv.ParkingPlaceVerifier)
+            .WithMany(a => a.AwaitedParkingPlaces)
+            .HasForeignKey(pv => pv.ParkingPlaceVerifierId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<ComplianceMonitoring>()
+            .HasOne(v => v.ParkingPlace)
+            .WithMany(c => c.ComplianceMonitoring)
+            .HasForeignKey(v => v.ParkingPlaceId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<ComplianceMonitoring>()
+            .HasOne(v => v.ParkingPlaceVerifier)
+            .WithMany(c => c.ComplianceMonitoring)
+            .HasForeignKey(v => v.ParkingPlaceVerifierId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<Issues>()
+            .HasOne(p => p.ParkingPlace)
+            .WithMany(i => i.Issues)
+            .HasForeignKey(p => p.ParkingPlaceId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<Issues>()
+            .HasOne(d => d.Driver)
+            .WithMany(i => i.Issues)
+            .HasForeignKey(d => d.ReportedBy)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<Issues>()
+            .HasOne(op => op.ParkingPlaceVerifier)
+            .WithMany(i => i.Issues)
+            .HasForeignKey(op => op.ParkingPlaceVerifierId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<IssueImages>()
+            .HasKey(k => new { k.IssueId, k.Image });
+        
+        modelBuilder.Entity<IssueImages>()
+            .HasOne(i => i.Issues)
+            .WithMany(i => i.IssueImages)
+            .HasForeignKey(i => i.IssueId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<SlotRatings>()
+            .HasOne(d => d.Driver)
+            .WithMany(s => s.SlotRatings)
+            .HasForeignKey(d => d.DriverId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<SlotRatings>()
+            .HasOne(s => s.Slot)
+            .WithMany(s => s.SlotRatings)
+            .HasForeignKey(s => s.SlotId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<SlotRatings>()
+            .HasKey(k => new {k.DriverId, k.SlotId});
     }
 }
 

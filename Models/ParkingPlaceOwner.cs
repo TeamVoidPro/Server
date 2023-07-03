@@ -63,4 +63,6 @@ public class ParkingPlaceOwner
     public string Token { get; set; } = null!;
     
     public ICollection<ParkingPlace>? ParkingPlaces { get; set; }
+    
+    public ICollection<AwaitedParkingPlaces>? AwaitedParkingPlaces { get; set; }
 }
