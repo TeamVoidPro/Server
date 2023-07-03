@@ -48,5 +48,5 @@ public class Slot
     
     public ICollection<Reservation> Reservations { get; set; } = null!;
     
-    public ICollection<SlotReservation> SlotReservations { get; set; } = null!;
+    public ICollection<Parking> Parkings { get; set; } = null!;
 }

@@ -79,4 +79,6 @@ public class Employee
     
     public ICollection<Reservation> Reservation { get; set; } = null!;
     
+    public ICollection<Ticket> Ticket { get; set; } = null!;
+
 }

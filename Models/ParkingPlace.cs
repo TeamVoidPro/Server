@@ -44,8 +44,10 @@ public class ParkingPlace
     public ICollection<ParkingPlaceSlotCapacities> ParkingPlaceSlotCapacities { get; set; } = null!;
 
     public ICollection<Zones> Zones { get; set; } = null!;
-    
+
     public ICollection<Slot> Slots { get; set; } = null!;
+
+    public ICollection<Reservation> Reservations { get; set; } = null!;
     
-    public ICollection<ZoneReservation> ZoneReservations { get; set; } = null!;
+    public ICollection<BookingPlan> BookingPlans { get; set; } = null!;
 }

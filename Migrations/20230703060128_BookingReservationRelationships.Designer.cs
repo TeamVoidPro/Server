@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DbContext;
@@ -11,9 +12,11 @@ using Server.DbContext;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230703060128_BookingReservationRelationships")]
+    partial class BookingReservationRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -662,10 +665,6 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("BookingPlanId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
                     b.Property<string>("DriverId")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
@@ -681,16 +680,9 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("ZonePlanId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
                     b.HasKey("VehicleNumber");
 
                     b.HasIndex("DriverId");
-
-                    b.HasIndex("BookingPlanId", "ZonePlanId")
-                        .IsUnique();
 
                     b.HasIndex("VehicleNumber", "VehicleModel", "VehicleType");
 
@@ -987,15 +979,7 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.ZonePlan", "ZonePlan")
-                        .WithOne("Vehicle")
-                        .HasForeignKey("Server.Models.Vehicle", "BookingPlanId", "ZonePlanId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Driver");
-
-                    b.Navigation("ZonePlan");
                 });
 
             modelBuilder.Entity("Server.Models.ZonePlan", b =>
@@ -1109,9 +1093,6 @@ namespace Server.Migrations
             modelBuilder.Entity("Server.Models.ZonePlan", b =>
                 {
                     b.Navigation("BookingReservations");
-
-                    b.Navigation("Vehicle")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Server.Models.Zones", b =>

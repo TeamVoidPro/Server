@@ -31,8 +31,16 @@ public class Vehicle
     
     [Required]
     public Driver Driver { get; set; } = null!;
+
+    public ICollection<Reservation> Reservations { get; set; } = null!;
+
+    public BookingReservation BookingReservation { get; set; } = null!;
     
-    public ICollection<ZoneReservation> ZoneReservations { get; set; } = null!;
+    [Column(TypeName = "varchar(20)")]
+    public string ZonePlanId { get; set; } = null!;
     
-    public ICollection<SlotReservation> SlotReservations { get; set; } = null!;
+    [Column(TypeName = "varchar(20)")]
+    public string BookingPlanId { get; set; } = null!;
+    
+    public ZonePlan ZonePlan { get; set; } = null!;
 }

@@ -67,7 +67,12 @@ public class Reservation
     
     public Slot Slot { get; set; } = null!;
     
-    public ZoneReservation ZoneReservation { get; set; } = null!;
+    public required string ParkingPlaceId { get; set; }
     
-    public SlotReservation SlotReservation { get; set; } = null!;
+    public ParkingPlace ParkingPlace { get; set; } = null!;
+    
+    public required string VehicleNumber { get; set; }
+    
+    public Vehicle Vehicle { get; set; } = null!;
+    public SlotReservationHistory SlotReservationHistory { get; set; } = null!;
 }

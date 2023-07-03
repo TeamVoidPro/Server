@@ -14,6 +14,8 @@ public class SlotReservationHistory
     [Column(TypeName = "varchar(20)")]
     public required string ReservationId { get; set; }
     
+    public Reservation Reservation { get; set; } = null!;
+    
     [Required(ErrorMessage = "Slot reservation time is required")]
     public required DateTime ReservationTime { get; set; }
     
