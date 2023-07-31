@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using server.Helpers;
 using Server.Models;
 
 namespace Server.DbContext;
@@ -7,6 +8,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
+        
     }
     
     public DbSet<Driver>? Drivers { get; set; }
@@ -281,6 +283,62 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         
         modelBuilder.Entity<SlotRatings>()
             .HasKey(k => new {k.DriverId, k.SlotId});
+
+        modelBuilder.Entity<Employee>()
+            .HasData(
+                new Employee
+                {
+                    EmployeeId = "EMP001",
+                    FirstName = "Danodya",
+                    LastName = "Supun",
+                    Email = "danodya_s@yahoo.com",
+                    Password = PasswordHash.HashPassword("12345678"),
+                    Role = "Operator",
+                    ContactNumber = "0711234567",
+                    AddressLine1 = "108/5 A",
+                    Street = "Weragama Road",
+                    City = "Wadduwa",
+                    Nic = "199914212942",
+                    ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
+                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    Token = TokenGenerator.GenerateToken(123)
+                },
+                new Employee
+                {
+                    EmployeeId = "EMP002",
+                    FirstName = "Isurika",
+                    LastName = "Arunodi",
+                    Email = "isudrikaarunodi99@gmail.com",
+                    Password = PasswordHash.HashPassword("12345678"),
+                    Role = "Verifier",
+                    ContactNumber = "0711234567",
+                    AddressLine1 = "108/5 A",
+                    Street = "Weragama Road",
+                    City = "Wadduwa",
+                    Nic = "199914212942",
+                    ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
+                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    Token = TokenGenerator.GenerateToken(123) 
+                },
+                new Employee
+                {
+                    EmployeeId = "EMP003",
+                    FirstName = "Viharsha",
+                    LastName = "Pramodi",
+                    Email = "viharshapramodi@gmail.com",
+                    Password = PasswordHash.HashPassword("12345678"),
+                    Role = "Administrator",
+                    ContactNumber = "0711234567",
+                    AddressLine1 = "108/5 A",
+                    Street = "Weragama Road",
+                    City = "Wadduwa",
+                    Nic = "199914212942",
+                    ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
+                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    Token = TokenGenerator.GenerateToken(123)
+                }
+            );
+
     }
 }
 
