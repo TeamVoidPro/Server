@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DbContext;
@@ -11,9 +12,11 @@ using Server.DbContext;
 namespace Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230731155748_Update_Employee_Table")]
+    partial class UpdateEmployeeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,7 +298,7 @@ namespace Server.Migrations
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("EmployeeId");
 
@@ -305,7 +308,7 @@ namespace Server.Migrations
                         new
                         {
                             EmployeeId = "EMP001",
-                            AccountCreatedAt = new DateTime(2023, 7, 31, 16, 9, 11, 622, DateTimeKind.Utc).AddTicks(425),
+                            AccountCreatedAt = new DateTime(2023, 7, 31, 15, 57, 47, 98, DateTimeKind.Utc).AddTicks(9583),
                             AddressLine1 = "108/5 A",
                             City = "Wadduwa",
                             ContactNumber = "0711234567",
@@ -313,16 +316,16 @@ namespace Server.Migrations
                             FirstName = "Danodya",
                             LastName = "Supun",
                             Nic = "199914212942",
-                            Password = "$2a$12$ltpBfXDJSBaJQcOatBBxrOxcEE8WAFt29lp4G94Bpgr5ZUlKZZz8u",
+                            Password = "$2a$12$k7cht4f1R1fr1nRovujAxeDHQV3T4QUh17cnvNPg85O9O8EZNvFvy",
                             ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                             Role = "Operator",
                             Street = "Weragama Road",
-                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTc1MSwiZXhwIjoxNjkxNDI0NTUxLCJpYXQiOjE2OTA4MTk3NTF9.5YglAau3MzcDi8hKnJ7E1RDt3CPHRAeaSGAln_jmHgg"
+                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTA2NywiZXhwIjoxNjkxNDIzODY3LCJpYXQiOjE2OTA4MTkwNjd9.bzHA26g7BK6K-flxy70JdZcEIfrsA4MlwfpO4iuH9Ss"
                         },
                         new
                         {
                             EmployeeId = "EMP002",
-                            AccountCreatedAt = new DateTime(2023, 7, 31, 16, 9, 12, 5, DateTimeKind.Utc).AddTicks(5002),
+                            AccountCreatedAt = new DateTime(2023, 7, 31, 15, 57, 47, 477, DateTimeKind.Utc).AddTicks(5536),
                             AddressLine1 = "108/5 A",
                             City = "Wadduwa",
                             ContactNumber = "0711234567",
@@ -330,16 +333,16 @@ namespace Server.Migrations
                             FirstName = "Isurika",
                             LastName = "Arunodi",
                             Nic = "199914212942",
-                            Password = "$2a$12$8buBOyFR/re6ijx/K8Ri0.TpEXqKnMNUJcXxvfViFpS.pr.44CCzS",
+                            Password = "$2a$12$Dsykn7WAJ5LNWJ9/EEfKNeRlxRo6s.RyOG9CCY6BS81X/eKiEE2Zq",
                             ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                             Role = "Verifier",
                             Street = "Weragama Road",
-                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTc1MiwiZXhwIjoxNjkxNDI0NTUyLCJpYXQiOjE2OTA4MTk3NTJ9.6vBaxQ3iMBWaO4nfXzsvGkAfcgqcj9SWZxphklJ5pdI"
+                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTA2NywiZXhwIjoxNjkxNDIzODY3LCJpYXQiOjE2OTA4MTkwNjd9.bzHA26g7BK6K-flxy70JdZcEIfrsA4MlwfpO4iuH9Ss"
                         },
                         new
                         {
                             EmployeeId = "EMP003",
-                            AccountCreatedAt = new DateTime(2023, 7, 31, 16, 9, 12, 394, DateTimeKind.Utc).AddTicks(357),
+                            AccountCreatedAt = new DateTime(2023, 7, 31, 15, 57, 47, 858, DateTimeKind.Utc).AddTicks(6245),
                             AddressLine1 = "108/5 A",
                             City = "Wadduwa",
                             ContactNumber = "0711234567",
@@ -347,11 +350,11 @@ namespace Server.Migrations
                             FirstName = "Viharsha",
                             LastName = "Pramodi",
                             Nic = "199914212942",
-                            Password = "$2a$12$Ts2xFNj/wKGMX168Zvr1j.SEp0u2u5H.avmbaWnVXSKQZmcF8t0B2",
+                            Password = "$2a$12$TWbzt7PJmD40UXyLgkWmve9MMTvBwaLjh32KkNFchATFkKa1EITPO",
                             ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                             Role = "Administrator",
                             Street = "Weragama Road",
-                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTc1MiwiZXhwIjoxNjkxNDI0NTUyLCJpYXQiOjE2OTA4MTk3NTJ9.6vBaxQ3iMBWaO4nfXzsvGkAfcgqcj9SWZxphklJ5pdI"
+                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTA2NywiZXhwIjoxNjkxNDIzODY3LCJpYXQiOjE2OTA4MTkwNjd9.bzHA26g7BK6K-flxy70JdZcEIfrsA4MlwfpO4iuH9Ss"
                         });
                 });
 

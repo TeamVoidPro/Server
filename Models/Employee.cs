@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Server.Models;
 
@@ -63,12 +64,14 @@ public class Employee
     public required string Role { get; set; }
     
     [Column(TypeName = "varchar(256)")]
+    [AllowNull]
     public string ProfilePicture { get; set; } = null!;
     
     [Required]
-    public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
+    public DateTime AccountCreatedAt { get; set; }
     
-    [Column(TypeName = "varchar(256)")]
+    [Column(TypeName = "varchar(512)")]
+    [AllowNull]
     public string Token { get; set; } = null!;
     
     [NotMapped]
