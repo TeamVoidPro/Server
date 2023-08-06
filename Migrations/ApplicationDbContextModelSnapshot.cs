@@ -246,6 +246,10 @@ namespace Server.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("AddressLine2")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -304,42 +308,8 @@ namespace Server.Migrations
                     b.HasData(
                         new
                         {
-                            EmployeeId = "EMP001",
-                            AccountCreatedAt = new DateTime(2023, 7, 31, 16, 9, 11, 622, DateTimeKind.Utc).AddTicks(425),
-                            AddressLine1 = "108/5 A",
-                            City = "Wadduwa",
-                            ContactNumber = "0711234567",
-                            Email = "danodya_s@yahoo.com",
-                            FirstName = "Danodya",
-                            LastName = "Supun",
-                            Nic = "199914212942",
-                            Password = "$2a$12$ltpBfXDJSBaJQcOatBBxrOxcEE8WAFt29lp4G94Bpgr5ZUlKZZz8u",
-                            ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
-                            Role = "Operator",
-                            Street = "Weragama Road",
-                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTc1MSwiZXhwIjoxNjkxNDI0NTUxLCJpYXQiOjE2OTA4MTk3NTF9.5YglAau3MzcDi8hKnJ7E1RDt3CPHRAeaSGAln_jmHgg"
-                        },
-                        new
-                        {
-                            EmployeeId = "EMP002",
-                            AccountCreatedAt = new DateTime(2023, 7, 31, 16, 9, 12, 5, DateTimeKind.Utc).AddTicks(5002),
-                            AddressLine1 = "108/5 A",
-                            City = "Wadduwa",
-                            ContactNumber = "0711234567",
-                            Email = "isudrikaarunodi99@gmail.com",
-                            FirstName = "Isurika",
-                            LastName = "Arunodi",
-                            Nic = "199914212942",
-                            Password = "$2a$12$8buBOyFR/re6ijx/K8Ri0.TpEXqKnMNUJcXxvfViFpS.pr.44CCzS",
-                            ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
-                            Role = "Verifier",
-                            Street = "Weragama Road",
-                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTc1MiwiZXhwIjoxNjkxNDI0NTUyLCJpYXQiOjE2OTA4MTk3NTJ9.6vBaxQ3iMBWaO4nfXzsvGkAfcgqcj9SWZxphklJ5pdI"
-                        },
-                        new
-                        {
-                            EmployeeId = "EMP003",
-                            AccountCreatedAt = new DateTime(2023, 7, 31, 16, 9, 12, 394, DateTimeKind.Utc).AddTicks(357),
+                            EmployeeId = "EMP_0023_4589",
+                            AccountCreatedAt = new DateTime(2023, 8, 5, 20, 50, 25, 410, DateTimeKind.Utc).AddTicks(5193),
                             AddressLine1 = "108/5 A",
                             City = "Wadduwa",
                             ContactNumber = "0711234567",
@@ -347,11 +317,11 @@ namespace Server.Migrations
                             FirstName = "Viharsha",
                             LastName = "Pramodi",
                             Nic = "199914212942",
-                            Password = "$2a$12$Ts2xFNj/wKGMX168Zvr1j.SEp0u2u5H.avmbaWnVXSKQZmcF8t0B2",
+                            Password = "$2a$11$7LNHY7KsV/MyIszGobX8PukAd38SgFhyw593PCy3uVEsJx9Mq07Fi",
                             ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                             Role = "Administrator",
                             Street = "Weragama Road",
-                            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyMyIsIm5iZiI6MTY5MDgxOTc1MiwiZXhwIjoxNjkxNDI0NTUyLCJpYXQiOjE2OTA4MTk3NTJ9.6vBaxQ3iMBWaO4nfXzsvGkAfcgqcj9SWZxphklJ5pdI"
+                            Token = ""
                         });
                 });
 
@@ -626,6 +596,39 @@ namespace Server.Migrations
                     b.HasIndex("SlotCategoryId");
 
                     b.ToTable("ParkingPlaceSlotCapacities");
+                });
+
+            modelBuilder.Entity("Server.Models.RefreshToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("JwtId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Server.Models.Reservation", b =>
@@ -1182,6 +1185,17 @@ namespace Server.Migrations
                     b.Navigation("SlotCategories");
                 });
 
+            modelBuilder.Entity("Server.Models.RefreshToken", b =>
+                {
+                    b.HasOne("Server.Models.Employee", "Employee")
+                        .WithMany("RefreshToken")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Server.Models.Reservation", b =>
                 {
                     b.HasOne("Server.Models.ParkingPlace", "ParkingPlace")
@@ -1378,6 +1392,8 @@ namespace Server.Migrations
                     b.Navigation("ComplianceMonitoring");
 
                     b.Navigation("Issues");
+
+                    b.Navigation("RefreshToken");
 
                     b.Navigation("Reservation");
 

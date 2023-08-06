@@ -11,12 +11,32 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors(p =>
+{
+    p.AddPolicy("Cors", op =>
+    {
+        op.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 // Register postgresql connection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register JWT configuration
 builder.Services.Configure<JWTConfig>(builder.Configuration.GetSection("JWTConfig"));
+
+var tokenValidationParameters = new TokenValidationParameters
+{
+    ValidateIssuerSigningKey = true,
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JWTConfig:Secret").Value!)),
+    ValidateIssuer = false,
+    ValidateAudience = false,
+    RequireExpirationTime = false,
+    ValidateLifetime = true
+};
 
 builder.Services.AddAuthentication(options =>
 {
@@ -25,29 +45,14 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(jwt =>
 {
-    var value = builder.Configuration.GetSection("JWTConfig:Secret").Value;
-    if (value != null)
-    {
-        var key = Encoding.ASCII.GetBytes(value);
-    }
-    
     jwt.SaveToken = true;
-    jwt.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JWTConfig:Secret").Value!)),
-        ValidateIssuer = false, // We are not validating the issuer for the development environment
-        ValidateAudience = false, // We are not validating the audience for the development environment
-        RequireExpirationTime = false,
-        ValidateLifetime = true
-    };
+    jwt.TokenValidationParameters = tokenValidationParameters;
 });
-
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton(tokenValidationParameters);
 
 var app = builder.Build();
 
@@ -59,6 +64,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("Cors");
 
 app.UseAuthentication();
 

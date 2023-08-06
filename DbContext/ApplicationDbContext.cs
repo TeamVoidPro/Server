@@ -59,6 +59,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     
     public DbSet<SlotRatings>? SlotRatings { get; set; }
 
+    public DbSet<RefreshToken>? RefreshTokens { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Vehicle>()
@@ -283,50 +285,23 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         
         modelBuilder.Entity<SlotRatings>()
             .HasKey(k => new {k.DriverId, k.SlotId});
+        
+        modelBuilder.Entity<Employee>()
+            .HasMany(r => r.RefreshToken)
+            .WithOne(e => e.Employee)
+            .HasForeignKey(r => r.EmployeeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
 
         modelBuilder.Entity<Employee>()
             .HasData(
                 new Employee
                 {
-                    EmployeeId = "EMP001",
-                    FirstName = "Danodya",
-                    LastName = "Supun",
-                    Email = "danodya_s@yahoo.com",
-                    Password = PasswordHash.HashPassword("12345678"),
-                    Role = "Operator",
-                    ContactNumber = "0711234567",
-                    AddressLine1 = "108/5 A",
-                    Street = "Weragama Road",
-                    City = "Wadduwa",
-                    Nic = "199914212942",
-                    ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
-                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    Token = TokenGenerator.GenerateToken(123)
-                },
-                new Employee
-                {
-                    EmployeeId = "EMP002",
-                    FirstName = "Isurika",
-                    LastName = "Arunodi",
-                    Email = "isudrikaarunodi99@gmail.com",
-                    Password = PasswordHash.HashPassword("12345678"),
-                    Role = "Verifier",
-                    ContactNumber = "0711234567",
-                    AddressLine1 = "108/5 A",
-                    Street = "Weragama Road",
-                    City = "Wadduwa",
-                    Nic = "199914212942",
-                    ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
-                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    Token = TokenGenerator.GenerateToken(123) 
-                },
-                new Employee
-                {
-                    EmployeeId = "EMP003",
+                    EmployeeId = "EMP_0023_4589",
                     FirstName = "Viharsha",
                     LastName = "Pramodi",
                     Email = "viharshapramodi@gmail.com",
-                    Password = PasswordHash.HashPassword("12345678"),
+                    Password = BCrypt.Net.BCrypt.HashPassword("Viharsha@123"),
                     Role = "Administrator",
                     ContactNumber = "0711234567",
                     AddressLine1 = "108/5 A",
@@ -335,7 +310,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     Nic = "199914212942",
                     ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                     AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    Token = TokenGenerator.GenerateToken(123)
+                    Token = ""
                 }
             );
 
