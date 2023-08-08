@@ -74,9 +74,10 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<ParkingPlaceServices>()
             .HasKey(p => new {p.ParkingPlaceId, p.ServiceProvide});
         
-        modelBuilder.Entity<ParkingPlaceOwner>()
-            .HasMany(p=>p.ParkingPlaces)
-            .WithOne(p=>p.ParkingPlaceOwner)
+        modelBuilder.Entity<ParkingPlace>()
+            .HasOne(p => p.ParkingPlaceOwner)
+            .WithMany(p => p.ParkingPlaces)
+            .HasForeignKey(p => p.ParkingPlaceOwnerId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ParkingPlaceSlotCapacities>()

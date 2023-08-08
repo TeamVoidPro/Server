@@ -309,7 +309,7 @@ namespace Server.Migrations
                         new
                         {
                             EmployeeId = "EMP_0023_4589",
-                            AccountCreatedAt = new DateTime(2023, 8, 5, 20, 50, 25, 410, DateTimeKind.Utc).AddTicks(5193),
+                            AccountCreatedAt = new DateTime(2023, 8, 8, 3, 17, 36, 735, DateTimeKind.Utc).AddTicks(7511),
                             AddressLine1 = "108/5 A",
                             City = "Wadduwa",
                             ContactNumber = "0711234567",
@@ -317,7 +317,7 @@ namespace Server.Migrations
                             FirstName = "Viharsha",
                             LastName = "Pramodi",
                             Nic = "199914212942",
-                            Password = "$2a$11$7LNHY7KsV/MyIszGobX8PukAd38SgFhyw593PCy3uVEsJx9Mq07Fi",
+                            Password = "$2a$11$2Kcz8Dy.1FhpFI.uHKiMXe7cU6iBtojC9lY1cu31qRhSvX5utBosS",
                             ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                             Role = "Administrator",
                             Street = "Weragama Road",
@@ -436,7 +436,7 @@ namespace Server.Migrations
                     b.Property<string>("ParkingPlaceOperatorId")
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("ParkingPlaceOwnerOwnerId")
+                    b.Property<string>("ParkingPlaceOwnerId")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
@@ -447,7 +447,7 @@ namespace Server.Migrations
 
                     b.HasIndex("ParkingPlaceOperatorId");
 
-                    b.HasIndex("ParkingPlaceOwnerOwnerId");
+                    b.HasIndex("ParkingPlaceOwnerId");
 
                     b.HasIndex("ParkingPlaceVerifierId");
 
@@ -483,6 +483,10 @@ namespace Server.Migrations
 
                     b.Property<string>("AddressLine1")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("AddressLine2")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
@@ -526,7 +530,7 @@ namespace Server.Migrations
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("varchar(512)");
 
                     b.HasKey("OwnerId");
 
@@ -1110,7 +1114,7 @@ namespace Server.Migrations
 
                     b.HasOne("Server.Models.ParkingPlaceOwner", "ParkingPlaceOwner")
                         .WithMany("ParkingPlaces")
-                        .HasForeignKey("ParkingPlaceOwnerOwnerId")
+                        .HasForeignKey("ParkingPlaceOwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

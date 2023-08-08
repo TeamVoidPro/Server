@@ -21,6 +21,7 @@ public class AuthController : ControllerBase
     private readonly JWTConfig _jwtConfig;
     private readonly TokenValidationParameters _tokenValidationParameters;
 
+
     public AuthController(ApplicationDbContext context, IOptions<JWTConfig> jwtConfig, TokenValidationParameters tokenValidationParameters)
     {
         _context = context;
@@ -66,7 +67,7 @@ public class AuthController : ControllerBase
 
         await _context.Employees!.AddAsync(newEmployee);
         await _context.SaveChangesAsync();
-
+        
         return StatusCode(201);
     }
     
@@ -314,7 +315,7 @@ public class AuthController : ControllerBase
                 Errors = new[] {"Something went wrong"}
             };
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new AuthResults()
             {

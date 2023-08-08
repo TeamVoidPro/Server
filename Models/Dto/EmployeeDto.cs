@@ -4,6 +4,7 @@ namespace Server.Models.Dto;
 
 public class EmployeeDto
 {
+    
     [Required(ErrorMessage = "Firstname is required")]
     public required string FirstName { get; set; }
     

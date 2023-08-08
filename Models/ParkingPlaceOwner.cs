@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Server.Models;
 
 public class ParkingPlaceOwner
 {
     [Key]
-    [Required (ErrorMessage = "Parking place owner id is required")]
     [Column(TypeName = "varchar(20)")]
     public required string OwnerId { get; set; }
     
@@ -31,14 +31,19 @@ public class ParkingPlaceOwner
     [StringLength(100, MinimumLength = 2, ErrorMessage = "Invalid address line.")]
     public required string AddressLine1 { get; set; }
     
+    [RegularExpression(@"^[a-zA-Z0-9/\s]+$", ErrorMessage = "Address line 2 should contain only alphanumeric characters.")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "Invalid address line.")]
+    [AllowNull]
+    public string? AddressLine2 { get; set; }
+    
     [Required (ErrorMessage = "Street is required")]
     [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "Street should contain only alphanumeric characters.")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid street.")]
     public required string Street { get; set; }
     
-    [Required (ErrorMessage = "City is required")]
-    [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "City should contain only alphabetic characters.")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid city.")]
+    [Required (ErrorMessage = "Street is required")]
+    [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "Street should contain only alphanumeric characters.")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid street.")]
     public required string City { get; set; }
     
     [Required (ErrorMessage = "Contact number is required")]
@@ -59,7 +64,8 @@ public class ParkingPlaceOwner
     
     public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
     
-    [Column(TypeName = "varchar(256)")]
+    [Column(TypeName = "varchar(512)")]
+    [AllowNull]
     public string Token { get; set; } = null!;
     
     public ICollection<ParkingPlace>? ParkingPlaces { get; set; }
