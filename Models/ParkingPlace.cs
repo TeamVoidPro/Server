@@ -25,7 +25,9 @@ public class ParkingPlace
 
     public string Description { get; set; } = null!;
 
-    public required ParkingPlaceOwner ParkingPlaceOwner { get; set; } = null!;
+    public required string ParkingPlaceOwnerId { get; set; } = null!;
+    
+    public ParkingPlaceOwner ParkingPlaceOwner { get; set; } = null!;
 
     [ForeignKey("Employee")] public string? ParkingPlaceVerifierId { get; set; }
 

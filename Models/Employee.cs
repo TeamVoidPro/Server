@@ -37,6 +37,10 @@ public class Employee
     [StringLength(50, MinimumLength = 2, ErrorMessage = "The address line 1 must be 2 characters long.")]
     public required string AddressLine1 { get; set; }
     
+    [RegularExpression(@"^[a-zA-Z0-9/\s]+$", ErrorMessage = "Address line 1 should contain only alphanumeric characters.")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "The address line 1 must be 2 characters long.")]
+    public string? AddressLine2 { get; set; }
+    
     [Required (ErrorMessage = "Street is required")]
     [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "Street should contain only alphanumeric characters.")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid street.")]
@@ -89,4 +93,6 @@ public class Employee
     public ICollection<ComplianceMonitoring> ComplianceMonitoring { get; set; } = null!;
     
     public ICollection<Issues> Issues { get; set; } = null!;
+    
+    public ICollection<RefreshToken> RefreshToken { get; set; } = null!;
  }
