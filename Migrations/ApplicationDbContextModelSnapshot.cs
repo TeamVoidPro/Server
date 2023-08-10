@@ -269,6 +269,12 @@ namespace Server.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("character varying(60)");
 
+                    b.Property<bool>("IsActivated")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -309,15 +315,17 @@ namespace Server.Migrations
                         new
                         {
                             EmployeeId = "EMP_0023_4589",
-                            AccountCreatedAt = new DateTime(2023, 8, 8, 3, 17, 36, 735, DateTimeKind.Utc).AddTicks(7511),
+                            AccountCreatedAt = new DateTime(2023, 8, 10, 8, 0, 27, 940, DateTimeKind.Utc).AddTicks(6741),
                             AddressLine1 = "108/5 A",
                             City = "Wadduwa",
                             ContactNumber = "0711234567",
                             Email = "viharshapramodi@gmail.com",
                             FirstName = "Viharsha",
+                            IsActivated = false,
+                            IsVerified = false,
                             LastName = "Pramodi",
                             Nic = "199914212942",
-                            Password = "$2a$11$2Kcz8Dy.1FhpFI.uHKiMXe7cU6iBtojC9lY1cu31qRhSvX5utBosS",
+                            Password = "$2a$11$4DsudAeWjfxZ8VwL3GW97eoeR/DkDeRzCmG6ye7sbT8C2zdY3ePha",
                             ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                             Role = "Administrator",
                             Street = "Weragama Road",
@@ -929,6 +937,33 @@ namespace Server.Migrations
                     b.HasIndex("VehicleNumber", "VehicleModel", "VehicleType");
 
                     b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("Server.Models.VerificationCodes", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VerificationCodes");
                 });
 
             modelBuilder.Entity("Server.Models.ZonePlan", b =>

@@ -60,6 +60,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<SlotRatings>? SlotRatings { get; set; }
 
     public DbSet<RefreshToken>? RefreshTokens { get; set; }
+    
+    public DbSet<VerificationCodes>? VerificationCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

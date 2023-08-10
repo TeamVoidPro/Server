@@ -20,4 +20,5 @@ public class ParkingPlaceSlotCapacities
     [Required (ErrorMessage = "Slot capacity is required")]
     [RegularExpression( @"^[0-9]+$", ErrorMessage = "Slot capacity must be a number")]
     public int SlotCapacity { get; set; }
+
 }
