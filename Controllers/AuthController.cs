@@ -236,7 +236,6 @@ public class AuthController : ControllerBase
             if (validatedToken is JwtSecurityToken jwtSecurityToken)
             {
                 var result = jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
-
                 if (result == false)
                     return null;
             }
