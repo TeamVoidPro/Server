@@ -1,3 +1,4 @@
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,7 +21,6 @@ public class Zones
     public string ParkingPlaceId { get; set; } = null!;
     
     public ParkingPlace ParkingPlace { get; set; } = null!;
-    
     
     public ICollection<ZonePlan> ZonePlans { get; set; } = null!;
 }

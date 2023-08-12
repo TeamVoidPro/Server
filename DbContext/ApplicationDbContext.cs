@@ -62,6 +62,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<RefreshToken>? RefreshTokens { get; set; }
     
     public DbSet<VerificationCodes>? VerificationCodes { get; set; }
+    
+    public DbSet<OnsiteReservations>? OnsiteReservations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -138,13 +140,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithMany(s => s.Reservations)
             .HasForeignKey(s => s.SlotId)
             .OnDelete(DeleteBehavior.SetNull);
-        
-        modelBuilder.Entity<Reservation>()
-            .HasOne(p => p.ParkingPlaceOperator)
-            .WithMany(p => p.Reservation)
-            .HasForeignKey(e => e.ParkingPlaceOperatorId)
-            .OnDelete(DeleteBehavior.SetNull);
-        
+
         modelBuilder.Entity<Reservation>()
             .HasOne(P => P.ParkingPlace)
             .WithMany(p => p.Reservations)
@@ -294,6 +290,18 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(e => e.Employee)
             .HasForeignKey(r => r.EmployeeId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Models.OnsiteReservations>()
+            .HasOne(p => p.ParkingPlaceOperator)
+            .WithMany(o => o.OnsiteReservations)
+            .HasForeignKey(p => p.ParkingPlaceOperatorId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<Models.OnsiteReservations>()
+            .HasOne(s => s.Slot)
+            .WithMany(o => o.OnsiteReservations)
+            .HasForeignKey(s => s.SlotId)
+            .OnDelete(DeleteBehavior.NoAction);
 
 
         modelBuilder.Entity<Employee>()

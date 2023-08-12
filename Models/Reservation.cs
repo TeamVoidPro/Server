@@ -58,11 +58,7 @@ public class Reservation
     public DateTime ParkingStartedAt { get; set; }
     
     public DateTime ParkingEndedAt { get; set; }
-    
-    public string ParkingPlaceOperatorId { get; set; } = null!;
-    
-    public Employee ParkingPlaceOperator { get; set; } = null!;
-    
+
     public string SlotId { get; set; } = null!;
     
     public Slot Slot { get; set; } = null!;
