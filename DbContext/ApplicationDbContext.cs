@@ -60,6 +60,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<SlotRatings>? SlotRatings { get; set; }
 
     public DbSet<RefreshToken>? RefreshTokens { get; set; }
+    public DbSet<DriverRefreshToken>? DriverRefreshTokens { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -291,6 +292,14 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(e => e.Employee)
             .HasForeignKey(r => r.EmployeeId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Driver>()
+            .HasMany(d => d.RefreshTokens)
+            .WithOne(d => d.Driver)
+            .HasForeignKey(r => r.DriverId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        
 
 
         modelBuilder.Entity<Employee>()
@@ -313,7 +322,6 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     Token = ""
                 }
             );
-
     }
 }
 
