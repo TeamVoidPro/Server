@@ -61,6 +61,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 
     public DbSet<RefreshToken>? RefreshTokens { get; set; }
     public DbSet<DriverRefreshToken>? DriverRefreshTokens { get; set; } = null!;
+    
+    public DbSet<VerificationCodes>? VerificationCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -75,9 +77,10 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<ParkingPlaceServices>()
             .HasKey(p => new {p.ParkingPlaceId, p.ServiceProvide});
         
-        modelBuilder.Entity<ParkingPlaceOwner>()
-            .HasMany(p=>p.ParkingPlaces)
-            .WithOne(p=>p.ParkingPlaceOwner)
+        modelBuilder.Entity<ParkingPlace>()
+            .HasOne(p => p.ParkingPlaceOwner)
+            .WithMany(p => p.ParkingPlaces)
+            .HasForeignKey(p => p.ParkingPlaceOwnerId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ParkingPlaceSlotCapacities>()
