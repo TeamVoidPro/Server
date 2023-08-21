@@ -43,7 +43,8 @@ public class ParkingPlacesController : ControllerBase
         {
             ParkingPlaceId = IdGenerator.GenerateId("PARK"),
             Name = parkingPlaceDto.Name,
-            Location = parkingPlaceDto.Location,
+            Latitude = parkingPlaceDto.Latitude,
+            Longitude = parkingPlaceDto.Longitude,
             Description = parkingPlaceDto.Description,
             ParkingPlaceOwnerId = parkingPlaceDto.ParkingPlaceOwnerId,
             ParkingPlaceVerifierId = parkingPlaceDto.ParkingPlaceVerifierId,

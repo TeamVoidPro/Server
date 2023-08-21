@@ -58,7 +58,11 @@ builder.Services.AddSendGrid(options =>
 {
     options.ApiKey = builder.Configuration.GetSection("EmailServer").GetValue<string>("ApiKey");
 });
-
+// allows synchronous I/O for uploading files.
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

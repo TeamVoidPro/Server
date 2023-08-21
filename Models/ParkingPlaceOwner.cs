@@ -10,10 +10,15 @@ public class ParkingPlaceOwner
     [Column(TypeName = "varchar(20)")]
     public required string OwnerId { get; set; }
     
-    [Required (ErrorMessage = "Full is required")]
+    [Required (ErrorMessage = "First Name is required")]
     [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid name")]
-    [StringLength(100, MinimumLength = 2, ErrorMessage = "The full name must be 2 characters long.")]
-    public required string FullName { get; set; }
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "First Name name must be 2 characters long.")]
+    public required string FirstName { get; set; }
+    
+    [Required (ErrorMessage = "Last Name is required")]
+    [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid name")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "Last Name name must be 2 characters long.")]
+    public required string LastName { get; set; }
     
     [Required (ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid Email Address")]
@@ -36,14 +41,9 @@ public class ParkingPlaceOwner
     [AllowNull]
     public string? AddressLine2 { get; set; }
     
-    [Required (ErrorMessage = "Street is required")]
-    [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "Street should contain only alphanumeric characters.")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid street.")]
-    public required string Street { get; set; }
-    
-    [Required (ErrorMessage = "Street is required")]
-    [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "Street should contain only alphanumeric characters.")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid street.")]
+    [Required (ErrorMessage = "City is required")]
+    [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "City should contain only alphanumeric characters.")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid City.")]
     public required string City { get; set; }
     
     [Required (ErrorMessage = "Contact number is required")]
@@ -51,18 +51,39 @@ public class ParkingPlaceOwner
     [MinLength(10, ErrorMessage = "Contact number must be 10 digits")]
     public required string ContactNumber { get; set; }
     
-    [Required (ErrorMessage = "Deed copy is required")]
-    [Column(TypeName = "varchar(256)")]
-    public required string DeedCopy { get; set; }
     
     [Required (ErrorMessage = "NIC is required")]
     [Column(TypeName = "varchar(12)")]
     [MaxLength(12, ErrorMessage = "NIC must be 12 digits")]
     [MinLength(11, ErrorMessage = "NIC must be at least 11 digits")]
     [RegularExpression(@"^[0-9Vv]+$" , ErrorMessage = "Invalid NIC")]
-    public required string Nic { get; set; }
+    public required string NIC { get; set; }
     
+    [Required (ErrorMessage = "NIC Front Image is required")]
+    [Column(TypeName = "varchar(12)")]
+    public required string NICFront { get; set; }
+    
+    [Required (ErrorMessage = "NIC Back Image is required")]
+    [Column(TypeName = "varchar(12)")]
+    public required string NICBack { get; set; }
+    
+    [Required (ErrorMessage = "Account Created At is required")]
     public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
+    
+    [Required (ErrorMessage = "Account Verified is required")]
+    public bool AccountVerified { get; set; } = false;
+    
+    [Required (ErrorMessage = "Is Registered is required")]
+    public bool IsRegistered { get; set; } = false;
+    
+    public int CurrentRegistrationStep { get; set; } = 0;
+    
+    [Required (ErrorMessage = "Is Blocked is required")]
+    public bool IsBlocked { get; set; } = false;
+    
+    [Required (ErrorMessage = "Is Deleted is required")]
+    public bool IsDeleted { get; set; } = false;
+    
     
     [Column(TypeName = "varchar(512)")]
     [AllowNull]

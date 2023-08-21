@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -203,7 +204,7 @@ public class DriverController:ControllerBase
             return BadRequest("Vehicle with this number already exists");
         }
         
-        var driver = await _context.Drivers!.FirstOrDefaultAsync(d => d.DriverId == vehicleDto.DriverId);
+        var driver = await _context.Drivers!.FirstOrDefaultAsync(d => d.DriverId == "Drv_1365_6410");
         if (driver == null)
         {
             return BadRequest("Driver with this id does not exist");
@@ -223,6 +224,22 @@ public class DriverController:ControllerBase
         return Ok(new
         {
             message = "Vehicle added successfully",
+        });
+    }
+    
+    [HttpGet("get-nearest-park")]
+    [Authorize]
+    public async Task<IActionResult> GetParkingPlaces([FromBody] GetNearestParkDto getNearestParkDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var parkingPlaces = await _context.ParkingPlaces!.ToListAsync();
+        return Ok(new
+        {
+            message = "Parking places retrieved successfully",
+            parkingPlaces
         });
     }
 }
