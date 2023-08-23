@@ -315,7 +315,7 @@ namespace Server.Migrations
                         new
                         {
                             EmployeeId = "EMP_0023_4589",
-                            AccountCreatedAt = new DateTime(2023, 8, 10, 8, 0, 27, 940, DateTimeKind.Utc).AddTicks(6741),
+                            AccountCreatedAt = new DateTime(2023, 8, 13, 8, 7, 45, 703, DateTimeKind.Utc).AddTicks(9590),
                             AddressLine1 = "108/5 A",
                             City = "Wadduwa",
                             ContactNumber = "0711234567",
@@ -325,7 +325,7 @@ namespace Server.Migrations
                             IsVerified = false,
                             LastName = "Pramodi",
                             Nic = "199914212942",
-                            Password = "$2a$11$4DsudAeWjfxZ8VwL3GW97eoeR/DkDeRzCmG6ye7sbT8C2zdY3ePha",
+                            Password = "$2a$11$THbKdybEYQb39l/7Zqz...GLCq0hO277HuV8T2w0V6kAxb0aWoN1m",
                             ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                             Role = "Administrator",
                             Street = "Weragama Road",
@@ -386,6 +386,78 @@ namespace Server.Migrations
                     b.HasIndex("ReportedBy");
 
                     b.ToTable("Issues");
+                });
+
+            modelBuilder.Entity("Server.Models.OnsiteReservations", b =>
+                {
+                    b.Property<string>("ReservationId")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("CancellationCreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CancellationReason")
+                        .IsRequired()
+                        .HasColumnType("varchar(1024)");
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("char(10)");
+
+                    b.Property<string>("DriverName")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("ParkingPlaceOperatorId")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("ReservationCompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ReservationCreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ReservationEndAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ReservationStartAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReservationStatus")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("SlotId")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<decimal>("TotalPayment")
+                        .HasColumnType("decimal(7,2)");
+
+                    b.Property<string>("VehicleNumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("VehicleType")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("ReservationId");
+
+                    b.HasIndex("ParkingPlaceOperatorId");
+
+                    b.HasIndex("SlotId");
+
+                    b.ToTable("OnsiteReservations");
                 });
 
             modelBuilder.Entity("Server.Models.Parking", b =>
@@ -658,10 +730,6 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("ParkingPlaceOperatorId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
                     b.Property<DateTime>("ParkingStartedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -722,8 +790,6 @@ namespace Server.Migrations
 
                     b.HasIndex("ParkingPlaceId");
 
-                    b.HasIndex("ParkingPlaceOperatorId");
-
                     b.HasIndex("SlotId");
 
                     b.HasIndex("VehicleNumber");
@@ -765,6 +831,10 @@ namespace Server.Migrations
                     b.Property<int>("SlotNumber")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SlotStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ZoneId")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
@@ -793,7 +863,6 @@ namespace Server.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SlotCategoryDescription")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SlotCategoryName")
@@ -1009,6 +1078,9 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<decimal>("ZonePrice")
+                        .HasColumnType("decimal(5,2)");
+
                     b.HasKey("ZoneId");
 
                     b.HasIndex("ParkingPlaceId");
@@ -1120,6 +1192,25 @@ namespace Server.Migrations
                     b.Navigation("ParkingPlace");
 
                     b.Navigation("ParkingPlaceVerifier");
+                });
+
+            modelBuilder.Entity("Server.Models.OnsiteReservations", b =>
+                {
+                    b.HasOne("Server.Models.Employee", "ParkingPlaceOperator")
+                        .WithMany("OnsiteReservations")
+                        .HasForeignKey("ParkingPlaceOperatorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.Slot", "Slot")
+                        .WithMany("OnsiteReservations")
+                        .HasForeignKey("SlotId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ParkingPlaceOperator");
+
+                    b.Navigation("Slot");
                 });
 
             modelBuilder.Entity("Server.Models.Parking", b =>
@@ -1243,12 +1334,6 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.Employee", "ParkingPlaceOperator")
-                        .WithMany("Reservation")
-                        .HasForeignKey("ParkingPlaceOperatorId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
                     b.HasOne("Server.Models.Slot", "Slot")
                         .WithMany("Reservations")
                         .HasForeignKey("SlotId")
@@ -1268,8 +1353,6 @@ namespace Server.Migrations
                         .IsRequired();
 
                     b.Navigation("ParkingPlace");
-
-                    b.Navigation("ParkingPlaceOperator");
 
                     b.Navigation("Slot");
 
@@ -1432,9 +1515,9 @@ namespace Server.Migrations
 
                     b.Navigation("Issues");
 
-                    b.Navigation("RefreshToken");
+                    b.Navigation("OnsiteReservations");
 
-                    b.Navigation("Reservation");
+                    b.Navigation("RefreshToken");
 
                     b.Navigation("Ticket");
                 });
@@ -1482,6 +1565,8 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.Slot", b =>
                 {
+                    b.Navigation("OnsiteReservations");
+
                     b.Navigation("Parkings");
 
                     b.Navigation("Reservations");

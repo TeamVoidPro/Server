@@ -36,6 +36,8 @@ public class Slot
     [RegularExpression( @"^[0-1]+$", ErrorMessage = "Is available must be a number")]
     public required bool IsAvailable { get; set; }
     
+    public required string SlotStatus { get; set; }
+    
     public string Description { get; set; } = null!;
     
     public DateTime SlotCreatedDate { get; set; } = DateTime.Now;

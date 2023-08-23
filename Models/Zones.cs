@@ -1,4 +1,3 @@
-using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +13,9 @@ public class Zones
     [Required(ErrorMessage = "Zone name is required")]
     public required string ZoneName { get; set; }
     
+    [Column(TypeName = "decimal(5,2)")]
+    public required decimal ZonePrice { get; set; }
+
     public string? ZoneDescription { get; set; }
     
     public DateTime ZoneCreatedDate { get; set; } = DateTime.Now;

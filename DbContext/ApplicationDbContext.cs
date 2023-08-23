@@ -291,13 +291,13 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasForeignKey(r => r.EmployeeId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        modelBuilder.Entity<Models.OnsiteReservations>()
+        modelBuilder.Entity<OnsiteReservations>()
             .HasOne(p => p.ParkingPlaceOperator)
             .WithMany(o => o.OnsiteReservations)
             .HasForeignKey(p => p.ParkingPlaceOperatorId)
             .OnDelete(DeleteBehavior.NoAction);
         
-        modelBuilder.Entity<Models.OnsiteReservations>()
+        modelBuilder.Entity<OnsiteReservations>()
             .HasOne(s => s.Slot)
             .WithMany(o => o.OnsiteReservations)
             .HasForeignKey(s => s.SlotId)
