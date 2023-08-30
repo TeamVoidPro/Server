@@ -32,7 +32,7 @@ public class Vehicle
     [Required]
     public Driver Driver { get; set; } = null!;
 
-    public ICollection<Reservation> Reservations { get; set; } = null!;
+    public ICollection<OnlineReservations> OnlineReservations { get; set; } = null!;
 
     public BookingReservation BookingReservation { get; set; } = null!;
     
