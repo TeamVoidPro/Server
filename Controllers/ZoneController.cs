@@ -57,4 +57,24 @@ public class ZoneController : ControllerBase
             data = newZone
         });
     }
+    
+    [HttpGet("get-zones-by-parking-place/{parkingPlaceId}")]
+    public IActionResult GetZonesByParkingPlace(string parkingPlaceId)
+    {
+        var zones = _context.Zones!.Where(z => z.ParkingPlaceId == parkingPlaceId);
+
+        if (zones == null)
+        {
+            return NotFound(new
+            {
+                message = "No zones found for the parking place."
+            });
+        }
+
+        return Ok(new
+        {
+            message = "Zones found successfully",
+            data = zones
+        });
+    }
 }

@@ -17,7 +17,6 @@ public class ParkingOperatorController : ControllerBase
     }
     
     [HttpGet("get-operator-parking")]
-    [Authorize]
     public async Task<IActionResult> GetOperatorParking(string parkingOperatorId)
     {
         var parkingPlace = await _context.ParkingPlaces!.FirstOrDefaultAsync(p => p.ParkingPlaceOperatorId == parkingOperatorId);

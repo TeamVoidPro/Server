@@ -118,17 +118,11 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTime>("ReservationDate")
+                    b.Property<DateTime>("ExitedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("ReservationEndTime")
+                    b.Property<DateTime>("ParkedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ReservationStartTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("TotalPayment")
-                        .HasColumnType("decimal(8,2)");
 
                     b.Property<DateTime>("ValidFrom")
                         .HasColumnType("timestamp with time zone");
@@ -315,7 +309,7 @@ namespace Server.Migrations
                         new
                         {
                             EmployeeId = "EMP_0023_4589",
-                            AccountCreatedAt = new DateTime(2023, 8, 13, 8, 7, 45, 703, DateTimeKind.Utc).AddTicks(9590),
+                            AccountCreatedAt = new DateTime(2023, 8, 23, 18, 11, 23, 145, DateTimeKind.Utc).AddTicks(8233),
                             AddressLine1 = "108/5 A",
                             City = "Wadduwa",
                             ContactNumber = "0711234567",
@@ -325,7 +319,7 @@ namespace Server.Migrations
                             IsVerified = false,
                             LastName = "Pramodi",
                             Nic = "199914212942",
-                            Password = "$2a$11$THbKdybEYQb39l/7Zqz...GLCq0hO277HuV8T2w0V6kAxb0aWoN1m",
+                            Password = "$2a$11$FLCgw0qNasBAqOvdHD3toeWC3PL504JDOJo1qnhecld9YhiUosSeK",
                             ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                             Role = "Administrator",
                             Street = "Weragama Road",
@@ -388,17 +382,30 @@ namespace Server.Migrations
                     b.ToTable("Issues");
                 });
 
-            modelBuilder.Entity("Server.Models.OnsiteReservations", b =>
+            modelBuilder.Entity("Server.Models.OnlineReservations", b =>
                 {
-                    b.Property<string>("ReservationId")
+                    b.Property<string>("OnlineReservationId")
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTime>("CancellationCreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CancellationReason")
+                    b.Property<string>("SpecialNotes")
                         .IsRequired()
-                        .HasColumnType("varchar(1024)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("VehicleNumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(8)");
+
+                    b.HasKey("OnlineReservationId");
+
+                    b.HasIndex("VehicleNumber");
+
+                    b.ToTable("OnlineReservations");
+                });
+
+            modelBuilder.Entity("Server.Models.OnsiteReservations", b =>
+                {
+                    b.Property<string>("OnsiteReservationId")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("ContactNumber")
                         .IsRequired()
@@ -412,36 +419,8 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<DateTime>("ReservationCompletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ReservationCreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ReservationEndAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ReservationStartAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ReservationStatus")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
                     b.Property<string>("SlotId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)");
-
-                    b.Property<decimal>("TotalPayment")
-                        .HasColumnType("decimal(7,2)");
 
                     b.Property<string>("VehicleNumber")
                         .IsRequired()
@@ -451,7 +430,7 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.HasKey("ReservationId");
+                    b.HasKey("OnsiteReservationId");
 
                     b.HasIndex("ParkingPlaceOperatorId");
 
@@ -721,68 +700,58 @@ namespace Server.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("CancellationReason")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ParkingEndedAt")
+                    b.Property<DateTime>("CancelledAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExitedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ParkedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ParkingPlaceId")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTime>("ParkingStartedAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
-                    b.Property<DateTime>("ReservationCancelledAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ReservationCreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("ReservationEndTime")
+                    b.Property<DateTime>("ReservationEndAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("ReservationStartTime")
+                    b.Property<DateTime>("ReservationStartAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ReservationStatus")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("ReservationType")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime>("ReservedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SlotId")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("SpecialNotes")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("TotalAmount")
+                    b.Property<decimal>("TotalPayment")
                         .HasColumnType("decimal(8,2)");
 
-                    b.Property<string>("VehicleNumber")
-                        .IsRequired()
-                        .HasColumnType("varchar(8)");
-
                     b.Property<string>("ZoneId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("ZonesZoneId")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
@@ -792,9 +761,7 @@ namespace Server.Migrations
 
                     b.HasIndex("SlotId");
 
-                    b.HasIndex("VehicleNumber");
-
-                    b.HasIndex("ZonesZoneId");
+                    b.HasIndex("ZoneId");
 
                     b.ToTable("Reservations");
                 });
@@ -923,8 +890,7 @@ namespace Server.Migrations
 
                     b.HasKey("SlotReservationHistoryId");
 
-                    b.HasIndex("ReservationId")
-                        .IsUnique();
+                    b.HasIndex("ReservationId");
 
                     b.HasIndex("SlotId");
 
@@ -1120,6 +1086,12 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.BookingReservation", b =>
                 {
+                    b.HasOne("Server.Models.Reservation", "Reservation")
+                        .WithOne("BookingReservation")
+                        .HasForeignKey("Server.Models.BookingReservation", "BookingReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Server.Models.Vehicle", "Vehicle")
                         .WithOne("BookingReservation")
                         .HasForeignKey("Server.Models.BookingReservation", "VehicleNumber")
@@ -1131,6 +1103,8 @@ namespace Server.Migrations
                         .HasForeignKey("BookingPlanId", "ZonePlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Reservation");
 
                     b.Navigation("Vehicle");
 
@@ -1194,23 +1168,46 @@ namespace Server.Migrations
                     b.Navigation("ParkingPlaceVerifier");
                 });
 
+            modelBuilder.Entity("Server.Models.OnlineReservations", b =>
+                {
+                    b.HasOne("Server.Models.Reservation", "Reservation")
+                        .WithOne("OnlineReservations")
+                        .HasForeignKey("Server.Models.OnlineReservations", "OnlineReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.Vehicle", "Vehicle")
+                        .WithMany("OnlineReservations")
+                        .HasForeignKey("VehicleNumber")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("Vehicle");
+                });
+
             modelBuilder.Entity("Server.Models.OnsiteReservations", b =>
                 {
+                    b.HasOne("Server.Models.Reservation", "Reservation")
+                        .WithOne("OnsiteReservations")
+                        .HasForeignKey("Server.Models.OnsiteReservations", "OnsiteReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Server.Models.Employee", "ParkingPlaceOperator")
                         .WithMany("OnsiteReservations")
                         .HasForeignKey("ParkingPlaceOperatorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.Slot", "Slot")
+                    b.HasOne("Server.Models.Slot", null)
                         .WithMany("OnsiteReservations")
-                        .HasForeignKey("SlotId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("SlotId");
 
                     b.Navigation("ParkingPlaceOperator");
 
-                    b.Navigation("Slot");
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("Server.Models.Parking", b =>
@@ -1340,15 +1337,9 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.Vehicle", "Vehicle")
-                        .WithMany("Reservations")
-                        .HasForeignKey("VehicleNumber")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.Zones", "Zones")
+                    b.HasOne("Server.Models.Zones", "Zone")
                         .WithMany()
-                        .HasForeignKey("ZonesZoneId")
+                        .HasForeignKey("ZoneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1356,9 +1347,7 @@ namespace Server.Migrations
 
                     b.Navigation("Slot");
 
-                    b.Navigation("Vehicle");
-
-                    b.Navigation("Zones");
+                    b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("Server.Models.Slot", b =>
@@ -1410,8 +1399,8 @@ namespace Server.Migrations
             modelBuilder.Entity("Server.Models.SlotReservationHistory", b =>
                 {
                     b.HasOne("Server.Models.Reservation", "Reservation")
-                        .WithOne("SlotReservationHistory")
-                        .HasForeignKey("Server.Models.SlotReservationHistory", "ReservationId")
+                        .WithMany()
+                        .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1559,7 +1548,13 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.Reservation", b =>
                 {
-                    b.Navigation("SlotReservationHistory")
+                    b.Navigation("BookingReservation")
+                        .IsRequired();
+
+                    b.Navigation("OnlineReservations")
+                        .IsRequired();
+
+                    b.Navigation("OnsiteReservations")
                         .IsRequired();
                 });
 
@@ -1588,7 +1583,7 @@ namespace Server.Migrations
                     b.Navigation("BookingReservation")
                         .IsRequired();
 
-                    b.Navigation("Reservations");
+                    b.Navigation("OnlineReservations");
                 });
 
             modelBuilder.Entity("Server.Models.ZonePlan", b =>
