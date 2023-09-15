@@ -4,6 +4,7 @@ namespace Server.Models.Dto;
 
 public class EmployeeDto
 {
+    
     [Required(ErrorMessage = "Firstname is required")]
     public required string FirstName { get; set; }
     
@@ -12,14 +13,7 @@ public class EmployeeDto
     
     [Required(ErrorMessage = "Email is required")]
     public required string Email { get; set; }
-    
-    [Required(ErrorMessage = "Password is required.")]
-    public required string Password { get; set; }
-    
-    [Required(ErrorMessage = "Confirm Password is required.")]
-    [Compare("Password", ErrorMessage = "Password and Confirm Password must match")]
-    public required string ConfirmPassword { get; set; }
-    
+
     [Required(ErrorMessage = "AddressLine1 is required")]
     public required string AddressLine1 { get; set; }
     

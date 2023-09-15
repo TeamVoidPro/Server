@@ -13,6 +13,9 @@ public class Zones
     [Required(ErrorMessage = "Zone name is required")]
     public required string ZoneName { get; set; }
     
+    [Column(TypeName = "decimal(5,2)")]
+    public required decimal ZonePrice { get; set; }
+
     public string? ZoneDescription { get; set; }
     
     public DateTime ZoneCreatedDate { get; set; } = DateTime.Now;
@@ -20,7 +23,6 @@ public class Zones
     public string ParkingPlaceId { get; set; } = null!;
     
     public ParkingPlace ParkingPlace { get; set; } = null!;
-    
     
     public ICollection<ZonePlan> ZonePlans { get; set; } = null!;
 }

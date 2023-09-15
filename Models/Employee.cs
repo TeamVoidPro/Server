@@ -26,11 +26,11 @@ public class Employee
     [Column(TypeName = "varchar(100)")]
     public required string Email { get; set; }
     
-    [Required (ErrorMessage = "Password is required")]
     [StringLength(256, MinimumLength = 8, ErrorMessage = "The password must be at least 8 characters long.")]
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",
         ErrorMessage = "The password must contain at least an uppercase letter, a lowercase letter, a number and a special character.")]
-    public required string Password { get; set; }
+    [AllowNull]
+    public string Password { get; set; }
     
     [Required (ErrorMessage = "Address line 1 is required")]
     [RegularExpression(@"^[a-zA-Z0-9/\s]+$", ErrorMessage = "Address line 1 should contain only alphanumeric characters.")]
@@ -76,16 +76,19 @@ public class Employee
     
     [Column(TypeName = "varchar(512)")]
     [AllowNull]
-    public string Token { get; set; } = null!;
+    public string Token { get; set; }
+
+    [AllowNull]
+    public bool IsActivated { get; set; } 
+    
+    public bool IsVerified { get; set; }
     
     [NotMapped]
     public ParkingPlace VerifiedParkingPlace { get; set; } = null!;
     
     [NotMapped]
     public ParkingPlace OperatorParkingPlace { get; set; } = null!;
-    
-    public ICollection<Reservation> Reservation { get; set; } = null!;
-    
+
     public ICollection<Ticket> Ticket { get; set; } = null!;
     
     public ICollection<AwaitedParkingPlaces> AwaitedParkingPlaces { get; set; } = null!;
@@ -95,4 +98,6 @@ public class Employee
     public ICollection<Issues> Issues { get; set; } = null!;
     
     public ICollection<RefreshToken> RefreshToken { get; set; } = null!;
+    
+    public ICollection<OnsiteReservations> OnsiteReservations { get; set; } = null!;
  }

@@ -21,6 +21,7 @@ public class AuthController : ControllerBase
     private readonly JWTConfig _jwtConfig;
     private readonly TokenValidationParameters _tokenValidationParameters;
 
+
     public AuthController(ApplicationDbContext context, IOptions<JWTConfig> jwtConfig, TokenValidationParameters tokenValidationParameters)
     {
         _context = context;
@@ -52,7 +53,7 @@ public class AuthController : ControllerBase
             FirstName = employeeDto.FirstName,
             LastName = employeeDto.LastName,
             Email = employeeDto.Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(employeeDto.Password),
+            Password = "",
             AddressLine1 = employeeDto.AddressLine1,
             Street = employeeDto.Street,
             City = employeeDto.City,
@@ -61,13 +62,33 @@ public class AuthController : ControllerBase
             Role = employeeDto.Role,
             ProfilePicture = "https://i.imgur.com/6VBx3io.png",
             Token = "",
-            AccountCreatedAt = DateTime.UtcNow
+            AccountCreatedAt = DateTime.UtcNow,
+            IsVerified = false
         };
 
+        var random = new Random();
+        var code = random.Next(100000, 999999).ToString();
+
+        var newVerification = new VerificationCodes
+        {
+            Id = IdGenerator.GenerateRandomId(20),
+            Code = BCrypt.Net.BCrypt.HashPassword(code),
+            IsUsed = false,
+            UserId = newEmployee.EmployeeId,
+            CreatedAt = DateTime.UtcNow,
+            ExpiresAt = DateTime.UtcNow.AddHours(2)
+        };
+        
+        await _context.VerificationCodes!.AddAsync(newVerification);
         await _context.Employees!.AddAsync(newEmployee);
         await _context.SaveChangesAsync();
-
-        return StatusCode(201);
+        
+        return Ok(new
+        {
+            message = "Successfully registered",
+            verificationCode = code,
+            employeeId = newEmployee.EmployeeId
+        });
     }
     
     [HttpPost("employee-login")]
@@ -87,6 +108,16 @@ public class AuthController : ControllerBase
         if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
         {
             return BadRequest(new {message = "Invalid credentials"});
+        }
+        
+        if(employee.IsActivated == false)
+        {
+            return BadRequest(new {message = "Account is not activated"});
+        }
+        
+        if(employee.IsVerified == false)
+        {
+            return BadRequest(new {message = "Account is not verified"});
         }
 
         var jwtTokens = await GenerateJwtToken(employee);
@@ -314,7 +345,7 @@ public class AuthController : ControllerBase
                 Errors = new[] {"Something went wrong"}
             };
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new AuthResults()
             {
@@ -330,5 +361,131 @@ public class AuthController : ControllerBase
         dateTimeVal = dateTimeVal.AddSeconds(unixTimeStamp).ToUniversalTime();
         return dateTimeVal;
     }
-    
+
+    [HttpPost("verify-account")] 
+    public async Task<IActionResult> VerifyAccount([FromBody] VerifyAccountDto verifyAccountDto)
+    {
+        var employee = _context.Employees!.FirstOrDefault(x => x.EmployeeId == verifyAccountDto.EmployeeId);
+        
+        if (employee == null)
+            return BadRequest(new
+            {
+                VerificationCode = "Invalid request"
+            });
+        
+        var verificationRecord = _context.VerificationCodes!.FirstOrDefault(x => x.UserId == employee.EmployeeId);
+        
+        if (verificationRecord == null)
+            return BadRequest(new
+            {
+                VerificationCode = "Invalid request"
+            });
+        
+        if(verificationRecord.IsUsed)
+            return BadRequest(new
+            {
+                VerificationCode = "Verification code already used"
+            });
+        
+        if(!BCrypt.Net.BCrypt.Verify(verifyAccountDto.VerificationCode, verificationRecord.Code))
+            return BadRequest(new
+            {
+                VerificationCode = "Invalid verification code"
+            });
+        
+        if(verificationRecord.ExpiresAt < DateTime.UtcNow)
+            return BadRequest(new
+            {
+                VerificationCode = "Verification code expired"
+            });
+        
+        if(employee.IsVerified)
+            return BadRequest(new
+            {
+                VerificationCode = "Account already verified"
+            });
+        
+        verificationRecord.IsUsed = true;
+        _context.VerificationCodes!.Update(verificationRecord);
+        employee.IsVerified = true;
+        _context.Employees!.Update(employee);
+        await _context.SaveChangesAsync();
+        
+        return Ok(new AuthResults()
+        {
+            Result = true,
+            Errors = null
+        });
+    }
+
+    [HttpPost("create-password")]
+    public async Task<IActionResult> CreatePassword([FromBody] CreatePasswordDto createPasswordDto)
+    {
+        var employee = _context.Employees!.FirstOrDefault(x => x.EmployeeId == createPasswordDto.EmployeeId);
+
+        if (employee == null)
+            return BadRequest(new AuthResults()
+            {
+                Errors = new[]
+                {
+                    "Invalid Request"
+                },
+                Result = false
+            });
+        
+        if(employee.Password != "")
+            return BadRequest(new AuthResults()
+            {
+                Errors = new[]
+                {
+                    "Password already set for the user"
+                },
+                Result = false
+            });
+        
+        if(employee.IsVerified == false)
+            return BadRequest(new AuthResults()
+            {
+                Errors = new[]
+                {
+                    "Email not verified"
+                },
+                Result = false
+            });
+        
+
+        if (createPasswordDto.Password != createPasswordDto.ConfirmPassword)
+        {
+            return BadRequest(new AuthResults()
+            {
+                Errors = new[]
+                {
+                    "Passwords do not match"
+                },
+                Result = false
+            });
+        }
+        
+        if (employee.IsActivated == false)
+        {
+            employee.IsActivated = true;
+            employee.Password = BCrypt.Net.BCrypt.HashPassword(createPasswordDto.Password);
+            _context.Employees!.Update(employee);
+            await _context.SaveChangesAsync();
+            
+            return Ok(new AuthResults()
+            {
+                Result = true,
+                Errors = null
+            });
+        }
+        
+        return BadRequest(new AuthResults()
+            {
+                Result = false,
+                Errors = new[] { "Account is already activated." }
+            });
+        
+    }
+
 }

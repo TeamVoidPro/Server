@@ -15,7 +15,7 @@ public class SlotCategories
     [StringLength(100, MinimumLength = 2, ErrorMessage = "The slot category name must be 2 characters long.")]
     public required string SlotCategoryName { get; set; }
     
-    public string SlotCategoryDescription { get; set; } = null!;
+    public string? SlotCategoryDescription { get; set; } = null!;
     
     public DateTime CategoryCreatedDate { get; set; } = DateTime.Now;
     
