@@ -10,6 +10,9 @@ public class ParkingPlaceOwner
     [Column(TypeName = "varchar(20)")]
     public required string OwnerId { get; set; }
     
+    
+    public required string FullName { get; set; }
+    
     [Required (ErrorMessage = "First name is required")]
     [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid name")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "The first name must be 1 characters long.")]

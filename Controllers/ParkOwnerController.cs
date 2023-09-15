@@ -36,6 +36,7 @@ public class ParkOwnerController : ControllerBase
         var newOwner = new ParkingPlaceOwner
         {
             OwnerId = IdGenerator.GenerateId("OWN"),
+            FullName = ownerDto.FullName,
             FirstName = ownerDto.FirstName,
             LastName = ownerDto.LastName,
             Email = ownerDto.Email,

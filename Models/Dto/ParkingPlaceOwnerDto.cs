@@ -7,6 +7,9 @@ public class ParkingPlaceOwnerDto
     public required string OwnerId { get; set; }
     
     public required string FullName { get; set; }
+    public required string FirstName { get; set; }
+    
+    public required string LastName { get; set; }
     
     public required string Email { get; set; }
     
@@ -38,7 +41,7 @@ public class ParkingPlaceOwnerDto
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid street.")]
     public required string City { get; set; }
     
-    public required int ContactNumber { get; set; }
+    public required string ContactNumber { get; set; }
     
     public required string DeedCopy { get; set; }
     
@@ -47,4 +50,13 @@ public class ParkingPlaceOwnerDto
     public DateTime AccountCreatedAt { get; set; } 
     
     public string? Token { get; set; } = null!;
+    public string Province { get; set; }
+    public string LandAddressNumber { get; set; }
+    public string LandAddressStreet { get; set; }
+    public string LandAddressCity { get; set; }
+    public string LandAddressProvince { get; set; }
+    public string LandMap { get; set; }
+    public string LandImages { get; set; }
+    public string NicFront { get; set; }
+    public string NicBack { get; set; }
 }
