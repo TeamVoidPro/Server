@@ -4,21 +4,10 @@ namespace Server.Models.Dto;
 
 public class ParkingPlaceOwnerDto
 {
+    public required string OwnerId { get; set; }
     
-<<<<<<< HEAD
-    public required string FirstName { get; set; }
-    
-    public required string LastName { get; set; }
-
-=======
-    [Required (ErrorMessage = "Full is required")]
-    [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid name")]
-    [StringLength(100, MinimumLength = 2, ErrorMessage = "The full name must be 2 characters long.")]
     public required string FullName { get; set; }
     
-    [Required (ErrorMessage = "Email is required")]
-    [EmailAddress(ErrorMessage = "Invalid Email Address")]
->>>>>>> origin/main
     public required string Email { get; set; }
     
     [Required (ErrorMessage = "Password is required")]
@@ -49,48 +38,13 @@ public class ParkingPlaceOwnerDto
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Invalid street.")]
     public required string City { get; set; }
     
-<<<<<<< HEAD
-    public required string Province{ get; set; }
+    public required int ContactNumber { get; set; }
     
-    public required string LandAddressNumber { get; set; }
-    
-    public required string LandAddressStreet { get; set; }
-    
-    public required string LandAddressCity { get; set; }
-    
-    public required string LandAddressProvince { get; set; }
-    
-=======
-    [Required (ErrorMessage = "Contact number is required")]
-    [MaxLength(10, ErrorMessage = "Contact number must be 10 digits")]
-    [MinLength(10, ErrorMessage = "Contact number must be 10 digits")]
->>>>>>> origin/main
-    public required string ContactNumber { get; set; }
-    
-    [Required (ErrorMessage = "Deed copy is required")]
     public required string DeedCopy { get; set; }
     
-<<<<<<< HEAD
-    public required string LandMap { get; set; }
-    
-    public required string LandImages { get; set; }
-    
     public required string Nic { get; set; }
     
-    public required string NicFront { get; set; }
-    
-    public required string NicBack { get; set; }
-
     public DateTime AccountCreatedAt { get; set; } 
-=======
-    [Required (ErrorMessage = "NIC is required")]
-    [MaxLength(12, ErrorMessage = "NIC must be 12 digits")]
-    [MinLength(11, ErrorMessage = "NIC must be at least 11 digits")]
-    [RegularExpression(@"^[0-9Vv]+$" , ErrorMessage = "Invalid NIC")]
-    public required string Nic { get; set; }
-    
-    public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
->>>>>>> origin/main
     
     public string? Token { get; set; } = null!;
 }
