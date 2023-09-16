@@ -148,7 +148,19 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithMany(p => p.Reservations)
             .HasForeignKey(e => e.ParkingPlaceId)
             .OnDelete(DeleteBehavior.Restrict);
-
+        
+        modelBuilder.Entity<Reservation>()
+            .HasOne(v => v.Vehicle)
+            .WithMany(v => v.Reservations)
+            .HasForeignKey(e => e.VehicleNumber)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<SlotReservationHistory>()
+            .HasOne(r => r.Reservation)
+            .WithOne(srh => srh.SlotReservationHistory)
+            .HasForeignKey<SlotReservationHistory>(srh => srh.ReservationId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
         modelBuilder.Entity<Ticket>()
             .HasOne(op => op.ParkingPlaceOperator)
             .WithMany(t => t.Ticket)
@@ -292,6 +304,14 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(o => o.OnsiteReservations)
             .HasForeignKey<OnsiteReservations>(r => r.OnsiteReservationId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Driver>()
+            .HasMany(d => d.RefreshTokens)
+            .WithOne(d => d.Driver)
+            .HasForeignKey(r => r.DriverId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        
 
         modelBuilder.Entity<BookingReservation>()
             .HasOne(r => r.Reservation)
@@ -333,7 +353,6 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     Token = ""
                 }
             );
-
     }
 }
 

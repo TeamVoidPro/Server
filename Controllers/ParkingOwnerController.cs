@@ -68,5 +68,27 @@ public class ParkingOwnerController : ControllerBase
                 
             });
     }
+    [HttpPost("upload")]
+    public async Task<IActionResult> Upload(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return Content("file not selected");
+        // console log the file name
+        Console.WriteLine(file.FileName);
+        
+        // Generate unique file name
+        var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
 
+        var path = Path.Combine(
+            Directory.GetCurrentDirectory(), "wwwroot",
+            fileName
+            );
+
+        await using (var stream = new FileStream(path, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return Ok(new { fileName });
+    }
 }

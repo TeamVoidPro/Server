@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Server.Models;
 
-[Index(nameof(ParkingPlaceId), nameof(Name), nameof(Location), nameof(ParkingPlaceOperatorId),
+[Index(nameof(ParkingPlaceId), nameof(Name), nameof(ParkingPlaceOperatorId),
     nameof(ParkingPlaceVerifierId), IsUnique = true)]
 public class ParkingPlace
 {
@@ -18,10 +18,15 @@ public class ParkingPlace
     [Required(ErrorMessage = "Parking place name is required")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "The parking place name must be 2 characters long.")]
     public required string Name { get; set; }
-
-    [Required(ErrorMessage = "Parking place location is required")]
-    [StringLength(100, MinimumLength = 2, ErrorMessage = "The parking place location must be 2 characters long.")]
-    public required string Location { get; set; }
+    
+    // Latitude and Longitude
+    [Required(ErrorMessage = "Parking place latitude is required")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "The parking place latitude must be 2 characters long.")]
+    public required string Latitude { get; set; }
+    
+    [Required(ErrorMessage = "Parking place longitude is required")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "The parking place longitude must be 2 characters long.")]
+    public required string Longitude { get; set; }
 
     public string Description { get; set; } = null!;
 

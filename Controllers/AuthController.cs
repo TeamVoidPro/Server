@@ -102,8 +102,9 @@ public class AuthController : ControllerBase
         var employee = await _context.Employees!.FirstOrDefaultAsync(e => e.Email == loginDto.Email);
         if (employee == null)
         {
-            return BadRequest(new {message = "Invalid credentials"});
+            return BadRequest(new {message = "Invalid credentials", email = employee});
         }
+        
 
         if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
         {
@@ -267,7 +268,6 @@ public class AuthController : ControllerBase
             if (validatedToken is JwtSecurityToken jwtSecurityToken)
             {
                 var result = jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
-
                 if (result == false)
                     return null;
             }

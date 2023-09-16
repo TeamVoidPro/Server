@@ -5,7 +5,6 @@ namespace Server.Models.Dto;
 
 public class DriverDto
 {
-    public required string DriverId { get; set; }
     
     public required string FirstName { get; set; }
     
@@ -20,9 +19,6 @@ public class DriverDto
     [Required (ErrorMessage = "Confirm password is required")]
     public required string ConfirmPassword { get; set; }
     
-    public required int ContactNumber { get; set; }
-
-    public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
+    public required string ContactNumber { get; set; }
     
-    public string? Token { get; set; } = null!;
 }
