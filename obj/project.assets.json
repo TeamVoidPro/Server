@@ -2871,26 +2871,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Asus\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Asus\\Desktop\\3rd Year Group Project\\Server\\Server.csproj",
+      "projectUniqueName": "D:\\UCSC\\viharsha\\Third Year\\Group project\\ParkEase\\Server\\Server.csproj",
       "projectName": "Server",
-      "projectPath": "C:\\Users\\Asus\\Desktop\\3rd Year Group Project\\Server\\Server.csproj",
-      "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Asus\\Desktop\\3rd Year Group Project\\Server\\obj\\",
+      "projectPath": "D:\\UCSC\\viharsha\\Third Year\\Group project\\ParkEase\\Server\\Server.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "D:\\UCSC\\viharsha\\Third Year\\Group project\\ParkEase\\Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2993,7 +2991,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
