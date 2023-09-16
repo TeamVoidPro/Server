@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace Server.Models;
@@ -23,7 +24,11 @@ public class Vehicle
     
     [Required (ErrorMessage = "Vehicle model is required.")]
     [Column(TypeName = "varchar(50)")]
-    public required string VehicleModel { get; set; }   
+    public required string VehicleModel { get; set; }
+    
+    [Required (ErrorMessage = "Vehicle color is required.")]
+    [Column(TypeName = "varchar(50)")]
+    public required string VehicleColor { get; set; }
     
     public string AdditionalNotes { get; set; } = null!;
     
@@ -37,10 +42,12 @@ public class Vehicle
     public BookingReservation BookingReservation { get; set; } = null!;
     
     [Column(TypeName = "varchar(20)")]
-    public string ZonePlanId { get; set; } = null!;
+    [AllowNull]
+    public string? ZonePlanId { get; set; } = null!;
     
     [Column(TypeName = "varchar(20)")]
-    public string BookingPlanId { get; set; } = null!;
+    [AllowNull]
+    public string? BookingPlanId { get; set; } = null!;
     
     public ZonePlan ZonePlan { get; set; } = null!;
 }
