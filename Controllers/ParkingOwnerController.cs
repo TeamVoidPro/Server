@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server.DbContext;
 using server.Helpers;
 using Server.Models;
@@ -6,7 +7,7 @@ using Server.Models.Dto;
 
 namespace Server.Controllers;
 
-[Route("api/[controller]")] 
+[Route("api/ParkOwner")]
 [ApiController]
 public class ParkingOwnerController : ControllerBase
 {
@@ -16,44 +17,56 @@ public class ParkingOwnerController : ControllerBase
     {
         _context = context;
     }
-    
-    [HttpPost("add-parking-owner")]
-    public async Task<IActionResult> AddParkingOwner([FromBody] ParkingPlaceOwnerDto parkingOwnerDto)
-    {
-        var parkingOwner = _context.ParkingPlaceOwners!.FirstOrDefault(p => p.Email == parkingOwnerDto.Email);
 
-        if (parkingOwner != null)
+    [HttpPost("register-park-owners")]
+    public async Task<IActionResult> RegisterParkOwner([FromBody] ParkingPlaceOwnerDto ownerDto)
+    {
+
+        if (!ModelState.IsValid)
         {
-            return BadRequest(new
-            {
-                message = "Parking Owner already exists"
-            });
+            return BadRequest("Invalid model object");
         }
 
-        var newParkingOwner = new ParkingPlaceOwner()
+        var owner = await _context.ParkingPlaceOwners!.FirstOrDefaultAsync(e => e.Email == ownerDto.Email);
+        if (owner == null)
+        {
+            return BadRequest("Owner object is null");
+        }
+
+        var newOwner = new ParkingPlaceOwner
         {
             OwnerId = IdGenerator.GenerateId("OWN"),
-            FullName = parkingOwnerDto.FullName,
-            Email = parkingOwnerDto.Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(parkingOwnerDto.Password),
-            AddressLine1 = parkingOwnerDto.AddressLine1,
-            AddressLine2 = parkingOwnerDto.AddressLine2,
-            Street = parkingOwnerDto.Street,
-            City = parkingOwnerDto.City,
-            ContactNumber = parkingOwnerDto.ContactNumber,
-            Nic = parkingOwnerDto.Nic,
-            DeedCopy = parkingOwnerDto.DeedCopy,
-            Token = parkingOwnerDto.Token,
-            AccountCreatedAt = DateTime.UtcNow
+            FirstName = ownerDto.FirstName,
+            LastName = ownerDto.LastName,
+            Email = ownerDto.Email,
+            Password = ownerDto.Password,
+            AddressLine1 = ownerDto.AddressLine1,
+            Street = ownerDto.Street,
+            City = ownerDto.City,
+            Province = ownerDto.Province,
+            LandAddressNumber = ownerDto.LandAddressNumber,
+            LandAddressStreet = ownerDto.LandAddressStreet,
+            LandAddressCity = ownerDto.LandAddressCity,
+            LandAddressProvince = ownerDto.LandAddressProvince,
+            ContactNumber = ownerDto.ContactNumber,
+            DeedCopy = ownerDto.DeedCopy,
+            LandMap = ownerDto.LandMap,
+            LandImages = ownerDto.LandImages,
+            Nic = ownerDto.Nic,
+            NicFront = ownerDto.NicFront,
+            NicBack = ownerDto.NicBack,
+            AccountCreatedAt = ownerDto.AccountCreatedAt,
+            Token = ""
         };
 
-        await _context.ParkingPlaceOwners!.AddAsync(newParkingOwner);
+        await _context.ParkingPlaceOwners.AddAsync(newOwner);
         await _context.SaveChangesAsync();
 
-        return Ok(new
-        {
-            message = "Parking Owner added successfully",
-            data = newParkingOwner
-        });
+        return Ok(new 
+            { message = "Parking Owner added successfully" ,
+                data = newOwner
+                
+            });
     }
+
 }

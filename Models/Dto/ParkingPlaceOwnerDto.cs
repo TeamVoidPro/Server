@@ -6,11 +6,19 @@ public class ParkingPlaceOwnerDto
 {
     public required string OwnerId { get; set; }
     
-    public required string FullName { get; set; }
+    [Required (ErrorMessage = "First name is required")]
+    [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid name")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "The first name must be 1 characters long.")]
     public required string FirstName { get; set; }
     
+    [Required (ErrorMessage = "Second name is required")]
+    [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid name")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "The last name must be 1 characters long.")]
     public required string LastName { get; set; }
     
+    [Required (ErrorMessage = "Email is required")]
+    [EmailAddress(ErrorMessage = "Invalid Email Address")]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = "The email must be 1 characters long.")]
     public required string Email { get; set; }
     
     [Required (ErrorMessage = "Password is required")]
