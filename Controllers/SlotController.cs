@@ -46,7 +46,6 @@ public class SlotController : ControllerBase
             SlotCategoryId = slotDto.SlotCategoryId,
             ZoneId = slotDto.ZoneId,
             ParkingPlaceId = slotDto.ParkingPlaceId,
-            IsAvailable = slotDto.IsAvailable,
             SlotStatus = slotDto.SlotStatus,
             Description = slotDto.Description,
             SlotCreatedDate = DateTime.UtcNow,
@@ -77,7 +76,6 @@ public class SlotController : ControllerBase
                 slot.SlotCategoryId,
                 slot.ZoneId,
                 slot.ParkingPlaceId,
-                slot.IsAvailable,
                 slot.SlotStatus,
                 slot.Description,
                 slot.SlotCreatedDate,
@@ -111,7 +109,6 @@ public class SlotController : ControllerBase
                     s.SlotNumber,
                     s.SlotCategoryId,
                     s.ParkingPlaceId,
-                    s.IsAvailable,
                     s.SlotStatus,
                     s.Description,
                     s.SlotCreatedDate,
@@ -130,6 +127,56 @@ public class SlotController : ControllerBase
         return Ok(new
         {
             data = slots
+        });
+    }
+    
+    [HttpGet("get-free-slots-by-time-duration/{parkingPlaceId}/{startAt}/{endAt}")]
+    public IActionResult GetFreeSlotsByTimeDuration(string parkingPlaceId, string startAt, string endAt)
+    {
+        TimeOnly.TryParse(startAt, out TimeOnly startTimeOut);
+        TimeOnly.TryParse(endAt, out TimeOnly endTimeOut);
+        
+        var freeSlots = _context.Slots!.Where(s =>
+            s.ParkingPlaceId == parkingPlaceId && s.SlotStatus == "Available")
+            .Select(s => new
+            {
+                s.SlotId,
+                s.SlotNumber,
+                s.Reservations,
+                s.ZoneId
+            });
+
+        var filteredSlots = new List<FreeSlotsResponseDto>();
+        var flag = true;
+        
+        foreach (var slot in freeSlots)
+        {
+            foreach (var reservation in slot.Reservations)
+            {
+                if(reservation.ReservationStartAt >= startTimeOut && reservation.ReservationEndAt <= endTimeOut)
+                {
+                    flag = false;
+                }
+                    
+            }
+            
+            if (flag)
+            {
+                var zone = _context.Zones!.Where(z => z.ZoneId == slot.ZoneId);
+                filteredSlots.Add(new FreeSlotsResponseDto()
+                {
+                    SlotId = slot.SlotId,
+                    SlotNumber = slot.SlotNumber,
+                    ZoneId = slot.ZoneId,
+                    ZoneName = zone.Select(z => z.ZoneName).FirstOrDefault()
+                    
+                });
+            }
+        }
+        
+        return Ok(new
+        {
+            slots = filteredSlots
         });
     }
 }

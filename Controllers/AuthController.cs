@@ -100,10 +100,7 @@ public class AuthController : ControllerBase
         }
 
         var employee = await _context.Employees!.FirstOrDefaultAsync(e => e.Email == loginDto.Email);
-        if (employee == null)
-        {
-            return BadRequest(new {message = "Invalid credentials"});
-        }
+        var role = "";
 
         if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
         {
@@ -124,6 +121,13 @@ public class AuthController : ControllerBase
         employee.Token = jwtTokens.Token;
         await _context.SaveChangesAsync();
 
+        var parkingPlaceId = "";
+
+        if (employee.Role == "Operator")
+        {
+            parkingPlaceId = employee.OperatorParkingPlace.ParkingPlaceId;
+        }
+        
         var user = new
         {
             Id = employee.EmployeeId,
@@ -132,6 +136,7 @@ public class AuthController : ControllerBase
             Email = employee.Email,
             Role = employee.Role,
             ProfilePicture = employee.ProfilePicture,
+            ParkingPlaceId = parkingPlaceId
         };
         
         
@@ -217,7 +222,7 @@ public class AuthController : ControllerBase
         };
     }
 
-    private string RandomString(int length)
+    private static string RandomString(int length)
     { 
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz_"; 
         return new string(Enumerable.Repeat(chars, length)

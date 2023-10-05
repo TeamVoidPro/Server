@@ -17,12 +17,14 @@ public class Zones
     public required decimal ZonePrice { get; set; }
 
     public string? ZoneDescription { get; set; }
-    
-    public DateTime ZoneCreatedDate { get; set; } = DateTime.Now;
+
+    public DateTime ZoneCreatedDate { get; set; } 
 
     public string ParkingPlaceId { get; set; } = null!;
     
     public ParkingPlace ParkingPlace { get; set; } = null!;
     
     public ICollection<ZonePlan> ZonePlans { get; set; } = null!;
+    
+    public ICollection<Slot> Slots { get; set; } = null!;
 }
