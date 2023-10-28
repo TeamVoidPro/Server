@@ -80,5 +80,24 @@ public class ParkingPlacesController : ControllerBase
         });
         
     }
+    
+    [HttpGet("get-parking-place-by-operator/{operatorId}")]
+    public async Task<IActionResult> GetParkingPlaceByOperator(string operatorId)
+    {
+        var parkingPlace = await _context.ParkingPlaces!.FirstOrDefaultAsync(p => p.ParkingPlaceOperatorId == operatorId);
+
+        if (parkingPlace == null)
+        {
+            return NotFound(new
+            {
+                message = "Parking place not found"
+            });
+        }
+
+        return Ok(new
+        {
+            data = parkingPlace
+        });
+    }
 
 }

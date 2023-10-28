@@ -61,4 +61,5 @@ public class ParkingPlace
     public ICollection<ComplianceMonitoring> ComplianceMonitoring { get; set; } = null!;
     
     public ICollection<Issues> Issues { get; set; } = null!;
+    
 }

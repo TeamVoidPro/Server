@@ -63,6 +63,10 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<DriverRefreshToken>? DriverRefreshTokens { get; set; } = null!;
     
     public DbSet<VerificationCodes>? VerificationCodes { get; set; }
+    
+    public DbSet<OnsiteReservations>? OnsiteReservations { get; set; }
+    
+    public DbSet<OnsiteReservations>? OnlineReservations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -140,30 +144,18 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasForeignKey(s => s.SlotId)
             .OnDelete(DeleteBehavior.SetNull);
         
-        modelBuilder.Entity<Reservation>()
-            .HasOne(p => p.ParkingPlaceOperator)
-            .WithMany(p => p.Reservation)
-            .HasForeignKey(e => e.ParkingPlaceOperatorId)
-            .OnDelete(DeleteBehavior.SetNull);
+        // modelBuilder.Entity<Reservation>()
+        //     .HasOne(p => p.ParkingPlaceOperator)
+        //     .WithMany(p => p.Reservation)
+        //     .HasForeignKey(e => e.ParkingPlaceOperatorId)
+        //     .OnDelete(DeleteBehavior.SetNull);
         
         modelBuilder.Entity<Reservation>()
             .HasOne(P => P.ParkingPlace)
             .WithMany(p => p.Reservations)
             .HasForeignKey(e => e.ParkingPlaceId)
             .OnDelete(DeleteBehavior.Restrict);
-        
-        modelBuilder.Entity<Reservation>()
-            .HasOne(v => v.Vehicle)
-            .WithMany(v => v.Reservations)
-            .HasForeignKey(e => e.VehicleNumber)
-            .OnDelete(DeleteBehavior.Restrict);
-        
-        modelBuilder.Entity<SlotReservationHistory>()
-            .HasOne(r => r.Reservation)
-            .WithOne(srh => srh.SlotReservationHistory)
-            .HasForeignKey<SlotReservationHistory>(srh => srh.ReservationId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
+
         modelBuilder.Entity<Ticket>()
             .HasOne(op => op.ParkingPlaceOperator)
             .WithMany(t => t.Ticket)
@@ -303,7 +295,38 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .OnDelete(DeleteBehavior.Cascade);
         
         
+        
+        modelBuilder.Entity<OnsiteReservations>()
+            .HasOne(p => p.ParkingPlaceOperator)
+            .WithMany(o => o.OnsiteReservations)
+            .HasForeignKey(p => p.ParkingPlaceOperatorId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<OnsiteReservations>()
+            .HasOne(r => r.Reservation)
+            .WithOne(o => o.OnsiteReservations)
+            .HasForeignKey<OnsiteReservations>(r => r.OnsiteReservationId)
+            .OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<BookingReservation>()
+            .HasOne(r => r.Reservation)
+            .WithOne(b => b.BookingReservation)
+            .HasForeignKey<BookingReservation>(r => r.BookingReservationId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<OnlineReservations>()
+            .HasOne(r => r.Vehicle)
+            .WithMany(o => o.OnlineReservations)
+            .HasForeignKey(r => r.VehicleNumber)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<OnlineReservations>()
+            .HasOne(r => r.Reservation)
+            .WithOne(o => o.OnlineReservations)
+            .HasForeignKey<OnlineReservations>(r => r.OnlineReservationId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        
 
         modelBuilder.Entity<Employee>()
             .HasData(
