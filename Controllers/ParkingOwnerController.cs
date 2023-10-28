@@ -28,7 +28,7 @@ public class ParkingOwnerController : ControllerBase
         }
 
         var owner = await _context.ParkingPlaceOwners!.FirstOrDefaultAsync(e => e.Email == ownerDto.Email);
-        if (owner == null)
+        if (owner != null)
         {
             return BadRequest("Owner object is null");
         }

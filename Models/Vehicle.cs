@@ -50,4 +50,6 @@ public class Vehicle
     public string? BookingPlanId { get; set; } = null!;
     
     public ZonePlan ZonePlan { get; set; } = null!;
+    
+    public ICollection<Reservation>  Reservations { get; set; } = null!;
 }

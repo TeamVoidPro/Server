@@ -22,4 +22,7 @@ public class ParkingPlaceDto
     
     [Required(ErrorMessage = "Parking place operator id is required.")]
     public string? ParkingPlaceOperatorId { get; set; }
+
+    public static string Latitude { get; set; }
+    public static string Longitude { get; set; }
 }

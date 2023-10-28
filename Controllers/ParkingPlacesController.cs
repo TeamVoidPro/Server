@@ -38,12 +38,14 @@ public class ParkingPlacesController : ControllerBase
                 message = "Parking place name already exists."
             });
         }
-
+        
         var newParkingPlace = new ParkingPlace
         {
             ParkingPlaceId = IdGenerator.GenerateId("PARK"),
+            Latitude = ParkingPlaceDto.Latitude,
+            Longitude = ParkingPlaceDto.Longitude,
             Name = parkingPlaceDto.Name,
-            Location = parkingPlaceDto.Location,
+            // Location = parkingPlaceDto.Location,
             Description = parkingPlaceDto.Description,
             ParkingPlaceOwnerId = parkingPlaceDto.ParkingPlaceOwnerId,
             ParkingPlaceVerifierId = parkingPlaceDto.ParkingPlaceVerifierId,

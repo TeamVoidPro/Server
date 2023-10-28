@@ -60,4 +60,6 @@ public class Reservation
     public OnlineReservations OnlineReservations { get; set; } = null!;
     
     public OnsiteReservations OnsiteReservations { get; set; } = null!;
+    
+    public Vehicle Vehicle { get; set; } = null!;
 }

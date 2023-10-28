@@ -67,4 +67,5 @@ public class ParkingPlaceOwnerDto
     public string LandImages { get; set; }
     public string NicFront { get; set; }
     public string NicBack { get; set; }
+    public bool acceptStatus { get; set; }
 }

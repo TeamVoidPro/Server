@@ -6,6 +6,7 @@ namespace Server.Models;
 
 public class ParkingPlaceOwner
 {
+
     [Key]
     [Column(TypeName = "varchar(20)")]
     public required string OwnerId { get; set; }
@@ -122,6 +123,7 @@ public class ParkingPlaceOwner
     
     public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
     
+    
     [Column(TypeName = "varchar(512)")]
     [AllowNull]
     public string Token { get; set; } = null!;
@@ -129,4 +131,5 @@ public class ParkingPlaceOwner
     public ICollection<ParkingPlace>? ParkingPlaces { get; set; }
     
     public ICollection<AwaitedParkingPlaces>? AwaitedParkingPlaces { get; set; }
+    public bool acceptStatus { get; set; }
 }
