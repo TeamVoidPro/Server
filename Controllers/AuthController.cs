@@ -20,13 +20,21 @@ public class AuthController : ControllerBase
     private readonly ApplicationDbContext _context;
     private readonly JWTConfig _jwtConfig;
     private readonly TokenValidationParameters _tokenValidationParameters;
-
-
+    
     public AuthController(ApplicationDbContext context, IOptions<JWTConfig> jwtConfig, TokenValidationParameters tokenValidationParameters)
     {
         _context = context;
         _jwtConfig = jwtConfig.Value;
         _tokenValidationParameters = tokenValidationParameters;
+    }
+    
+    [HttpGet("test")]
+    public IActionResult Test()
+    {
+        return Ok(new
+        {
+            message = "Test"
+        });
     }
     
 
