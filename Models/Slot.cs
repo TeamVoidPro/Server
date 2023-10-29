@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Server.Models;
 
@@ -32,14 +33,10 @@ public class Slot
     
     public ParkingPlace ParkingPlace { get; set; } = null!;
     
-    [Required(ErrorMessage = "Is available is required")]
-    [RegularExpression( @"^[0-1]+$", ErrorMessage = "Is available must be a number")]
-    public required bool IsAvailable { get; set; }
-    
     public required string SlotStatus { get; set; }
     
     public string Description { get; set; } = null!;
-    
+
     public DateTime SlotCreatedDate { get; set; } = DateTime.Now;
     
     public DateTime ReservedAt { get; set; }
