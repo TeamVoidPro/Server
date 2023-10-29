@@ -323,7 +323,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasData(
                 new Employee
                 {
-                    EmployeeId = "EMP_0023_4589",
+                    EmployeeId = "EMP_0023_4590",
                     FirstName = "Viharsha",
                     LastName = "Pramodi",
                     Email = "viharshapramodi@gmail.com",
@@ -406,7 +406,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 {
                     ParkingPlaceId = "PARK_0001_0001",
                     ParkingPlaceOwnerId = "OWNER_0001_0001",
-                    Name = "Danodya Supun",
+                    Name = "UCSC PArking Area",
                     ParkingPlaceOperatorId = "EMP_0022_4589",
                     ParkingPlaceVerifierId = "EMP_0022_4588",
                     Location = "Wadduwa",

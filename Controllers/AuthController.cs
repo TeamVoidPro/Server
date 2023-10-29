@@ -125,7 +125,8 @@ public class AuthController : ControllerBase
 
         if (employee.Role == "Operator")
         {
-            parkingPlaceId = employee.OperatorParkingPlace.ParkingPlaceId;
+            var parkingPlace = await _context.ParkingPlaces!.FirstOrDefaultAsync(p => p.ParkingPlaceOperatorId == employee.EmployeeId);
+            parkingPlaceId = parkingPlace!.ParkingPlaceId;
         }
         
         var user = new

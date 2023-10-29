@@ -133,50 +133,27 @@ public class SlotController : ControllerBase
     [HttpGet("get-free-slots-by-time-duration/{parkingPlaceId}/{startAt}/{endAt}")]
     public IActionResult GetFreeSlotsByTimeDuration(string parkingPlaceId, string startAt, string endAt)
     {
-        TimeOnly.TryParse(startAt, out TimeOnly startTimeOut);
-        TimeOnly.TryParse(endAt, out TimeOnly endTimeOut);
-        
-        var freeSlots = _context.Slots!.Where(s =>
-            s.ParkingPlaceId == parkingPlaceId && s.SlotStatus == "Available")
-            .Select(s => new
-            {
-                s.SlotId,
-                s.SlotNumber,
-                s.Reservations,
-                s.ZoneId
-            });
+        DateTime startTime = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(startAt)).DateTime;
+        DateTime endTime = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(endAt)).DateTime;
+        DateTime today = DateTime.UtcNow.Date;
 
-        var filteredSlots = new List<FreeSlotsResponseDto>();
-        var flag = true;
-        
-        foreach (var slot in freeSlots)
-        {
-            foreach (var reservation in slot.Reservations)
-            {
-                if(reservation.ReservationStartAt >= startTimeOut && reservation.ReservationEndAt <= endTimeOut)
-                {
-                    flag = false;
-                }
-                    
-            }
-            
-            if (flag)
-            {
-                var zone = _context.Zones!.Where(z => z.ZoneId == slot.ZoneId);
-                filteredSlots.Add(new FreeSlotsResponseDto()
-                {
-                    SlotId = slot.SlotId,
-                    SlotNumber = slot.SlotNumber,
-                    ZoneId = slot.ZoneId,
-                    ZoneName = zone.Select(z => z.ZoneName).FirstOrDefault()
-                    
-                });
-            }
-        }
+        startTime = startTime.AddHours(5).AddMinutes(30);
+        endTime = endTime.AddHours(5).AddMinutes(30);
+
+        DateTime startDateAndTime = today.AddHours(startTime.Hour).AddMinutes(startTime.Minute).AddSeconds(startTime.Second);
+        DateTime endDateAndTime = today.AddHours(endTime.Hour).AddMinutes(endTime.Minute).AddSeconds(endTime.Second);
+
+        var freeSlots = _context.Slots!.Where(s => 
+            s.SlotStatus == "Available"
+            && (s.ReservedAt >= startDateAndTime && s.ReservedAt >= endDateAndTime || s.ReservedUntil <= startDateAndTime && s.ReservedUntil <= endDateAndTime)
+        ).ToList();
         
         return Ok(new
         {
-            slots = filteredSlots
+            parkingPlace = parkingPlaceId,
+            startAt = startDateAndTime,
+            endAt = endDateAndTime,
+            slots = freeSlots
         });
     }
 }
