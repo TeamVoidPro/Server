@@ -227,15 +227,38 @@ public class DriverController:ControllerBase
         });
     }
     
-    [HttpGet("get-nearest-park")]
-    [Authorize]
+    [HttpPost("get-nearest-park")]
+    // [Authorize]
     public async Task<IActionResult> GetParkingPlaces([FromBody] GetNearestParkDto getNearestParkDto)
     {
-        if (!ModelState.IsValid)
+        // if (!ModelState.IsValid)
+        // {
+        //     return BadRequest(ModelState);
+        // }
+        // var parkingPlaces = await _context.ParkingPlaces!.ToListAsync();
+        // var parkingPlaces = await _context.ParkingPlaces!.ToListAsync();
+        
+        //generate random parking places
+        var parkingPlaces = new List<ParkingPlace>();
+        var random = new Random();
+        var count = random.Next(1, 100);
+        for (int i = 0; i < count; i++)
         {
-            return BadRequest(ModelState);
+            var parkingPlace = new ParkingPlace
+            {
+                ParkingPlaceId = random.Next(1, 1000).ToString(),
+                Name = $"Parking Place {i + 1}",
+                Latitude = (random.NextDouble() * 180 - 90).ToString(), // Random latitude between -90 and 90
+                Longitude = (random.NextDouble() * 360 - 180).ToString(), // Random longitude between -180 and 180
+                Description = $"Description for Parking Place {i + 1}",
+                ParkingPlaceOwnerId = random.Next(1, 100).ToString(),
+                ParkingPlaceVerifierId = random.Next(1, 100).ToString(),
+                ParkingPlaceOperatorId = random.Next(1, 100).ToString(),
+            };
+
+            parkingPlaces.Add(parkingPlace);
         }
-        var parkingPlaces = await _context.ParkingPlaces!.ToListAsync();
+        
         return Ok(new
         {
             message = "Parking places retrieved successfully",

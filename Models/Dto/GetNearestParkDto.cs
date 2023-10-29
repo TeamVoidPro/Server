@@ -12,6 +12,13 @@ public class GetNearestParkDto
     public required string DriverLatitude { get; set; }
     
     [Required(ErrorMessage = "radius is required.")]
-    public required string Radius { get; set; }
+    public required int Radius { get; set; }
+    
+    // [Required(ErrorMessage = "Arrival time is required.")]
+    public required string ArrivalTime { get; set; }
+    
+    // [Required(ErrorMessage = "Departure time is required.")]
+    public required string DepartureTime { get; set; }
+    
     
 }

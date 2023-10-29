@@ -8,6 +8,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         
     }
     
@@ -330,9 +331,10 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 
         modelBuilder.Entity<Employee>()
             .HasData(
+                // Administrator
                 new Employee
                 {
-                    EmployeeId = "EMP_0023_4589",
+                    EmployeeId = "EMP_0024_4589",
                     FirstName = "Viharsha",
                     LastName = "Pramodi",
                     Email = "viharshapramodi@gmail.com",
@@ -346,8 +348,216 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                     AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
                     Token = ""
+                },
+                // Parking Place Operator
+                new Employee
+                {
+                    EmployeeId = "EMP_0023_4590",
+                    FirstName = "Prasad",
+                    LastName = "Udara",
+                    Email = "parkingopeator@parkease.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Prasad@123"),
+                    Role = "ParkingPlaceOperator",
+                    ContactNumber = "0711234567",
+                    AddressLine1 = "108/5 A",
+                    Street = "Weragama Road",
+                    City = "Wadduwa",
+                    Nic = "199914212942",
+                    ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
+                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    Token = ""
+                },
+                // Parking Place Verifier
+                new Employee
+                {
+                    EmployeeId = "EMP_0025_4591",
+                    FirstName = "Dinethi",
+                    LastName = "Wickramasinghe",
+                    Email = "dinethi@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Dinethi@123"),
+                    Role = "ParkingPlaceVerifier",
+                    ContactNumber = "0711234567",
+                    AddressLine1 = "108/5 A",
+                    Street = "Weragama Road",
+                    City = "Wadduwa",
+                    Nic = "199914212953",
+                    ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
+                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    Token = ""
                 }
             );
+        
+        modelBuilder.Entity<ParkingPlaceOwner>()
+            .HasData(
+                new ParkingPlaceOwner
+                {
+                    OwnerId = "OWN_0023_4589",
+                    FirstName = "Isurika ",
+                    LastName = " Arunodi",
+                    Email = "isu@test.com",
+                    Password = "12345678",
+                    AddressLine1 = "No 12",
+                    City = "Colombo",
+                    ContactNumber = "0711234567",
+                    NIC = "199914212942",
+                    NICFront = "",
+                    NICBack = "",
+                    Token = "w"
+                },
+                new ParkingPlaceOwner
+                {
+                    OwnerId = "OWN_0024_4591",
+                    FirstName = "Isurika ",
+                    LastName = " Kandasamy",
+                    Email = "isu2@test.com",
+                    Password = "12345678",
+                    AddressLine1 = "No 12",
+                    City = "Colombo",
+                    ContactNumber = "0711234567",
+                    NIC = "199914212944",
+                    NICFront = "",
+                    Token = "",
+                    NICBack = "w"
+                },
+                new ParkingPlaceOwner
+                {
+                    OwnerId = "OWN_0025_45819",
+                    FirstName = "Isurika ",
+                    LastName = " Pramodi",
+                    Email = "isu3@test.com",
+                    Password = "12345678",
+                    AddressLine1 = "No 12",
+                    City = "Colombo",
+                    ContactNumber = "0711234567",
+                    NIC = "199914212942",
+                    NICFront = "",
+                    NICBack = "",
+                    Token = "w"
+                },
+                new ParkingPlaceOwner
+                {
+                    OwnerId = "OWN_0026_45829",
+                    FirstName = "Isurika ",
+                    LastName = " Arunodi",
+                    Email = "isu4@test.com",
+                    Password = "12345678",
+                    AddressLine1 = "No 12",
+                    City = "Colombo",
+                    ContactNumber = "0711234567",
+                    NIC = "199914212943",
+                    NICFront = "",
+                    NICBack = "",
+                    Token = "w"
+                }
+            );
+        
+        // Parking Places
+        modelBuilder.Entity<ParkingPlace>().
+            HasData
+            (
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_001",
+                Description = "This is a parking place for UCSC.",
+                Name = "UCSC Parking Place",
+                Latitude = "6.9037046",
+                Longitude = "79.8597409",
+                ParkingPlaceOwnerId = "OWN_0023_4589"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_002",
+                Name = "Thirsten College Car Park",
+                Description = "This is a parking place for Thirsten College.",
+                Latitude = "6.903758",
+                Longitude = "79.858857",
+                ParkingPlaceOwnerId = "OWN_0023_4589"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_003",
+                Description = "This is a parking place for Alfred's car.",
+                Name = "Alfred Parking Place",
+                Latitude = "6.9028807",
+                Longitude = "79.8574223",
+                ParkingPlaceOwnerId = "OWN_0023_4589"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_004",
+                Description = "This is a parking place for Elite's car.",
+                Name = "Elite Parking Place",
+                Latitude = "6.896073",
+                Longitude = "79.858103",
+                ParkingPlaceOwnerId = "OWN_0023_4589"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_005",
+                Description = "This is a parking place for Colombo's car.",
+                Name = "Colombo Parking Spot 1",
+                Latitude = "6.927062",
+                Longitude = "79.861774",
+                ParkingPlaceOwnerId = "OWN_0023_4590"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_006",
+                Description = "This is a parking place for City Center.",
+                Name = "City Center Parking Lot",
+                Latitude = "6.934814",
+                Longitude = "79.845247",
+                ParkingPlaceOwnerId = "OWN_0023_4591"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_007",
+                Description = "This is a parking place for Colombo's car.",
+                Name = "Colombo Parking Spot 2",
+                Latitude = "6.938403",
+                Longitude = "79.863279",
+                ParkingPlaceOwnerId = "OWN_0023_4592"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_008",
+                Description = "This is a parking place for Downtown.",
+                Name = "Downtown Parking Zone",
+                Latitude = "6.936579",
+                Longitude = "79.853734",
+                ParkingPlaceOwnerId = "OWN_0023_4593"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_009",
+                Description = "This is a parking place for Central Colombo.",
+                Name = "Central Colombo Car Park",
+                Latitude = "6.942156",
+                Longitude = "79.853205",
+                ParkingPlaceOwnerId = "OWN_0023_4594"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_010",
+                Name = "Colombo Parking Spot 29",
+                Description = "This is a parking place for Colombo's car.",
+                Latitude = "6.926507",
+                Longitude = "79.859743",
+                ParkingPlaceOwnerId = "OWN_0023_4619"
+            },
+            new ParkingPlace
+            {
+                ParkingPlaceId = "Park_011",
+                Description = "This is a parking place for Colombo's car.",
+                Name = "Colombo Parking Spot 30",
+                Latitude = "6.920345",
+                Longitude = "79.962573",
+                ParkingPlaceOwnerId = "OWN_0023_4620"
+            }
+            );
+
+
+
     }
 }
 
