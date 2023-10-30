@@ -80,6 +80,49 @@ public class ParkingPlacesController : ControllerBase
         
     }
     
+    [HttpGet("get-all-parking-places")]
+    public async Task<IActionResult> GetAllParkingPlaces()
+    {
+        var parkingPlaces = await _context.ParkingPlaces!.ToListAsync();
+       
+        if (parkingPlaces == null)
+        {
+            return NotFound(new
+            {
+                message = "Parking place not found"
+            });
+        }
+
+        var parkingPlacesList = new List<ParkingPlacesResponseDto>();
+
+        foreach (var parkingPlace in parkingPlaces)
+        {
+            var parkingOwner =
+                await _context.ParkingPlaceOwners!.FirstOrDefaultAsync(
+                    p => p.OwnerId == parkingPlace.ParkingPlaceOwnerId);
+            var parkingOperator =
+                await _context.Employees!.FirstOrDefaultAsync(p => p.EmployeeId == parkingPlace.ParkingPlaceOperatorId);
+            var parkingVerifier =
+                await _context.Employees!.FirstOrDefaultAsync(p => p.EmployeeId == parkingPlace.ParkingPlaceVerifierId);
+
+            var parkingPlaceResponseDto = new ParkingPlacesResponseDto
+            {
+                ParkingPlaceId = parkingPlace.ParkingPlaceId,
+                Name = parkingPlace.Name,
+                Location = parkingPlace.Location,
+                ParkingOperator = parkingOperator!.FirstName+" "+ parkingOperator.LastName,
+                ParkingOwner = parkingOwner!.FullName,
+                ParkingVerifier = parkingVerifier!.FirstName+" "+ parkingVerifier.LastName
+            };
+            parkingPlacesList.Add(parkingPlaceResponseDto);
+        }
+
+        return Ok(new
+        {
+            data = parkingPlacesList
+        });
+    }
+    
     [HttpGet("get-parking-place-by-operator/{operatorId}")]
     public async Task<IActionResult> GetParkingPlaceByOperator(string operatorId)
     {

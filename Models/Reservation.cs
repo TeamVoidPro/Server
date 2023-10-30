@@ -23,13 +23,13 @@ public class Reservation
     [Column(TypeName = "decimal(8,2)")]
     public required decimal TotalPayment { get; set; } 
     
-    public required DateTime ReservationStartAt { get; set; }
+    public required TimeOnly ReservationStartAt { get; set; }
     
-    public required DateTime ReservationEndAt { get; set; }
+    public required TimeOnly ReservationEndAt { get; set; }
     
     public required DateTime ReservedAt { get; set; }
     
-    public required DateTime ReservationDate { get; set; }
+    public required DateOnly ReservationDate { get; set; }
     
     public required DateTime ParkedAt { get; set; }
     

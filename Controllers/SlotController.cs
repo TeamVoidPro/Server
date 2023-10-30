@@ -46,7 +46,6 @@ public class SlotController : ControllerBase
             SlotCategoryId = slotDto.SlotCategoryId,
             ZoneId = slotDto.ZoneId,
             ParkingPlaceId = slotDto.ParkingPlaceId,
-            IsAvailable = slotDto.IsAvailable,
             SlotStatus = slotDto.SlotStatus,
             Description = slotDto.Description,
             SlotCreatedDate = DateTime.UtcNow,
@@ -77,7 +76,6 @@ public class SlotController : ControllerBase
                 slot.SlotCategoryId,
                 slot.ZoneId,
                 slot.ParkingPlaceId,
-                slot.IsAvailable,
                 slot.SlotStatus,
                 slot.Description,
                 slot.SlotCreatedDate,
@@ -111,7 +109,6 @@ public class SlotController : ControllerBase
                     s.SlotNumber,
                     s.SlotCategoryId,
                     s.ParkingPlaceId,
-                    s.IsAvailable,
                     s.SlotStatus,
                     s.Description,
                     s.SlotCreatedDate,
@@ -130,6 +127,33 @@ public class SlotController : ControllerBase
         return Ok(new
         {
             data = slots
+        });
+    }
+    
+    [HttpGet("get-free-slots-by-time-duration/{parkingPlaceId}/{startAt}/{endAt}")]
+    public IActionResult GetFreeSlotsByTimeDuration(string parkingPlaceId, string startAt, string endAt)
+    {
+        DateTime startTime = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(startAt)).DateTime;
+        DateTime endTime = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(endAt)).DateTime;
+        DateTime today = DateTime.UtcNow.Date;
+
+        startTime = startTime.AddHours(5).AddMinutes(30);
+        endTime = endTime.AddHours(5).AddMinutes(30);
+
+        DateTime startDateAndTime = today.AddHours(startTime.Hour).AddMinutes(startTime.Minute).AddSeconds(startTime.Second);
+        DateTime endDateAndTime = today.AddHours(endTime.Hour).AddMinutes(endTime.Minute).AddSeconds(endTime.Second);
+
+        var freeSlots = _context.Slots!.Where(s => 
+            s.SlotStatus == "Available"
+            && (s.ReservedAt >= startDateAndTime && s.ReservedAt >= endDateAndTime || s.ReservedUntil <= startDateAndTime && s.ReservedUntil <= endDateAndTime)
+        ).ToList();
+        
+        return Ok(new
+        {
+            parkingPlace = parkingPlaceId,
+            startAt = startDateAndTime,
+            endAt = endDateAndTime,
+            slots = freeSlots
         });
     }
 }
