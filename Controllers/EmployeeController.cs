@@ -92,4 +92,34 @@ public class EmployeeController : ControllerBase
             message = "Employee deleted successfully"
         });
     }
+    
+    // [HttpPost("update-employee")]
+    // public IActionResult UpdateEmployee([FromBody] UpdateEmployeeDto updateEmployeeDto)
+    // {
+    //     var employee = _context.Employees!.FirstOrDefault(e => e.EmployeeId == updateEmployeeDto.EmployeeId);
+    //
+    //     if (employee == null)
+    //     {
+    //         return BadRequest(new
+    //         {
+    //             message = "Employee not found"
+    //         });
+    //     }
+    //
+    //     employee.FirstName = updateEmployeeDto.FirstName;
+    //     employee.LastName = updateEmployeeDto.LastName;
+    //     employee.AddressLine1 = updateEmployeeDto.AddressLine1;
+    //     employee.Street = updateEmployeeDto.Street;
+    //     employee.City = updateEmployeeDto.City;
+    //     employee.ContactNumber = updateEmployeeDto.ContactNumber;
+    //     employee.Nic = updateEmployeeDto.Nic;
+    //
+    //     _context.Update(employee);
+    //     _context.SaveChanges();
+    //
+    //     return Ok(new
+    //     {
+    //         message = "Employee Updated Successfully"
+    //     });
+    // }
 }
