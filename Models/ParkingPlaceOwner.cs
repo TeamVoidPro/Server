@@ -50,11 +50,7 @@ public class ParkingPlaceOwner
     [MaxLength(10, ErrorMessage = "Contact number must be 10 digits")]
     [MinLength(10, ErrorMessage = "Contact number must be 10 digits")]
     public required string ContactNumber { get; set; }
-    
-    [Required (ErrorMessage = "Deed copy is required")]
-    [Column(TypeName = "varchar(256)")]
-    public required string DeedCopy { get; set; }
-    
+
     [Required (ErrorMessage = "NIC is required")]
     [Column(TypeName = "varchar(12)")]
     [MaxLength(12, ErrorMessage = "NIC must be 12 digits")]
@@ -63,6 +59,13 @@ public class ParkingPlaceOwner
     public required string Nic { get; set; }
     
     public DateTime AccountCreatedAt { get; set; } = DateTime.Now;
+    
+    public string IdentificationMethod { get; set; } = null!;
+    
+    public string IdentificationFrontImage { get; set; } = null!;
+    
+    public string IdentificationBackImage { get; set; } = null!;
+    
     
     [Column(TypeName = "varchar(512)")]
     [AllowNull]

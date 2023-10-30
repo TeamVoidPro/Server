@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Server.Models;
 
@@ -19,16 +20,27 @@ public class AwaitedParkingPlaces
     [Required(ErrorMessage = "City is required")]
     public required string City { get; set; }
     
+    [Required(ErrorMessage = "Province is required")]
+    public required string Province { get; set; }
+    
     [Required(ErrorMessage = "Deed copy is required")]
     public required string DeedCopy { get; set; }
     
+    public string LandMapImage { get; set; } = null!;
+    
+    public string LandImages { get; set; } = null!;
+    
+    public double Longitude { get; set; }  
+    
+    public double Latitude { get; set; } 
+    
     public required string ConfirmationStatus { get; set; }
     
-    public DateTime ConfirmationDate { get; set; }
+    public DateTime? ConfirmationDate { get; set; }
     
     public required string ConfirmationReport { get; set; }
     
-    public DateTime RegistrationDate { get; set; }
+    public DateTime? RegistrationDate { get; set; }
     
     public string RejectionReason { get; set; } = null!;
     
@@ -38,9 +50,10 @@ public class AwaitedParkingPlaces
     public required ParkingPlaceOwner ParkingPlaceOwner { get; set; }
     
     [Column(TypeName = "varchar(20)")]
+    [AllowNull]
     public string ParkingPlaceVerifierId { get; set; } = null!;
     
     public Employee ParkingPlaceVerifier { get; set; } = null!;
     
-    public DateTime InspectionDate { get; set; }
+    public DateTime? InspectionDate { get; set; }
 }
