@@ -89,6 +89,8 @@ public class Employee
     [NotMapped]
     public ParkingPlace OperatorParkingPlace { get; set; } = null!;
 
+    public ICollection<VerificationSchedule> VerificationSchedule { get; set; } = null!;
+
     public ICollection<Ticket> Ticket { get; set; } = null!;
     
     public ICollection<AwaitedParkingPlaces> AwaitedParkingPlaces { get; set; } = null!;

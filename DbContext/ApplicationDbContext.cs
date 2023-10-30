@@ -67,6 +67,10 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     
     public DbSet<OnsiteReservations>? OnlineReservations { get; set; }
 
+    public DbSet<OnSiteVerifications>? OnsiteVerifications { get; set; }
+
+    public DbSet<VerificationSchedule>? VerificationSchedule { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Vehicle>()
@@ -316,7 +320,24 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(o => o.OnlineReservations)
             .HasForeignKey<OnlineReservations>(r => r.OnlineReservationId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
+        modelBuilder.Entity<OnSiteVerifications>()
+            .HasOne(p => p.ParkingPlaceOwner)
+            .WithOne(o => o.OnSiteVerifications)
+            .HasForeignKey<OnSiteVerifications>(o => o.OwnerId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<VerificationSchedule>()
+            .HasOne(p => p.ParkingPlaceOwner)
+            .WithOne(v => v.VerificationSchedule)
+            .HasForeignKey<VerificationSchedule>(o => o.OwnerId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<VerificationSchedule>()
+            .HasOne(e => e.Employee)
+            .WithMany(v => v.VerificationSchedule)
+            .HasForeignKey(e => e.EmployeeId)
+            .OnDelete(DeleteBehavior.NoAction);
         
 
         modelBuilder.Entity<Employee>()
@@ -386,18 +407,87 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasData(
                 new ParkingPlaceOwner
                 {
-                    OwnerId = "OWNER_0001_0001",
-                    FullName = "Danodya Supun",
+                    OwnerId = "OWN_0001_0001",
+                    FirstName = "Danodya",
+                    LastName = "Supun",
                     Email = "danodya_s@yahoo.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("Danodya@123"),
                     ContactNumber = "0711234567",
                     AddressLine1 = "108/5 A",
                     Street = "Weragama Road",
                     City = "Wadduwa",
+                    Province = "Western",
                     Nic = "199914212942",
-                    AccountCreatedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    LandAddressNumber = "No.15",
+                    LandAddressStreet = "Malwala",
+                    LandAddressCity = "Rathnapura",
+                    LandAddressProvince = "Sabaragamuwa",
+                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
                     DeedCopy = "https://i.imgur.com/1qk4XKn.jpg",
+                    LandMap = "https://i.imgur.com/1qk4XKn.jpg",
+                    LandImages = "https://i.imgur.com/1qk4XKn.jpg",
+                    NicBack = "https://i.imgur.com/1qk4XKn.jpg",
+                    NicFront = "https://i.imgur.com/1qk4XKn.jpg",
                     Token = ""
+                });
+
+        modelBuilder.Entity<ParkingPlaceOwner>()
+            .HasData(
+                new ParkingPlaceOwner
+                {
+                    OwnerId = "OWN_0001_0002",
+                    FirstName = "Tharusha",
+                    LastName = "Atukorala",
+                    Email = "atukoralat@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Tharusha@123"),
+                    ContactNumber = "0714900086",
+                    AddressLine1 = "No.15",
+                    Street = "Malwala",
+                    City = "Rathnapura",
+                    Province = "Sabaragamuwa",
+                    Nic = "200103604251",
+                    LandAddressNumber = "No.210",
+                    LandAddressStreet = "Rilhena",
+                    LandAddressCity = "Pelmadulla",
+                    LandAddressProvince = "Sabaragamuwa",
+                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    DeedCopy = "https://i.imgur.com/1qk4XKn.jpg",
+                    LandMap = "https://i.imgur.com/1qk4XKn.jpg",
+                    LandImages = "https://i.imgur.com/1qk4XKn.jpg",
+                    NicBack = "https://i.imgur.com/1qk4XKn.jpg",
+                    NicFront = "https://i.imgur.com/1qk4XKn.jpg",
+                    Token = "",
+                    acceptStatus = true
+                });
+
+        modelBuilder.Entity<ParkingPlaceOwner>()
+            .HasData(
+                new ParkingPlaceOwner
+                {
+                    OwnerId = "OWN_0001_0003",
+                    FirstName = "Dinethi",
+                    LastName = "Hansika",
+                    Email = "dinethi@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Dinethi@123"),
+                    ContactNumber = "0711234567",
+                    AddressLine1 = "108/5 A",
+                    Street = "Main Street",
+                    City = "Balangoda",
+                    Province = "Sabaragamuwa",
+                    Nic = "199914214567",
+                    LandAddressNumber = "No.300",
+                    LandAddressStreet = "Opanayaka",
+                    LandAddressCity = "Balangoda",
+                    LandAddressProvince = "Sabaragamuwa",
+                    AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    DeedCopy = "https://i.imgur.com/1qk4XKn.jpg",
+                    LandMap = "https://i.imgur.com/1qk4XKn.jpg",
+                    LandImages = "https://i.imgur.com/1qk4XKn.jpg",
+                    NicBack = "https://i.imgur.com/1qk4XKn.jpg",
+                    NicFront = "https://i.imgur.com/1qk4XKn.jpg",
+                    Token = "",
+                    acceptStatus = true
+                    
                 });
 
         modelBuilder.Entity<ParkingPlace>()
@@ -405,7 +495,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 new ParkingPlace
                 {
                     ParkingPlaceId = "PARK_0001_0001",
-                    ParkingPlaceOwnerId = "OWNER_0001_0001",
+                    ParkingPlaceOwnerId = "OWN_0001_0001",
                     Name = "Danodya Supun",
                     ParkingPlaceOperatorId = "EMP_0022_4589",
                     ParkingPlaceVerifierId = "EMP_0022_4588",
