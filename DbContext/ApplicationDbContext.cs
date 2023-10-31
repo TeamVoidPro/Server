@@ -51,6 +51,12 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     
     public DbSet<AwaitedParkingPlaces> AwaitedParkingPlaces { get; set; } = null!;
     
+    public DbSet<AwaitedParkingPlaceSlotCapacities> AwaitedParkingPlaceSlotCapacities { get; set; } = null!;
+    
+    public DbSet<AwaitedParkingSlotCategories> AwaitedParkingSlotCategories { get; set; } = null!;
+    
+    public DbSet<AwaitedParkingPlaceSlots> AwaitedParkingPlaceSlots { get; set; } = null!;
+
     public DbSet<ComplianceMonitoring> ComplianceMonitoring { get; set; } = null!;
     
     public DbSet<Issues> Issues { get; set; } = null!;

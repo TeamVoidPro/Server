@@ -57,10 +57,10 @@ public class ParkingOwnerController : ControllerBase
             Token = ""
         };
 
-        var awaitedParkingPlace = new AwaitedParkingPlaces()
+        var awaitedParkingPlace = new AwaitedParkingPlaces
         {
             AwaitedParkingPlacesId = IdGenerator.GenerateId("AWP"),
-            AddressLine1  = parkingOwnerDto.LandAddress1,
+            AddressLine1 = parkingOwnerDto.LandAddress1,
             Street = parkingOwnerDto.LandStreet,
             City = parkingOwnerDto.LandCity,
             Province = parkingOwnerDto.LandProvince,
@@ -76,17 +76,35 @@ public class ParkingOwnerController : ControllerBase
             RejectionReason = "",
             OwnerId = newParkingOwner.OwnerId,
             ParkingPlaceOwner = newParkingOwner,
-            InspectionDate = null
+            ParkingPlaceVerifierId = null,
+            InspectionDate = null,
+            ParkAvailable = parkingOwnerDto.ParkAvailable,
+            ParkName = parkingOwnerDto.ParkName,
+            ParkDescription = parkingOwnerDto.ParkDescription,
+            ParkWidth = parkingOwnerDto.ParkWidth,
+            ParkLength = parkingOwnerDto.ParkLength,
+            ParkCategory = parkingOwnerDto.ParkCategory,
+            NoOfStories = parkingOwnerDto.NoOfStories,
+            HasUndergroundParking = parkingOwnerDto.HasUndergroundParking,
+            ParkImage = parkingOwnerDto.ParkImage,
+            
         };
+        
+        // var awaitedParkingPlaceSlotCapacities = new AwaitedParkingPlaceSlotCapacities()
+        // {
+        //     AwaitedParkingParkingPlaceId = awaitedParkingPlace.AwaitedParkingPlacesId,
+        //     AwaitedParkingSlotCategoryId = IdGenerator.GenerateId("AWPC"),
+        //     // AwaitedParkingSlotCapacity = parkingOwnerDto.SlotCapacity1
+        // };
 
         await _context.ParkingPlaceOwners!.AddAsync(newParkingOwner);
-        await _context.AwaitedParkingPlaces!.AddAsync(awaitedParkingPlace);
+        await _context.AwaitedParkingPlaces!.AddAsync(awaitedParkingPlace); 
+        // await _context.AwaitedParkingPlaceSlotCapacities!.AddAsync(awaitedParkingPlaceSlotCapacities);
         await _context.SaveChangesAsync();
 
         return Ok(new
         {
-            message = "Parking Owner added successfully",
-            data = newParkingOwner
+            message = "Parking Owner and park details added successfully",
         });
     }
 }

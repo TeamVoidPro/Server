@@ -51,9 +51,30 @@ public class AwaitedParkingPlaces
     
     [Column(TypeName = "varchar(20)")]
     [AllowNull]
-    public string ParkingPlaceVerifierId { get; set; } = null!;
+    public string ParkingPlaceVerifierId { get; set; }
     
     public Employee ParkingPlaceVerifier { get; set; } = null!;
     
     public DateTime? InspectionDate { get; set; }
+    
+    public required string ParkAvailable { get; set; }
+    
+    public required string ParkName { get; set; }
+    
+    public string? ParkDescription { get; set; }
+    
+    public required double ParkWidth { get; set; }
+    
+    public required double ParkLength { get; set; }
+    
+    public required string ParkCategory { get; set; }
+    
+    public required int NoOfStories { get; set; }
+    
+    public required bool HasUndergroundParking { get; set; }
+    
+    public required string ParkImage { get; set; }
+
+    public ICollection<AwaitedParkingPlaceSlotCapacities> AwaitedParkingPlaceSlotCapacities { get; set; } = null!;
+
 }
