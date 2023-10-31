@@ -39,9 +39,11 @@ public class Slot
 
     public DateTime SlotCreatedDate { get; set; } = DateTime.Now;
     
-    public DateTime ReservedAt { get; set; }
+    public TimeOnly? ReservedAt { get; set; }
     
-    public DateTime ReservedUntil { get; set; }
+    public TimeOnly? ReservedUntil { get; set; }
+    
+    public string? ReservationId { get; set; }
     
     public ICollection<SlotReservationHistory> SlotReservationHistories { get; set; } = null!;
     

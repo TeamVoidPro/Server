@@ -29,7 +29,10 @@ public class Vehicle
     
     public required DateTime VehicleAddedAt { get; set; } = DateTime.Now;
     
-    [Required]
+    [Required (ErrorMessage = "Driver is required.")]
+    [Column(TypeName = "varchar(20)")]
+    public string? DriverId { get; set; }
+    
     public Driver Driver { get; set; } = null!;
 
     public ICollection<OnlineReservations> OnlineReservations { get; set; } = null!;
@@ -37,10 +40,10 @@ public class Vehicle
     public BookingReservation BookingReservation { get; set; } = null!;
     
     [Column(TypeName = "varchar(20)")]
-    public string ZonePlanId { get; set; } = null!;
+    public string? ZonePlanId { get; set; }
     
     [Column(TypeName = "varchar(20)")]
-    public string BookingPlanId { get; set; } = null!;
+    public string? BookingPlanId { get; set; } 
     
     public ZonePlan ZonePlan { get; set; } = null!;
 }
