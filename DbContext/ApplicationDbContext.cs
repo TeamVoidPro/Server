@@ -832,13 +832,14 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         
         modelBuilder.Entity<OnlineReservations>()
             .HasData(
-                
                 new OnlineReservations
                 {
                     OnlineReservationId = "RES_0001_1101",
                     VehicleNumber = "CAL-5311",
                     SpecialNotes  = "No special notes"
                 });
+        
+        
     }
 }
 
