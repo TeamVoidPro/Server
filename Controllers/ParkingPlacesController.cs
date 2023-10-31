@@ -79,6 +79,79 @@ public class ParkingPlacesController : ControllerBase
         });
         
     }
+
+    [HttpGet("get-parking-place-info/{parkingPlaceId}")]
+    public async Task<IActionResult> GetParkingPlaceInfo(string parkingPlaceId)
+    {
+        var parkingPlace = await _context.ParkingPlaces!.FirstOrDefaultAsync(p => p.ParkingPlaceId == parkingPlaceId);
+
+        if (parkingPlace == null)
+        {
+            return NotFound(new
+            {
+                message = "Parking place not found."
+            });
+        }
+
+        var parkingService = await _context.ParkingPlaceServices!.Where(p => p.ParkingPlaceId == parkingPlaceId).ToListAsync();
+        var parkingPlaceVerifiedDate =
+            await _context.AwaitedParkingPlaces!.FirstOrDefaultAsync(p => p.AwaitedParkingPlacesId == parkingPlaceId);
+        
+        
+        return Ok(new
+        {
+            services = parkingService,
+            date = parkingPlaceVerifiedDate!.ConfirmationDate,
+            parking = parkingPlace
+            
+        });
+    }
+    
+    [HttpGet("get-all-parking-places")]
+    public async Task<IActionResult> GetAllParkingPlaces()
+    {
+        var parkingPlaces = await _context.ParkingPlaces!.ToListAsync();
+       
+        if (parkingPlaces == null)
+        {
+            return NotFound(new
+            {
+                message = "Parking place not found"
+            });
+        }
+
+        var parkingPlacesList = new List<ParkingPlacesResponseDto>();
+
+        foreach (var parkingPlace in parkingPlaces)
+        {
+            var parkingOwner =
+                await _context.ParkingPlaceOwners!.FirstOrDefaultAsync(
+                    p => p.OwnerId == parkingPlace.ParkingPlaceOwnerId);
+            var parkingOperator =
+                await _context.Employees!.FirstOrDefaultAsync(p => p.EmployeeId == parkingPlace.ParkingPlaceOperatorId);
+            var parkingVerifier =
+                await _context.Employees!.FirstOrDefaultAsync(p => p.EmployeeId == parkingPlace.ParkingPlaceVerifierId);
+            var complienceMonitoringDate =
+                await _context.ComplianceMonitoring!.FirstOrDefaultAsync(p =>
+                    p.ParkingPlaceId == parkingPlace.ParkingPlaceId);
+            var parkingPlaceResponseDto = new ParkingPlacesResponseDto
+            {
+                ParkingPlaceId = parkingPlace.ParkingPlaceId,
+                Name = parkingPlace.Name,
+                Location = parkingPlace.Location,
+                ParkingOperator = parkingOperator!.FirstName+" "+ parkingOperator.LastName,
+                ParkingOwner = parkingOwner!.FullName,
+                ParkingVerifier = parkingVerifier!.FirstName+" "+ parkingVerifier.LastName,
+                Date = complienceMonitoringDate!.Date
+            };
+            parkingPlacesList.Add(parkingPlaceResponseDto);
+        }
+
+        return Ok(new
+        {
+            data = parkingPlacesList
+        });
+    }
     
     [HttpGet("get-parking-place-by-operator/{operatorId}")]
     public async Task<IActionResult> GetParkingPlaceByOperator(string operatorId)
@@ -92,7 +165,6 @@ public class ParkingPlacesController : ControllerBase
                 message = "Parking place not found"
             });
         }
-
         return Ok(new
         {
             data = parkingPlace
