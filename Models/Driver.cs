@@ -42,7 +42,7 @@ public class Driver
     [Required]
     public DateTime AccountCreatedAt { get; set; }
     
-    public string Token { get; set; } = null!;
+    public string? Token { get; set; }
     public ICollection<Vehicle>? Vehicles { get; set; } 
     
     public ICollection<ParkingPlaceRatings> ParkingPlaceRatings { get; set; } = null!;

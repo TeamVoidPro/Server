@@ -26,7 +26,7 @@ public class SlotDto
     
     public DateTime SlotCreatedDate { get; set; } 
     
-    public DateTime ReservedAt { get; set; }
+    public TimeOnly ReservedAt { get; set; }
     
-    public DateTime ReservedUntil { get; set; }
+    public TimeOnly ReservedUntil { get; set; }
 }

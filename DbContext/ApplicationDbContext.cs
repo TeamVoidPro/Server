@@ -65,7 +65,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     
     public DbSet<OnsiteReservations>? OnsiteReservations { get; set; }
     
-    public DbSet<OnsiteReservations>? OnlineReservations { get; set; }
+    public DbSet<OnlineReservations>? OnlineReservations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -406,7 +406,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 {
                     ParkingPlaceId = "PARK_0001_0001",
                     ParkingPlaceOwnerId = "OWNER_0001_0001",
-                    Name = "UCSC PArking Area",
+                    Name = "UCSC Parking Area",
                     ParkingPlaceOperatorId = "EMP_0022_4589",
                     ParkingPlaceVerifierId = "EMP_0022_4588",
                     Location = "Wadduwa",
@@ -466,8 +466,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt =  null,
+                    ReservedUntil =  null,
                 },
             new Slot
             {
@@ -479,8 +479,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -493,8 +493,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -507,8 +507,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -521,8 +521,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -535,8 +535,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -549,8 +549,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -563,8 +563,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -577,9 +577,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                
+                ReservedAt =  null,
+                ReservedUntil =  null,
             },
             new Slot
             {
@@ -591,8 +590,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -605,8 +604,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Parked",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -619,8 +618,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -633,8 +632,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Reserved",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -647,8 +646,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -661,8 +660,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Emergency",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -675,8 +674,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -689,8 +688,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -703,8 +702,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -717,8 +716,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             },
             new Slot
@@ -731,11 +730,69 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 SlotStatus = "Available",
                 Description = "Slot",
                 SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                ReservedUntil =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
                 
             }
         );
+
+        modelBuilder.Entity<Driver>()
+            .HasData(
+                new Driver
+                {
+                    DriverId = "DRIVER_0001_0001",
+                    FirstName = "Viharsha",
+                    LastName = "Jayathilake",
+                    Email = "vpjayathilake@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Viharsha@123"),
+                    ContactNumber = "0711234567",
+                    AccountCreatedAt = DateTime.UtcNow,
+                    Token = null,
+                });
+
+        modelBuilder.Entity<Vehicle>()
+            .HasData(
+                new Vehicle
+                {
+                    VehicleNumber = "CAL-5311",
+                    VehicleType = "Car",
+                    VehicleModel = "Honda Grace",
+                    VehicleAddedAt = DateTime.UtcNow,
+                    AdditionalNotes = "None",
+                    DriverId = "DRIVER_0001_0001",
+                });
+                
+                
+
+        modelBuilder.Entity<Reservation>()
+            .HasData(
+                new Reservation
+                {
+                    ReservationId = "RES_0001_1101",
+                    ZoneId = "ZONE_0001_0001",
+                    SlotId = "SLOT_0001_0002",
+                    TotalPayment = 450,
+                    ReservationStartAt = TimeOnly.Parse("08:00"),
+                    ReservationEndAt = TimeOnly.Parse("12:00"),
+                    ReservedAt = DateTime.UtcNow,
+                    ReservationDate = DateOnly.Parse("2023-10-31"),
+                    PaymentStatus = "Paid",
+                    ReservationStatus = "Active",
+                    ReservationType = "Online",
+                    ParkingPlaceId = "PARK_0001_0001",
+                    PaymentMethod = "Card",
+                    ParkedAt = null
+                });
+        
+        modelBuilder.Entity<OnlineReservations>()
+            .HasData(
+                
+                new OnlineReservations
+                {
+                    OnlineReservationId = "RES_0001_1101",
+                    VehicleNumber = "CAL-5311",
+                    SpecialNotes  = "No special notes"
+                });
     }
 }
 
