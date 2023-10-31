@@ -79,6 +79,33 @@ public class ParkingPlacesController : ControllerBase
         });
         
     }
+
+    [HttpGet("get-parking-place-info/{parkingPlaceId}")]
+    public async Task<IActionResult> GetParkingPlaceInfo(string parkingPlaceId)
+    {
+        var parkingPlace = await _context.ParkingPlaces!.FirstOrDefaultAsync(p => p.ParkingPlaceId == parkingPlaceId);
+
+        if (parkingPlace == null)
+        {
+            return NotFound(new
+            {
+                message = "Parking place not found."
+            });
+        }
+
+        var parkingService = await _context.ParkingPlaceServices!.Where(p => p.ParkingPlaceId == parkingPlaceId).ToListAsync();
+        var parkingPlaceVerifiedDate =
+            await _context.AwaitedParkingPlaces!.FirstOrDefaultAsync(p => p.AwaitedParkingPlacesId == parkingPlaceId);
+        
+        
+        return Ok(new
+        {
+            services = parkingService,
+            date = parkingPlaceVerifiedDate!.ConfirmationDate,
+            parking = parkingPlace
+            
+        });
+    }
     
     [HttpGet("get-all-parking-places")]
     public async Task<IActionResult> GetAllParkingPlaces()
@@ -104,7 +131,9 @@ public class ParkingPlacesController : ControllerBase
                 await _context.Employees!.FirstOrDefaultAsync(p => p.EmployeeId == parkingPlace.ParkingPlaceOperatorId);
             var parkingVerifier =
                 await _context.Employees!.FirstOrDefaultAsync(p => p.EmployeeId == parkingPlace.ParkingPlaceVerifierId);
-
+            var complienceMonitoringDate =
+                await _context.ComplianceMonitoring!.FirstOrDefaultAsync(p =>
+                    p.ParkingPlaceId == parkingPlace.ParkingPlaceId);
             var parkingPlaceResponseDto = new ParkingPlacesResponseDto
             {
                 ParkingPlaceId = parkingPlace.ParkingPlaceId,
@@ -112,7 +141,8 @@ public class ParkingPlacesController : ControllerBase
                 Location = parkingPlace.Location,
                 ParkingOperator = parkingOperator!.FirstName+" "+ parkingOperator.LastName,
                 ParkingOwner = parkingOwner!.FullName,
-                ParkingVerifier = parkingVerifier!.FirstName+" "+ parkingVerifier.LastName
+                ParkingVerifier = parkingVerifier!.FirstName+" "+ parkingVerifier.LastName,
+                Date = complienceMonitoringDate!.Date
             };
             parkingPlacesList.Add(parkingPlaceResponseDto);
         }
@@ -135,7 +165,6 @@ public class ParkingPlacesController : ControllerBase
                 message = "Parking place not found"
             });
         }
-
         return Ok(new
         {
             data = parkingPlace

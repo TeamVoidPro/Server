@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.JavaScript;
+
 namespace Server.Models.Dto;
 
 public class ParkingPlacesResponseDto
@@ -13,6 +15,9 @@ public class ParkingPlacesResponseDto
     public string? ParkingOwner { get; set; }
     
     public string? ParkingVerifier { get; set; }
+    
+    public DateTime? Date { get; set; }
+    
     
     
 }

@@ -736,6 +736,53 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 
             }
         );
+
+        modelBuilder.Entity<ComplianceMonitoring>()
+            .HasData(
+                new ComplianceMonitoring
+                {
+                    ComplianceMonitoringId = "MONITOR_0001_0001",
+                    Date = DateTime.UtcNow,
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ComplianceStatus = "Good",
+                    Report = "Null",
+                    Feedback = "Good",
+                    ParkingPlaceVerifierId = "EMP_0022_4588"
+                }
+            );
+        modelBuilder.Entity<ParkingPlaceServices>()
+            .HasData(
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Mitigate Parking Abuse" 
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Enhance Parking Efficiency"
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Improve Parking Experience"
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Reduce Traffic Congestion"
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Mitigate Carbon Footprint"
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Deter Anti-Social Behaviour"
+                }
+                );
     }
 }
 
