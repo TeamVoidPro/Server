@@ -688,8 +688,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -701,8 +701,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -714,8 +714,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -727,8 +727,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -740,8 +740,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -753,8 +753,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -766,8 +766,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -779,8 +779,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -792,8 +792,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -805,8 +805,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -818,8 +818,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Parked",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -831,8 +831,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -844,8 +844,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Reserved",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -857,8 +857,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -870,8 +870,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Emergency",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -883,8 +883,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -896,8 +896,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -909,8 +909,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -922,8 +922,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 },
                 new Slot
                 {
@@ -935,8 +935,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SlotStatus = "Available",
                     Description = "Slot",
                     SlotCreatedDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
-                    ReservedUntil = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    ReservedAt = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t")),
+                    ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 }
             );
     }
