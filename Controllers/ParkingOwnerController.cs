@@ -129,6 +129,19 @@ public class ParkingOwnerController : ControllerBase
                 message = "Parking Place Ratings not found"
             });
         }
+        // load driver details
+        foreach (var parkingPlaceRating in parkingPlaceRatings)
+        {
+            var driver = await _context.Drivers!.FirstOrDefaultAsync(d => d.DriverId == parkingPlaceRating.DriverId);
+            if (driver == null)
+            {
+                return BadRequest(new
+                {
+                    message = "Driver not found"
+                });
+            }
+            parkingPlaceRating.Driver = driver;
+        }
 
         return Ok(new
         {
