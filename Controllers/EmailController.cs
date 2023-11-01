@@ -46,7 +46,7 @@ public class EmailController : ControllerBase
                                         <body>
                                             <p>Hello,</p>
                                             <p>Your account has been created. Your verification code is: {verifyAccountDto.VerificationCode}</p>
-                                            <p>Please click the following link to complete your registration: <a href=""http://127.0.0.1:3000/verify-account/{verifyAccountDto.EmployeeId}"">http://127.0.0.1:3000/verify-account/{verifyAccountDto.EmployeeId}</a></p>
+                                            <p>Please click the following link to complete your registration: <a href=""http://localhost:5173/verify-account/{verifyAccountDto.EmployeeId}"">http://localhost:5173/verify-account/{verifyAccountDto.EmployeeId}</a></p>
                                             <p>Best regards,<br>Park Ease Team</p>
                                         </body>
                                     </html>";

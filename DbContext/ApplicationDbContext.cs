@@ -66,6 +66,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<SlotRatings>? SlotRatings { get; set; }
 
     public DbSet<RefreshToken>? RefreshTokens { get; set; }
+    public DbSet<DriverRefreshToken>? DriverRefreshTokens { get; set; } = null!;
     
     public DbSet<VerificationCodes>? VerificationCodes { get; set; }
     
@@ -298,6 +299,14 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(o => o.OnsiteReservations)
             .HasForeignKey<OnsiteReservations>(r => r.OnsiteReservationId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Driver>()
+            .HasMany(d => d.RefreshTokens)
+            .WithOne(d => d.Driver)
+            .HasForeignKey(r => r.DriverId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        
 
         modelBuilder.Entity<BookingReservation>()
             .HasOne(r => r.Reservation)
@@ -339,7 +348,6 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     Token = ""
                 }
             );
-
     }
 }
 

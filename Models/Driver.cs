@@ -1,13 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace Server.Models;
 
-[Index(
-    nameof(DriverId),
-    nameof(Email)
-)]
+
 public class Driver
 {
     [Key]
@@ -39,6 +37,10 @@ public class Driver
     [MinLength(10, ErrorMessage = "Contact number must be 10 digits")]
     public required string ContactNumber { get; set; }
     
+    // [Column(TypeName = "varchar(256)")]
+    // [AllowNull]
+    // public string ProfilePicture { get; set; } = null!;
+    
     [Required]
     public DateTime AccountCreatedAt { get; set; }
     
@@ -50,4 +52,6 @@ public class Driver
     public ICollection<Issues> Issues { get; set; } = null!; 
     
     public ICollection<SlotRatings> SlotRatings { get; set; } = null!;
+    
+    public ICollection<DriverRefreshToken> RefreshTokens { get; set; } = null!;
 }
