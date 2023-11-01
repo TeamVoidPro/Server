@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Server.DbContext;
 using server.Helpers;
 using Server.Models;
@@ -63,7 +64,7 @@ public class ZoneController : ControllerBase
     {
         var zones = _context.Zones!.Where(z => z.ParkingPlaceId == parkingPlaceId);
 
-        if (zones == null)
+        if (zones.IsNullOrEmpty())
         {
             return NotFound(new
             {

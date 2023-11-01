@@ -360,10 +360,13 @@ public class DriverController : ControllerBase
         {
             return BadRequest("Slot with this id does not exist");
         }
+        
+        var ReservationID = IdGenerator.GenerateId("Res");
+        var VehicleNumber = "CAL-5311";
 
         var reservation = new Reservation
         {
-            ReservationId = IdGenerator.GenerateId("Res"),
+            ReservationId = ReservationID,
             // convert makeReservationDto.ReservationStartTime to TimeOnly
             ReservationStartAt = TimeOnly.Parse(makeReservationDto.ReservationStartTime.ToString("t")),
             ReservationEndAt = TimeOnly.Parse(makeReservationDto.ReservationEndTime.ToString("t")),
@@ -386,6 +389,13 @@ public class DriverController : ControllerBase
             ParkingPlaceId = null,
         };
         
+        var onlineReservation = new OnlineReservations
+        {
+            OnlineReservationId = ReservationID,
+            VehicleNumber = VehicleNumber,
+            SpecialNotes = "No special notes",
+        };
+        
         //make slot unavailable
         var slotToUpdate = await _context.Slots!.FirstOrDefaultAsync(s =>
             s.ParkingPlaceId == makeReservationDto.ParkingPlaceId && s.ZoneId == makeReservationDto.ZoneId);
@@ -394,6 +404,9 @@ public class DriverController : ControllerBase
             return BadRequest("Slot with this id does not exist");
         }
         slotToUpdate.SlotStatus = "Parked";
+        // add reserved Date and Reserved until
+        slotToUpdate.ReservedAt = TimeOnly.Parse(makeReservationDto.ReservationStartTime.ToString("t"));
+        slotToUpdate.ReservedUntil = TimeOnly.Parse(makeReservationDto.ReservationEndTime.ToString("t"));
         _context.Slots!.Update(slotToUpdate);
         
         
@@ -402,6 +415,7 @@ public class DriverController : ControllerBase
         return Ok(new
         {
             message = "Reservation made successfully",
+            slot= slotToUpdate.SlotId,
         });
         
     }
