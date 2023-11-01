@@ -64,7 +64,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<VerificationCodes>? VerificationCodes { get; set; }
     
     public DbSet<OnsiteReservations>? OnsiteReservations { get; set; }
-
+    
     public DbSet<OnlineReservations>? OnlineReservations { get; set; }
     public DbSet<DriverRefreshToken>? DriverRefreshTokens { get; set; } = null!;
 
@@ -941,5 +941,376 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     ReservedUntil = TimeOnly.Parse(TimeZoneInfo.ConvertTimeToUtc(DateTime.Now).ToString("t"))
                 }
             );
+            new Slot
+            {
+                SlotId = "SLOT_0001_0002",
+                SlotNumber = 2,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0001",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0003",
+                SlotNumber = 3,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0001",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0004",
+                SlotNumber = 4,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0001",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0005",
+                SlotNumber = 5,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0001",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0006",
+                SlotNumber = 6,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0001",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0007",
+                SlotNumber = 7,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0001",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0008",
+                SlotNumber = 8,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0001",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0009",
+                SlotNumber = 9,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0001",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0010",
+                SlotNumber = 10,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0011",
+                SlotNumber = 11,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Parked",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0012",
+                SlotNumber = 12,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0013",
+                SlotNumber = 13,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Reserved",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0014",
+                SlotNumber = 14,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0015",
+                SlotNumber = 15,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Emergency",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0016",
+                SlotNumber = 16,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0017",
+                SlotNumber = 17,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0018",
+                SlotNumber = 18,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0019",
+                SlotNumber = 19,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            },
+            new Slot
+            {
+                SlotId = "SLOT_0001_0020",
+                SlotNumber = 20,
+                SlotCategoryId = "CATEG_0001_0001",
+                ZoneId = "ZONE_0001_0002",
+                ParkingPlaceId = "PARK_0001_0001",
+                SlotStatus = "Available",
+                Description = "Slot",
+                SlotCreatedDate =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                ReservedAt =  null,
+                ReservedUntil =  null,
+                
+            }
+        );
+
+        modelBuilder.Entity<ComplianceMonitoring>()
+            .HasData(
+                new ComplianceMonitoring
+                {
+                    ComplianceMonitoringId = "MONITOR_0001_0001",
+                    Date = DateTime.UtcNow,
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ComplianceStatus = "Good",
+                    Report = "Null",
+                    Feedback = "Good",
+                    ParkingPlaceVerifierId = "EMP_0022_4588"
+                }
+            );
+        modelBuilder.Entity<ParkingPlaceServices>()
+            .HasData(
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Mitigate Parking Abuse" 
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Enhance Parking Efficiency"
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Improve Parking Experience"
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Reduce Traffic Congestion"
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Mitigate Carbon Footprint"
+                },
+                new ParkingPlaceServices
+                {
+                    ParkingPlaceId = "PARK_0001_0001",
+                    ServiceProvide = "Deter Anti-Social Behaviour"
+                }
+                );
+        modelBuilder.Entity<Driver>()
+            .HasData(
+                new Driver
+                {
+                    DriverId = "DRIVER_0001_0001",
+                    FirstName = "Viharsha",
+                    LastName = "Jayathilake",
+                    Email = "vpjayathilake@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Viharsha@123"),
+                    ContactNumber = "0711234567",
+                    AccountCreatedAt = DateTime.UtcNow,
+                    Token = null,
+                });
+
+        modelBuilder.Entity<Vehicle>()
+            .HasData(
+                new Vehicle
+                {
+                    VehicleNumber = "CAL-5311",
+                    VehicleType = "Car",
+                    VehicleModel = "Honda Grace",
+                    VehicleAddedAt = DateTime.UtcNow,
+                    AdditionalNotes = "None",
+                    DriverId = "DRIVER_0001_0001",
+                });
+                
+                
+
+        modelBuilder.Entity<Reservation>()
+            .HasData(
+                new Reservation
+                {
+                    ReservationId = "RES_0001_1101",
+                    ZoneId = "ZONE_0001_0001",
+                    SlotId = "SLOT_0001_0002",
+                    TotalPayment = 450,
+                    ReservationStartAt = TimeOnly.Parse("08:00"),
+                    ReservationEndAt = TimeOnly.Parse("12:00"),
+                    ReservedAt = DateTime.UtcNow,
+                    ReservationDate = DateOnly.Parse("2023-10-31"),
+                    PaymentStatus = "Paid",
+                    ReservationStatus = "Active",
+                    ReservationType = "Online",
+                    ParkingPlaceId = "PARK_0001_0001",
+                    PaymentMethod = "Card",
+                    ParkedAt = null
+                });
+        
+        modelBuilder.Entity<OnlineReservations>()
+            .HasData(
+                new OnlineReservations
+                {
+                    OnlineReservationId = "RES_0001_1101",
+                    VehicleNumber = "CAL-5311",
+                    SpecialNotes  = "No special notes"
+                });
+        
+        
     }
 }
