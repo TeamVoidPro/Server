@@ -421,4 +421,23 @@ public class DriverController : ControllerBase
     }
     
     
+    
+    [HttpGet("get-driver/{driverId}")]
+    public async Task<IActionResult> GetDriverDetails(string driverId)
+    {
+        var driver = await _context.Drivers!.FirstOrDefaultAsync(d => d.DriverId == driverId);
+        if (driver == null)
+        {
+            return BadRequest(new
+            {
+                message = "Driver not found"
+            });
+        }
+
+        return Ok(new
+        {
+            message = "Driver found",
+            driver
+        });
+    }
 }

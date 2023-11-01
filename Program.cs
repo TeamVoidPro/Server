@@ -30,10 +30,6 @@ builder.Services.AddCors(p =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddControllersWithViews()
-            .AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-        );
 
 // Register JWT configuration
 builder.Services.Configure<JWTConfig>(builder.Configuration.GetSection("JWTConfig"));

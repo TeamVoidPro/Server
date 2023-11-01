@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server.DbContext;
 using server.Helpers;
 using Server.Models;
@@ -34,7 +35,7 @@ public class ParkingOwnerController : ControllerBase
         {
             return BadRequest(new
             {
-                message = "Parking Owner already exists"
+                message = "Email is Already Exists !"
             });
         }
 
@@ -48,7 +49,6 @@ public class ParkingOwnerController : ControllerBase
             AddressLine2 = parkingOwnerDto.AddressLine2,
             Street = parkingOwnerDto.Street,
             City = parkingOwnerDto.City,
-            Street = parkingOwnerDto.Province,
             ContactNumber = parkingOwnerDto.ContactNumber,
             Nic = parkingOwnerDto.Nic,
             IdentificationMethod = parkingOwnerDto.IdentificationMethod,
@@ -58,10 +58,10 @@ public class ParkingOwnerController : ControllerBase
             Token = ""
         };
 
-        var awaitedParkingPlace = new AwaitedParkingPlaces()
+        var awaitedParkingPlace = new AwaitedParkingPlaces
         {
             AwaitedParkingPlacesId = IdGenerator.GenerateId("AWP"),
-            AddressLine1  = parkingOwnerDto.LandAddress1,
+            AddressLine1 = parkingOwnerDto.LandAddress1,
             Street = parkingOwnerDto.LandStreet,
             City = parkingOwnerDto.LandCity,
             Province = parkingOwnerDto.LandProvince,
@@ -77,40 +77,99 @@ public class ParkingOwnerController : ControllerBase
             RejectionReason = "",
             OwnerId = newParkingOwner.OwnerId,
             ParkingPlaceOwner = newParkingOwner,
+            ParkingPlaceVerifierId = null,
+            InspectionDate = null,
+            ParkAvailable = parkingOwnerDto.ParkAvailable,
+            ParkName = parkingOwnerDto.ParkName,
+            ParkDescription = parkingOwnerDto.ParkDescription,
+            ParkWidth = parkingOwnerDto.ParkWidth,
+            ParkLength = parkingOwnerDto.ParkLength,
+            ParkCategory = parkingOwnerDto.ParkCategory,
+            NoOfStories = parkingOwnerDto.NoOfStories,
+            HasUndergroundParking = parkingOwnerDto.HasUndergroundParking,
+            ParkImage = parkingOwnerDto.ParkImage,
+            
             InspectionDate = null
         };
+        
+        // var awaitedParkingPlaceSlotCapacities = new AwaitedParkingPlaceSlotCapacities()
+        // {
+        //     AwaitedParkingParkingPlaceId = awaitedParkingPlace.AwaitedParkingPlacesId,
+        //     AwaitedParkingSlotCategoryId = IdGenerator.GenerateId("AWPC"),
+        //     // AwaitedParkingSlotCapacity = parkingOwnerDto.SlotCapacity1
+        // };
 
         await _context.ParkingPlaceOwners!.AddAsync(newParkingOwner);
-        await _context.AwaitedParkingPlaces!.AddAsync(awaitedParkingPlace);
+        await _context.AwaitedParkingPlaces!.AddAsync(awaitedParkingPlace); 
+        // await _context.AwaitedParkingPlaceSlotCapacities!.AddAsync(awaitedParkingPlaceSlotCapacities);
         await _context.SaveChangesAsync();
 
         return Ok(new
         {
-            message = "Parking Owner added successfully",
-            data = newParkingOwner
+            message = "Parking Owner and park details added successfully",
         });
     }
-    [HttpPost("upload")]
-    public async Task<IActionResult> Upload(IFormFile file)
+    
+    [HttpGet("get-parking-ratings/{parkingPlaceId}")]
+    public async  Task<IActionResult> GetParkingRatings(string parkingPlaceId)
     {
-        if (file == null || file.Length == 0)
-            return Content("file not selected");
-        // console log the file name
-        Console.WriteLine(file.FileName);
+        // var parkingPlaceOwner = await _context.ParkingPlaceOwners!.FirstOrDefaultAsync(p => p.OwnerId == id);
+        // if (parkingPlaceOwner == null)
+        // {
+        //     return BadRequest(new
+        //     {
+        //         message = "Parking Owner not found"
+        //     });
+        // }
         
-        // Generate unique file name
-        var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-
-        var path = Path.Combine(
-            Directory.GetCurrentDirectory(), "wwwroot",
-            fileName
-            );
-
-        await using (var stream = new FileStream(path, FileMode.Create))
+        var parkingPlaceRatings = _context.ParkingPlaceRatings!.Where(p => p.ParkingPlaceId == parkingPlaceId).ToList();
+        if (parkingPlaceRatings == null)
         {
-            await file.CopyToAsync(stream);
+            return BadRequest(new
+            {
+                message = "Parking Place Ratings not found"
+            });
+        }
+        // load driver details
+        foreach (var parkingPlaceRating in parkingPlaceRatings)
+        {
+            var driver = await _context.Drivers!.FirstOrDefaultAsync(d => d.DriverId == parkingPlaceRating.DriverId);
+            if (driver == null)
+            {
+                return BadRequest(new
+                {
+                    message = "Driver not found"
+                });
+            }
+            parkingPlaceRating.Driver = driver;
         }
 
-        return Ok(new { fileName });
+        return Ok(new
+        {
+            message = "Parking Place Ratings found",
+            parkingPlaceRatings
+        });
+    }
+    
+
+    [HttpGet("get-parking-places/{ownerId}")]
+    public async Task<IActionResult> GetParkingPlaces(string ownerId)
+    {
+        var parkingPlaces = await _context.ParkingPlaces!.Where(p => p.ParkingPlaceOwnerId == ownerId).ToListAsync();
+        if (parkingPlaces == null)
+        {
+            return BadRequest(new
+            {
+                message = "Parking Places not found"
+            });
+        }
+        else
+        {
+            return Ok(new
+            {
+                message = "Parking Places found",
+                parkingPlaces
+            });
+        }
     }
 }

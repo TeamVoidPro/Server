@@ -12,7 +12,7 @@ public class ParkingPlaceRatings
     
     [Required(ErrorMessage = "Rating is required")]
     [Range(0, 5, ErrorMessage = "The rating must be between 0 and 5.")]
-    public required float Rating { get; set; }
+    public required int Rating { get; set; }
     
     public string? Comment { get; set; }
     

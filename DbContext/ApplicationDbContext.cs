@@ -10,7 +10,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
-
+    
     public DbSet<Driver>? Drivers { get; set; }
     
     public DbSet<Vehicle>? Vehicles { get; set; }
@@ -51,6 +51,12 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     
     public DbSet<AwaitedParkingPlaces> AwaitedParkingPlaces { get; set; } = null!;
     
+    public DbSet<AwaitedParkingPlaceSlotCapacities> AwaitedParkingPlaceSlotCapacities { get; set; } = null!;
+    
+    public DbSet<AwaitedParkingSlotCategories> AwaitedParkingSlotCategories { get; set; } = null!;
+    
+    public DbSet<AwaitedParkingPlaceSlots> AwaitedParkingPlaceSlots { get; set; } = null!;
+
     public DbSet<ComplianceMonitoring> ComplianceMonitoring { get; set; } = null!;
     
     public DbSet<Issues> Issues { get; set; } = null!;
@@ -313,6 +319,14 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(o => o.OnsiteReservations)
             .HasForeignKey<OnsiteReservations>(r => r.OnsiteReservationId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Driver>()
+            .HasMany(d => d.RefreshTokens)
+            .WithOne(d => d.Driver)
+            .HasForeignKey(r => r.DriverId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        
 
         modelBuilder.Entity<BookingReservation>()
             .HasOne(r => r.Reservation)

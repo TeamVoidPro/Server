@@ -54,7 +54,7 @@ public class ParkingPlaceOwnerDto
     
     public required string LandAddress1 { get; set; }
 
-    public string? LandStreet { get; set; }
+    public required string LandStreet { get; set; }
     
     public required string LandCity { get; set; }
     
@@ -70,6 +70,24 @@ public class ParkingPlaceOwnerDto
     
     public required double Latitude { get; set; }
     
+    public required string ParkAvailable { get; set; }
     
+    public required string ParkName { get; set; }
     
+    public string? ParkDescription { get; set; }
+
+    public required double ParkWidth { get; set; }
+    
+    public required double ParkLength { get; set; }
+    
+    public required string ParkCategory { get; set; }
+    
+    public required int NoOfStories { get; set; }
+    
+    public required bool HasUndergroundParking { get; set; }
+    
+    public required string ParkImage { get; set; }
+    
+    // public required List<SlotTypeDto> StoryList { get; set; }
+
 }
