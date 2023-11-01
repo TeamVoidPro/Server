@@ -48,7 +48,7 @@ public class EmployeeController : ControllerBase
     }
     
     [HttpPost("update-employee")]
-    [Authorize]
+    
     public IActionResult UpdateEmployee(EmployeeIdDto employeeIdDto)
     {
         var employee = _context.Employees!.FirstOrDefault(e => e.EmployeeId == employeeIdDto.EmployeeId);
@@ -61,7 +61,17 @@ public class EmployeeController : ControllerBase
             });
         }
 
-        employee.Role = employee.Role == "Employee" ? "Manager" : "Employee";
+        employee.FirstName = employeeIdDto.FirstName!;
+        employee.LastName = employeeIdDto.LastName!;
+        employee.EmployeeId = employeeIdDto.EmployeeId!;
+        employee.Email = employeeIdDto.Email!;
+        employee.Nic = employeeIdDto.Nic!;
+        employee.ContactNumber = employeeIdDto.ContactNumber!;
+        employee.AddressLine1 = employeeIdDto.AddressLine1!;
+        employee.AddressLine2 = employeeIdDto.AddressLine2!;
+        employee.Street = employeeIdDto.Street!;
+        employee.City = employeeIdDto.City!;
+
         _context.SaveChanges();
 
         return Ok(new

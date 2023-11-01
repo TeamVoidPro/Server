@@ -31,9 +31,9 @@ public class Reservation
     
     public required DateOnly ReservationDate { get; set; }
     
-    public DateTime? ParkedAt { get; set; }
+    public TimeOnly? ParkedAt { get; set; }
     
-    public DateTime? ExitedAt { get; set; }
+    public TimeOnly? ExitedAt { get; set; }
     
     [Column(TypeName = "varchar(10)")]
     public string PaymentMethod { get; set; } = null!;
@@ -47,7 +47,7 @@ public class Reservation
     [Column(TypeName = "varchar(10)")]
     public required string ReservationType { get; set; }
     
-    public DateTime? CancelledAt { get; set; }
+    public TimeOnly? CancelledAt { get; set; }
 
     public string? CancellationReason { get; set; }
     

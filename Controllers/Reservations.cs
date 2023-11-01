@@ -72,11 +72,41 @@ public class Reservations: ControllerBase
         TimeOnly.TryParse(startTime, out TimeOnly startTimeOut);
         TimeOnly.TryParse(endTime, out TimeOnly endTimeOut);
         
-        var canceledReservations = await _context.Reservations.Where(r => r.ReservationStatus == "Cancel"  && r.ReservationDate == dateOut && r.ReservationStartAt>=startTimeOut && r.ReservationEndAt<=endTimeOut).ToListAsync();
+        var reservationList = new List<ReservationResponseDto>();
+        
+        var canceledReservations = await _context.Reservations.Where(r => r.ReservationStatus == "Cancelled"  && r.ReservationDate == dateOut && r.ReservationStartAt>=startTimeOut && r.ReservationEndAt<=endTimeOut).ToListAsync();
+        foreach (var reservation in canceledReservations)
+        {
+            var onsiteReservation =
+                await _context.OnlineReservations!.FirstOrDefaultAsync(e =>
+                    e.OnlineReservationId == reservation.ReservationId);
+
+            var vehicle =
+                await _context.Vehicles!.FirstOrDefaultAsync(v => v.VehicleNumber == onsiteReservation!.VehicleNumber);
+
+            var driver = await _context.Drivers!.FirstOrDefaultAsync(d => d.DriverId == vehicle!.DriverId);
+
+            var slot = await _context.Slots!.FirstOrDefaultAsync(s => s.SlotId == reservation.SlotId);
+
+            var reservationResponseDto = new ReservationResponseDto
+            {
+                Name = driver!.FirstName+" "+driver!.LastName,
+                ReservationStartedAt = reservation.ReservationStartAt,
+                ReservationEndedAt = reservation.ReservationEndAt,
+                ContactNumber = driver.ContactNumber,
+                VehicleNumber = vehicle!.VehicleNumber,
+                VehicleType = vehicle!.VehicleType,
+                VehicleModel = vehicle!.VehicleModel,
+                SlotNumber = slot!.SlotNumber
+            };
+            
+            reservationList.Add(reservationResponseDto);
+        }
+
 
         return Ok(new
         {
-            reservations = canceledReservations
+            reservations =  reservationList
         });
     }
     
@@ -87,11 +117,39 @@ public class Reservations: ControllerBase
         TimeOnly.TryParse(startTime, out TimeOnly startTimeOut);
         TimeOnly.TryParse(endTime, out TimeOnly endTimeOut);
         
-        var completedReservations = await _context.Reservations.Where(r => r.ReservationStatus == "Completed"  && r.ReservationDate == dateOut && r.ReservationStartAt>=startTimeOut && r.ReservationEndAt<=endTimeOut).ToListAsync();
+        var completedReservations = await _context.Reservations.Where(r => r.ReservationStatus == "Completed" && r.ReservationDate == dateOut && r.ReservationStartAt>=startTimeOut && r.ReservationEndAt<=endTimeOut).ToListAsync();
+        var reservationList = new List<ReservationResponseDto>();
+        
+        foreach (var reservation in completedReservations)
+        {
+            var onsiteReservation =
+                await _context.OnlineReservations!.FirstOrDefaultAsync(e =>
+                    e.OnlineReservationId == reservation.ReservationId);
 
+            var vehicle =
+                await _context.Vehicles!.FirstOrDefaultAsync(v => v.VehicleNumber == onsiteReservation!.VehicleNumber);
+
+            var driver = await _context.Drivers!.FirstOrDefaultAsync(d => d.DriverId == vehicle!.DriverId);
+
+            var slot = await _context.Slots!.FirstOrDefaultAsync(s => s.SlotId == reservation.SlotId);
+
+            var reservationResponseDto = new ReservationResponseDto
+            {
+                Name = driver!.FirstName+" "+driver!.LastName,
+                ReservationStartedAt = reservation.ReservationStartAt,
+                ReservationEndedAt = reservation.ReservationEndAt,
+                ContactNumber = driver.ContactNumber,
+                VehicleNumber = vehicle!.VehicleNumber,
+                VehicleType = vehicle!.VehicleType,
+                VehicleModel = vehicle!.VehicleModel,
+                SlotNumber = slot!.SlotNumber
+            };
+            
+            reservationList.Add(reservationResponseDto);
+        }
         return Ok(new
         {
-            reservations = completedReservations
+            reservations = reservationList
         });
     }
 
@@ -110,6 +168,9 @@ public class Reservations: ControllerBase
         
         TimeOnly startedTimeOnly = new TimeOnly(startTime.Hour, startTime.Minute, startTime.Second);
         TimeOnly endedTimeOnly = new TimeOnly(endTime.Hour, endTime.Minute, endTime.Second);
+
+        DateTime now = DateTime.Now;
+        TimeSpan currentTime = now.TimeOfDay;
         
         Reservation reservation = new Reservation
         {
@@ -125,7 +186,7 @@ public class Reservations: ControllerBase
             ZoneId = slot!.ZoneId,
             TotalPayment = 1250,
             ReservedAt = DateTime.UtcNow,
-            ParkedAt = DateTime.UtcNow,
+            ParkedAt = TimeOnly.Parse(currentTime.ToString()),
             ExitedAt = null,
             CancelledAt = null,
             PaymentStatus = "Paid",

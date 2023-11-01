@@ -398,6 +398,21 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     AccountCreatedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
                     DeedCopy = "https://i.imgur.com/1qk4XKn.jpg",
                     Token = ""
+                },
+                new ParkingPlaceOwner
+                {
+                    OwnerId = "OWNER_0001_0002",
+                    FullName = "Isurika Arunodi",
+                    Email = "isurikaaru@yahoo.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Isu@123"),
+                    ContactNumber = "0711239567",
+                    AddressLine1 = "108/9 A",
+                    Street = "Wettwa Road",
+                    City = "kalutara",
+                    Nic = "199914212982",
+                    AccountCreatedAt =  TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
+                    DeedCopy = "https://i.imgur.com/1qk4XKn.jpg",
+                    Token = ""
                 });
 
         modelBuilder.Entity<ParkingPlace>()
@@ -412,8 +427,19 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     Location = "Wadduwa",
                     Description = "This is a parking place in Wadduwa",
 
+                },
+                new ParkingPlace
+                {
+                    ParkingPlaceId = "PARK_0001_0002",
+                    ParkingPlaceOwnerId = "OWNER_0001_0002",
+                    Name = "Abans Parking Area",
+                    ParkingPlaceOperatorId = null,
+                    ParkingPlaceVerifierId = null,
+                    Location = "Wadduwa",
+                    Description = "This is a parking place in Wadduwa",
+
                 });
-        //
+        
         modelBuilder.Entity<SlotCategories>()
             .HasData(
                 new SlotCategories
@@ -839,7 +865,112 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     SpecialNotes  = "No special notes"
                 });
         
-        
+        modelBuilder.Entity<Driver>()
+            .HasData(
+                new Driver
+                {
+                    DriverId = "DRIVER_0001_0002",
+                    FirstName = "Sachin",
+                    LastName = "Perera",
+                    Email = "sachinperera@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Sachin@123"),
+                    ContactNumber = "0711234587",
+                    AccountCreatedAt = DateTime.UtcNow,
+                    Token = null,
+                });
+        modelBuilder.Entity<Vehicle>()
+            .HasData(
+                new Vehicle
+                {
+                    VehicleNumber = "CAL-8711",
+                    VehicleType = "Car",
+                    VehicleModel = "Honda Vessel",
+                    VehicleAddedAt = DateTime.UtcNow,
+                    AdditionalNotes = "None",
+                    DriverId = "DRIVER_0001_0002",
+                });
+        modelBuilder.Entity<Reservation>()
+            .HasData(
+                new Reservation
+                {
+                    ReservationId = "RES_0001_1102",
+                    ZoneId = "ZONE_0001_0001",
+                    SlotId = "SLOT_0001_0003",
+                    TotalPayment = 450,
+                    ReservationStartAt = TimeOnly.Parse("08:00"),
+                    ReservationEndAt = TimeOnly.Parse("12:00"),
+                    ReservedAt = DateTime.UtcNow,
+                    ReservationDate = DateOnly.Parse("2023-10-31"),
+                    PaymentStatus = "Paid",
+                    ReservationStatus = "Cancelled",
+                    ReservationType = "Online",
+                    ParkingPlaceId = "PARK_0001_0001",
+                    PaymentMethod = "Card",
+                    ParkedAt = null,
+                    CancellationReason = "Private Issue",
+                    CancelledAt = TimeOnly.Parse("09:00"),
+                    
+                });
+        modelBuilder.Entity<OnlineReservations>()
+            .HasData(
+                new OnlineReservations
+                {
+                    OnlineReservationId = "RES_0001_1102",
+                    VehicleNumber = "CAL-8711",
+                    SpecialNotes  = "No special notes"
+                });
+        modelBuilder.Entity<Driver>()
+            .HasData(
+                new Driver
+                {
+                    DriverId = "DRIVER_0001_0003",
+                    FirstName = "Dinushan",
+                    LastName = "Ferdenando",
+                    Email = "dinushan@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Dinushan@123"),
+                    ContactNumber = "0711634587",
+                    AccountCreatedAt = DateTime.UtcNow,
+                    Token = null,
+                });
+        modelBuilder.Entity<Vehicle>()
+            .HasData(
+                new Vehicle
+                {
+                    VehicleNumber = "CAL-7622",
+                    VehicleType = "Car",
+                    VehicleModel = "Vitz",
+                    VehicleAddedAt = DateTime.UtcNow,
+                    AdditionalNotes = "None",
+                    DriverId = "DRIVER_0001_0003",
+                });
+        modelBuilder.Entity<Reservation>()
+            .HasData(
+                new Reservation
+                {
+                    ReservationId = "RES_0001_1103",
+                    ZoneId = "ZONE_0001_0001",
+                    SlotId = "SLOT_0001_0004",
+                    TotalPayment = 450,
+                    ReservationStartAt = TimeOnly.Parse("08:00"),
+                    ReservationEndAt = TimeOnly.Parse("12:00"),
+                    ReservedAt = DateTime.UtcNow,
+                    ReservationDate = DateOnly.Parse("2023-10-31"),
+                    PaymentStatus = "Paid",
+                    ReservationStatus = "Completed",
+                    ReservationType = "Online",
+                    ParkingPlaceId = "PARK_0001_0001",
+                    PaymentMethod = "Card",
+                    ParkedAt = TimeOnly.Parse("08:02"),
+                    ExitedAt = TimeOnly.Parse("11:55")
+                });
+        modelBuilder.Entity<OnlineReservations>()
+            .HasData(
+                new OnlineReservations
+                {
+                    OnlineReservationId = "RES_0001_1103",
+                    VehicleNumber = "CAL-7622",
+                    SpecialNotes  = "No special notes"
+                });
     }
 }
 

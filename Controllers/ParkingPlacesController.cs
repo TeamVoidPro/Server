@@ -171,4 +171,24 @@ public class ParkingPlacesController : ControllerBase
         });
     }
 
+    [HttpGet("get-new-parking-places/{role}")]
+    public async Task<IActionResult> GetNewParkingPlaces(string role)
+    {
+        var parkingPlaces = new List<ParkingPlace>();
+        if (role == "Operator")
+        {
+            parkingPlaces = await _context.ParkingPlaces!.Where(p => p.ParkingPlaceOperatorId == null).ToListAsync();
+        }
+        else if (role == "Verifier")
+        {
+            parkingPlaces = await _context.ParkingPlaces!.Where(p => p.ParkingPlaceVerifierId == null).ToListAsync();
+        }
+
+        return Ok(new
+            {
+                data = parkingPlaces
+            }
+        );
+    }
+
 }

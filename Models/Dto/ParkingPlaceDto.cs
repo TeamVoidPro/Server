@@ -17,9 +17,7 @@ public class ParkingPlaceDto
     [Required(ErrorMessage = "Parking place owner id is required.")]
     public required string ParkingPlaceOwnerId { get; set; }
     
-    [Required(ErrorMessage = "Parking place verifier id is required.")]
     public string? ParkingPlaceVerifierId { get; set; }
     
-    [Required(ErrorMessage = "Parking place operator id is required.")]
     public string? ParkingPlaceOperatorId { get; set; }
 }

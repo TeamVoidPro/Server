@@ -34,5 +34,7 @@ public class EmployeeDto
     [Required(ErrorMessage = "Role is required")]
     public required string Role { get; set; }
     
+    public string? ParkingPlaceId { get; set; }
+    
     public DateTime AccountCreatedAt { get; set; }
 }
