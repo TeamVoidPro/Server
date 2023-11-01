@@ -16,10 +16,13 @@ namespace Server.Models
         public required string LandAddress { get; set; }
 
         [Column(TypeName = "varchar(20)")]
-        public required string Date {  get; set; }
+        public required DateTime Date {  get; set; }
 
         [Column(TypeName = "varchar(20)")]
         public required string Time {  get; set; }
+
+        [Column(TypeName = "varchar(20)")]
+        public required string Format { get; set; }
 
         [Column(TypeName = "varchar(20)")]
         public required string EmployeeId { get; set; }

@@ -19,10 +19,13 @@ namespace Server.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("get-all")]
         public ActionResult<IEnumerable<ParkingPlaceOwnerDto>> GetOwners()
         {
-            var owner = _context.ParkingPlaceOwners.Where(p => p.acceptStatus == false);
+            var owner = _context.ParkingPlaceOwners
+                .Where(ParkingPlaceOwner => !_context.VerificationSchedule.Any(VerificationSchedule => VerificationSchedule.OwnerId == ParkingPlaceOwner.OwnerId) && ParkingPlaceOwner.acceptStatus == false)
+                .ToList();
+
             return Ok(owner);
         }
 
@@ -40,6 +43,7 @@ namespace Server.Controllers
             {
                 return BadRequest(verificationDto);
             }
+
             OnSiteVerifications model = new()
             {
                 OwnerId = verificationDto.OwnerId,
@@ -87,10 +91,11 @@ namespace Server.Controllers
             VerificationSchedule model = new()
             {
                 OwnerId = verifyDto.OwnerId,
-                OwnerName = FirstName + LastName,
-                LandAddress = LandAddressNumber + "" + LandAddressStreet + "" + LandAddressCity + "" + LandAddressProvince,
+                OwnerName = FirstName + " " + LastName,
+                LandAddress = LandAddressNumber + " " + LandAddressStreet + " " + LandAddressCity + " " + LandAddressProvince,
                 Date = verifyDto.Date,
                 Time = verifyDto.Time,
+                Format = verifyDto.Format,
                 EmployeeId = verifyDto.EmployeeId,
             };
             _context.VerificationSchedule.Add(model);
@@ -103,7 +108,7 @@ namespace Server.Controllers
             message.From = new MailAddress(fromMail);
             message.Subject = "On-Site Inspection Date";
             message.To.Add(new MailAddress(Email));
-            message.Body = $"<html><body><p>Hello {FirstName},</p><p>One of our Verifiers will be at your plot of land on: {verifyDto.Date} at {verifyDto.Time}. Please make sure to bring all your legal documents. Failure to do so will result rejection of parking place.</p><p>Best regards,<br>Park Ease Team</p></body></html>";
+            message.Body = $"<html><body><p>Hello {FirstName},</p><p>One of our Verifiers will be at your plot of land on: {verifyDto.Date} at {verifyDto.Time}{verifyDto.Format}. Please make sure to bring all your legal documents. Failure to do so will result rejection of parking place.</p><p>Best regards,<br>Park Ease Team</p></body></html>";
             message.IsBodyHtml = true;
 
             var smtpClient = new SmtpClient("smtp.gmail.com")
