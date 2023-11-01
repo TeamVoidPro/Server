@@ -22,11 +22,11 @@ public class ParkingPlace
     // Latitude and Longitude
     [Required(ErrorMessage = "Parking place latitude is required")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "The parking place latitude must be 2 characters long.")]
-    public required string Latitude { get; set; }
+    public required double Latitude { get; set; }
     
     [Required(ErrorMessage = "Parking place longitude is required")]
     [StringLength(100, MinimumLength = 2, ErrorMessage = "The parking place longitude must be 2 characters long.")]
-    public required string Longitude { get; set; }
+    public required double Longitude { get; set; }
 
     public string Description { get; set; } = null!;
 
@@ -39,6 +39,9 @@ public class ParkingPlace
     public Employee ParkingPlaceVerifier { get; set; } = null!;
 
     [ForeignKey("Employee")] public string? ParkingPlaceOperatorId { get; set; }
+    
+    [NotMapped]
+    public double Distance { get; set; }
 
     public Employee ParkingPlaceOperator { get; set; } = null!;
 

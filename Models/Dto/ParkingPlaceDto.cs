@@ -9,10 +9,10 @@ public class ParkingPlaceDto
     public required string Name { get; set; }
     
     [Required(ErrorMessage = "Parking place latitude is required.")]
-    public required string Latitude { get; set; }
+    public required double Latitude { get; set; }
     
     [Required(ErrorMessage = "Parking place longtitude is required.")]
-    public required string Longitude { get; set; }
+    public required double Longitude { get; set; }
     
     [AllowNull]
     public string Description { get; set; } = null!;
