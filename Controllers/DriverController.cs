@@ -360,10 +360,13 @@ public class DriverController : ControllerBase
         {
             return BadRequest("Slot with this id does not exist");
         }
+        
+        var ReservationID = IdGenerator.GenerateId("Res");
+        var VehicleNumber = "CAL-5311";
 
         var reservation = new Reservation
         {
-            ReservationId = IdGenerator.GenerateId("Res"),
+            ReservationId = ReservationID,
             // convert makeReservationDto.ReservationStartTime to TimeOnly
             ReservationStartAt = TimeOnly.Parse(makeReservationDto.ReservationStartTime.ToString("t")),
             ReservationEndAt = TimeOnly.Parse(makeReservationDto.ReservationEndTime.ToString("t")),
@@ -384,6 +387,13 @@ public class DriverController : ControllerBase
             CancelledAt = default,
             CancellationReason = "",
             ParkingPlaceId = null,
+        };
+        
+        var onlineReservation = new OnlineReservations
+        {
+            OnlineReservationId = ReservationID,
+            VehicleNumber = VehicleNumber,
+            SpecialNotes = "No special notes",
         };
         
         //make slot unavailable

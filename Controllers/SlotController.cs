@@ -271,11 +271,14 @@ public class SlotController : ControllerBase
             
         }
 
+
+
         if (reservation!.ReservationType == "Online")
         {
             var onlineReservation = _context.OnlineReservations!.FirstOrDefault(o => o.OnlineReservationId == reservation.ReservationId);
             var vehicle = _context.Vehicles!.FirstOrDefault(v => v.VehicleNumber == onlineReservation!.VehicleNumber);
-            var driver = _context.Drivers!.FirstOrDefault(d => d.DriverId == vehicle!.VehicleNumber);
+            var driver = _context.Drivers!.FirstOrDefault(d => d.DriverId == vehicle!.DriverId);
+            
             
             if (slot!.SlotStatus == "Parked")
             {
@@ -374,6 +377,6 @@ public class SlotController : ControllerBase
         });
     }
     
-    [HttpGet]
-    public async Task<IActionResult> GetEmergencySlotDetails()
+    // [HttpGet]
+    // public async Task<IActionResult> GetEmergencySlotDetails()
 }
