@@ -66,6 +66,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<OnsiteReservations>? OnsiteReservations { get; set; }
 
     public DbSet<OnsiteReservations>? OnlineReservations { get; set; }
+    public DbSet<DriverRefreshToken>? DriverRefreshTokens { get; set; } = null!;
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

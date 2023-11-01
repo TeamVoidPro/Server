@@ -395,8 +395,8 @@ public class DriverController : ControllerBase
         }
         slotToUpdate.SlotStatus = "Parked";
         // add reserved Date and Reserved until
-        slotToUpdate.ReservedAt = makeReservationDto.ReservationStartTime;
-        slotToUpdate.ReservedUntil = makeReservationDto.ReservationEndTime;
+        slotToUpdate.ReservedAt = TimeOnly.Parse(makeReservationDto.ReservationStartTime.ToString("t"));
+        slotToUpdate.ReservedUntil = TimeOnly.Parse(makeReservationDto.ReservationEndTime.ToString("t"));
         _context.Slots!.Update(slotToUpdate);
         
         
