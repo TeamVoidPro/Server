@@ -4,6 +4,8 @@ public class ReservationResponseDto
 {
     public string? Name { get; set; }
     
+    public string? ReservationID { get; set; }
+    
     public TimeOnly? ReservationStartedAt { get; set; }
     
     public TimeOnly? ReservationEndedAt { get; set; }

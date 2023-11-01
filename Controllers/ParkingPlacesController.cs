@@ -139,9 +139,9 @@ public class ParkingPlacesController : ControllerBase
             {
                 ParkingPlaceId = parkingPlace.ParkingPlaceId,
                 Name = parkingPlace.Name,
-                Location = parkingPlace.Location,
+                Location = "Colombo 07",
                 ParkingOperator = parkingOperator!.FirstName+" "+ parkingOperator.LastName,
-                ParkingOwner = parkingOwner!.FullName,
+                ParkingOwner = parkingOwner!.FirstName+" "+ parkingOwner.LastName,
                 ParkingVerifier = parkingVerifier!.FirstName+" "+ parkingVerifier.LastName,
                 Date = complienceMonitoringDate!.Date
             };

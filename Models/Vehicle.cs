@@ -32,9 +32,12 @@ public class Vehicle
     [Column(TypeName = "varchar(50)")]
     public required string VehicleColor { get; set; }
     
+    
+    public string DriverId { get; set; } = null!;
     public string AdditionalNotes { get; set; } = null!;
     
     public required DateTime VehicleAddedAt { get; set; } = DateTime.Now;
+    
     
     [Required]
     public Driver Driver { get; set; } = null!;

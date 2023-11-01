@@ -46,6 +46,7 @@ public class Reservations: ControllerBase
 
             var reservationResponseDto = new ReservationResponseDto
             {
+                ReservationID = reservation.ReservationId,
                 Name = driver!.FirstName+" "+driver!.LastName,
                 ReservationStartedAt = reservation.ReservationStartAt,
                 ReservationEndedAt = reservation.ReservationEndAt,
