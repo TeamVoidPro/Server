@@ -34,11 +34,11 @@ public class ParkingPlace
     
     public ParkingPlaceOwner ParkingPlaceOwner { get; set; } = null!;
 
-    [ForeignKey("Employee")] public string? ParkingPlaceVerifierId { get; set; }
+    [ForeignKey("Employee")] public string? ParkingPlaceVerifierId { get; set; } = null;
 
     public Employee ParkingPlaceVerifier { get; set; } = null!;
 
-    [ForeignKey("Employee")] public string? ParkingPlaceOperatorId { get; set; }
+    [ForeignKey("Employee")] public string? ParkingPlaceOperatorId { get; set; } = null;
     
     [NotMapped]
     public double Distance { get; set; }

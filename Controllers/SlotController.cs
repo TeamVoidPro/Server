@@ -331,7 +331,7 @@ public class SlotController : ControllerBase
         var slotDetailsResponseDto = new SlotDetailsResponseDto();
         var onlineReservation = _context.OnlineReservations!.FirstOrDefault(o => o.OnlineReservationId == reservation[0].ReservationId);
         var vehicle = _context.Vehicles!.FirstOrDefault(v => v.VehicleNumber == onlineReservation!.VehicleNumber);
-        var driver = _context.Drivers!.FirstOrDefault(d => d.DriverId == vehicle!.DriverId);
+        var driver = _context.Drivers!.FirstOrDefault(d => d.DriverId == vehicle!.Driver.DriverId);
         
         slotDetailsResponseDto.SlotId = slot.SlotId;
         slotDetailsResponseDto.SlotCategory = _context.SlotCategories!.FirstOrDefault(s => s.SlotCategoryId == slot.SlotCategoryId)!.SlotCategoryName;

@@ -65,7 +65,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     
     public DbSet<OnsiteReservations>? OnsiteReservations { get; set; }
 
-    public DbSet<OnsiteReservations>? OnlineReservations { get; set; }
+    public DbSet<OnlineReservations>? OnlineReservations { get; set; }
     public DbSet<DriverRefreshToken>? DriverRefreshTokens { get; set; } = null!;
 
 
@@ -357,7 +357,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 // Parking Place Operator
                 new Employee
                 {
-                    EmployeeId = "EMP_0023_4590",
+                    EmployeeId = "EMP_0023_4589",
                     FirstName = "Prasad",
                     LastName = "Udara",
                     Email = "parkingopeator@parkease.com",
@@ -389,12 +389,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     ProfilePicture = "https://i.imgur.com/1qk4XKn.jpg",
                     AccountCreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now),
                     Token = ""
-                }
-            );
-
-
-        modelBuilder.Entity<Employee>()
-            .HasData(
+                },
                 new Employee
                 {
                     EmployeeId = "EMP_0022_4588",
@@ -413,6 +408,11 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                     Token = ""
                 }
             );
+            
+
+
+
+
 
         modelBuilder.Entity<ParkingPlaceOwner>()
             .HasData(
