@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server.DbContext;
 using server.Helpers;
 using Server.Models;
@@ -106,5 +107,55 @@ public class ParkingOwnerController : ControllerBase
         {
             message = "Parking Owner and park details added successfully",
         });
+    }
+    
+    [HttpGet("get-parking-ratings/{parkingPlaceId}")]
+    public async  Task<IActionResult> GetParkingRatings(string parkingPlaceId)
+    {
+        // var parkingPlaceOwner = await _context.ParkingPlaceOwners!.FirstOrDefaultAsync(p => p.OwnerId == id);
+        // if (parkingPlaceOwner == null)
+        // {
+        //     return BadRequest(new
+        //     {
+        //         message = "Parking Owner not found"
+        //     });
+        // }
+        
+        var parkingPlaceRatings = _context.ParkingPlaceRatings!.Where(p => p.ParkingPlaceId == parkingPlaceId).ToList();
+        if (parkingPlaceRatings == null)
+        {
+            return BadRequest(new
+            {
+                message = "Parking Place Ratings not found"
+            });
+        }
+
+        return Ok(new
+        {
+            message = "Parking Place Ratings found",
+            parkingPlaceRatings
+        });
+    }
+    
+
+    [HttpGet("get-parking-places/{ownerId}")]
+    public async Task<IActionResult> GetParkingPlaces(string ownerId)
+    {
+        var parkingPlaces = await _context.ParkingPlaces!.Where(p => p.ParkingPlaceOwnerId == ownerId).ToListAsync();
+        if (parkingPlaces == null)
+        {
+            return BadRequest(new
+            {
+                message = "Parking Places not found"
+            });
+        }
+        else
+        {
+            return Ok(new
+            {
+                message = "Parking Places found",
+                parkingPlaces
+            });
+        }
     }
 }
