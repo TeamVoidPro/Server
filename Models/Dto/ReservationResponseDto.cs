@@ -19,4 +19,6 @@ public class ReservationResponseDto
     public string? VehicleModel { get; set; }
     
     public int? SlotNumber { get; set; }
+    
+    public string? ReservationId { get; set; }
 }

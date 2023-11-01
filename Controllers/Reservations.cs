@@ -54,7 +54,8 @@ public class Reservations: ControllerBase
                 VehicleNumber = vehicle!.VehicleNumber,
                 VehicleType = vehicle!.VehicleType,
                 VehicleModel = vehicle!.VehicleModel,
-                SlotNumber = slot!.SlotNumber
+                SlotNumber = slot!.SlotNumber,
+                ReservationId = reservation.ReservationId
             };
             
             reservationList.Add(reservationResponseDto);
@@ -198,5 +199,52 @@ public class Reservations: ControllerBase
             totalCost = totalCost
         });
     }
-   
+
+    [HttpGet("get-reservation/{id}")]
+    public async Task<IActionResult> GetReservationById(string id)
+    {
+        var reservation = _context.Reservations!.FirstOrDefault(r => r.ReservationId == id);
+        
+        if (reservation == null)
+        {
+            return BadRequest(new
+            {
+                error = "Invalid Reservation Id"
+            });
+        }
+        
+        var onlineReservation = await _context.OnlineReservations!.FirstOrDefaultAsync(o => o.OnlineReservationId == id);
+        var vehicle = await _context.Vehicles!.FirstOrDefaultAsync(v => v.VehicleNumber == onlineReservation!.VehicleNumber);
+        var driver = await _context.Drivers!.FirstOrDefaultAsync(d => d.DriverId == vehicle!.DriverId);
+        var slot = await _context.Slots!.FirstOrDefaultAsync(s => s.SlotId == reservation.SlotId);
+        
+        ReservationByIdResponseDto reservationByIdResponseDto = new ReservationByIdResponseDto
+        {
+            SlotNumber = slot!.SlotNumber,
+            VehicleNumber = onlineReservation!.VehicleNumber,
+            VehicleType = vehicle!.VehicleType,
+            VehicleModel = vehicle!.VehicleModel,
+            Name = driver!.FirstName+" "+driver!.LastName,
+            ReservedAt = reservation.ReservedAt,
+            ReservationStartedAt = reservation.ReservationStartAt,
+            ReservationEndedAt = reservation.ReservationEndAt,
+            ReservationType = reservation.ReservationType,
+            ReservationAmount = reservation.TotalPayment,
+            ReservationStatus = reservation.ReservationStatus,
+            AdditionalNote = onlineReservation.SpecialNotes,
+            ZoneName = _context.Zones!.FirstOrDefault(z => z.ZoneId == slot.ZoneId)!.ZoneName,
+            SlotId = slot.SlotId,
+            ReservationId = reservation.ReservationId,
+            ReservationDate = reservation.ReservationDate,
+            ContactNumber = driver.ContactNumber,
+            PaymentMethod = reservation.PaymentMethod,
+            PaymentStatus = reservation.PaymentStatus
+        };
+        
+        return Ok(new
+        {
+            data = reservationByIdResponseDto
+        });
+    }
+
 }
