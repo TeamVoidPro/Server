@@ -394,6 +394,9 @@ public class DriverController : ControllerBase
             return BadRequest("Slot with this id does not exist");
         }
         slotToUpdate.SlotStatus = "Parked";
+        // add reserved Date and Reserved until
+        slotToUpdate.ReservedAt = makeReservationDto.ReservationStartTime;
+        slotToUpdate.ReservedUntil = makeReservationDto.ReservationEndTime;
         _context.Slots!.Update(slotToUpdate);
         
         
@@ -402,6 +405,7 @@ public class DriverController : ControllerBase
         return Ok(new
         {
             message = "Reservation made successfully",
+            slot= slotToUpdate.SlotId,
         });
         
     }
