@@ -351,4 +351,29 @@ public class SlotController : ControllerBase
         });
 
     }
+    
+    [HttpPut("update-slot-state/{slotId}/{state}")]
+    public async Task<IActionResult> UpdateSlotStatus(string slotId, string state)
+    {
+        var slot = _context.Slots!.FirstOrDefault(s => s.SlotId == slotId);
+
+        if (slot == null)
+        {
+            return NotFound(new
+            {
+                message = "Slot not found"
+            });
+        }
+
+        slot.SlotStatus = state;
+        await _context.SaveChangesAsync();
+        
+        return Ok(new
+        {
+            message = "Slot status updated successfully"
+        });
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetEmergencySlotDetails()
 }
